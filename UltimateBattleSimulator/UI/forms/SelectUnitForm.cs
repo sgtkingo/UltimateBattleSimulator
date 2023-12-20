@@ -30,10 +30,13 @@ namespace UltimateBattleSimulator.UI.forms
         private void BindData()
         {
             checkedListBoxUnits.Items.Clear();
-            foreach (var item in UnitsManager.Units)
+            int index = 0;
+            foreach (var item in UnitsManager.LoadedUnits)
             {
                 checkedListBoxUnits.Items.Add(item);
-            }
+                index = checkedListBoxUnits.Items.IndexOf(item);
+                checkedListBoxUnits.SetItemChecked(index, item.IsSelected);
+            }      
         }
 
         private void checkedListBoxUnits_SelectedIndexChanged(object sender, EventArgs e)
@@ -49,9 +52,9 @@ namespace UltimateBattleSimulator.UI.forms
 
         private void buttonSelect_Click(object sender, EventArgs e)
         {
-            foreach (var item in checkedListBoxUnits.CheckedItems)
+            foreach (IUnit item in checkedListBoxUnits.CheckedItems)
             {
-                SelectedUnits.Add((IUnit)item);
+                item.IsSelected = true;
             }
 
             DialogResult = DialogResult.OK;

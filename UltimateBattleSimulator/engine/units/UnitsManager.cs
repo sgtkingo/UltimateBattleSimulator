@@ -12,19 +12,24 @@ namespace UltimateBattleSimulator.engine.units
     {
         public static List<IUnit> TempUnits { get; private set; } = new List<IUnit>();
 
-        public static List<IUnit> Units { get; private set; } = new List<IUnit>();
+        public static List<IUnit> LoadedUnits { get; private set; } = new List<IUnit>();
 
-        public async static Task ReloadAsync()
+        public static List<IUnit> GetUnits()
         {
-            await Task.Run(() => 
-            {
-                Reload();
-            });
+            var units = new List<IUnit>();
+            units.AddRange(LoadedUnits);
+            units.AddRange(TempUnits);
+
+            TempUnits = units;
+
+            return TempUnits;
         }
 
-        public static void Reload() 
+        public static void Reload()
         {
-            Units.Clear();
+            LoadedUnits.Clear();
+            TempUnits.Clear();
+
             string directoryPath = DirectoryManager.Units;
 
             // Check if the directory exists
@@ -41,29 +46,48 @@ namespace UltimateBattleSimulator.engine.units
             foreach (var filePath in filePaths)
             {
                 var unit = UnitFactory.LoadUnitFromJsonFile(filePath);
-                if (unit != null) 
+                if (unit != null)
                 {
-                    Units.Add(unit);
+                    LoadedUnits.Add(unit);
                 }
             }
         }
 
-        public static IUnit? Find(string text) 
+        public static IUnit? Find(string text)
         {
-            return Units.Find(unit =>  unit?.ToString()?.Contains(text) ?? false); 
+            return LoadedUnits.Find(unit => unit?.ToString()?.Contains(text) ?? false);
         }
 
         public static void Save(IUnit unit)
         {
-            UnitFactory.SaveUnitAsJsonFile(unit);
+            unit.Save();
         }
 
-        public static void SaveAll(List<IUnit> units) 
+        public static void SaveAll()
         {
-            foreach (var unit in units) 
+            foreach (var unit in TempUnits)
             {
-                UnitFactory.SaveUnitAsJsonFile(unit);
+                unit.Save();
             }
+        }
+
+        public static void Delete(IUnit unit, bool permanent = false)
+        {
+            TempUnits.Remove(unit);
+            if (permanent)
+            {
+                unit.Delete();
+            }
+        }
+
+        public static void DeleteAll()
+        {
+            foreach (var unit in TempUnits)
+            {
+                unit.Delete();
+            }
+
+            TempUnits.Clear();
         }
     }
 }

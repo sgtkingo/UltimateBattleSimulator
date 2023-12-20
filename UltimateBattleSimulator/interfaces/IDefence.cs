@@ -12,7 +12,25 @@ namespace UltimateBattleSimulator.interfaces
         public string Description { get; set; }
         public Size3D Size { get; set; }
 
-        public int Force { get; set; }
+        public int MainForce { get; set; }
+        public int SecondaryForce { get; set; }
+
+        public int Force 
+        {
+            get 
+            {  
+                return MainForce + SecondaryForce; 
+            }
+        }
+
+        public double Bonus 
+        {
+            get 
+            {
+                return Force/20.0; 
+            }
+        }
+
         public int MaxCapacity 
         {
             get 

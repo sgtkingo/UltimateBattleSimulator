@@ -9,7 +9,7 @@ namespace UltimateBattleSimulator.interfaces
     internal interface IArmy
     {
         public string Name { get; set; }
-        public List<IUnit> Units { get; }
+        public List<IGroup> Groups { get; }
         public IDefence? Defence { get; set; }
 
         public int Force { get; }
@@ -18,7 +18,10 @@ namespace UltimateBattleSimulator.interfaces
         {
             get
             {
-                return Units.Count;
+                int _count = 0;
+                Groups.Select(g => _count+=g.Amount);
+
+                return _count;
             }
         }
     }

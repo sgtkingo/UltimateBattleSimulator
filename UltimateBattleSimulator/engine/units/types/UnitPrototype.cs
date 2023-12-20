@@ -32,6 +32,9 @@ namespace UltimateBattleSimulator.engine.units.types
         public int Level { get; set; } = 0;
         public int Move { get; set; } = 0;
 
+        public bool IsSelected { get; set; } = true;
+        public bool IsLoadedFromFile { get; set; } = false;
+
 
         public UnitPrototype() 
         {
@@ -75,25 +78,22 @@ namespace UltimateBattleSimulator.engine.units.types
             return $"[{UnitType}] | {Name} ({Force}) \n" +
                 $"Description: {Description} \n" +
 
-                $"Description: {Level} \n" +
-                $"Description: {Life} \n" +
-                $"Description: {AttackNumber} \n" +
-                $"Description: {DefenceNumber} \n" +
-                $"Description: {Iniciative} \n" +
-                $"Description: {Move} \n";
+                $"Level: {Level} \n" +
+                $"Life: {Life} \n" +
+                $"AttackNumber: {AttackNumber} \n" +
+                $"DefenceNumber: {DefenceNumber} \n" +
+                $"Iniciative: {Iniciative} \n" +
+                $"Move: {Move} \n";
         }
 
         public virtual void Save()
         {
-            var jsonSerializerOptions = new JsonSerializerOptions()
-            {
-                AllowTrailingCommas = true,
-                WriteIndented = true
-            };
+            UnitFactory.SaveUnitAsJsonFile(this);
+        }
 
-            string jsonString = JsonSerializer.Serialize(this, jsonSerializerOptions);
-            string filePath = $"{DirectoryManager.Units}/{GUID}.json";
-            File.WriteAllText(filePath, jsonString);
+        public void Delete() 
+        {
+            UnitFactory.DeleteUnitAsJsonFile(this);
         }
 
         public override string ToString()

@@ -10,7 +10,7 @@ namespace UltimateBattleSimulator.engine.army
     internal class Army : IArmy
     {
         public string Name { get; set; } = "";
-        public List<IUnit> Units { get; set; } = new List<IUnit>();
+        public List<IGroup> Groups { get; set; } = new List<IGroup>();
 
         public IDefence? Defence { get; set; }
 
@@ -19,14 +19,19 @@ namespace UltimateBattleSimulator.engine.army
             get
             {
                 int _force = 0;
-                int _bonus = 0;
-                foreach (var unit in Units)
+                double _bonus = 0;
+                foreach (var group in Groups)
                 {
-                    _bonus = Defence?.Force ?? 0; 
-                    _force += unit.Force + _bonus;
+                    _bonus = Defence?.Bonus ?? 0.0; 
+                    _force += (int)(group.Force * _bonus);
                 }
                 return _force;
             }
+        }
+
+        public override string ToString()
+        {
+            return $"{Name} | Force: {Force}";
         }
     }
 }

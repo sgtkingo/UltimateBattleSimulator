@@ -48,18 +48,21 @@
             toolStripButtonSaveAllUnits = new ToolStripButton();
             toolStripSeparator3 = new ToolStripSeparator();
             toolStripTextBoxUnitFastSearch = new ToolStripTextBox();
+            toolStripButtonRefreshUnits = new ToolStripButton();
             openToolStripButtonUnits = new ToolStripButton();
             toolStripSeparator5 = new ToolStripSeparator();
             copyToolStripButtonUnits = new ToolStripButton();
             toolStripSeparator4 = new ToolStripSeparator();
             helpToolStripButtonUnits = new ToolStripButton();
+            toolStripSeparator6 = new ToolStripSeparator();
+            toolStripButtonSwapUnitsLayout = new ToolStripButton();
             dataGridViewUnits = new DataGridView();
             tabPageArmies = new TabPage();
             tabPageDefence = new TabPage();
             tabPageEnvironment = new TabPage();
             buttonSimulate = new Button();
             bindingSourceUnits = new BindingSource(components);
-            toolStripButtonRefreshUnits = new ToolStripButton();
+            openFileDialog = new OpenFileDialog();
             menuStripMain.SuspendLayout();
             tabControlMain.SuspendLayout();
             tabPageUnits.SuspendLayout();
@@ -133,7 +136,7 @@
             // 
             // toolStripUnits
             // 
-            toolStripUnits.Items.AddRange(new ToolStripItem[] { newToolStripButtonUnits, toolStripButtonEditUnits, toolStripSeparator1, toolStripButtonDeleteUnits, toolStripButtonDeleteAllUnits, toolStripSeparator2, saveToolStripButtonUnits, toolStripButtonSaveAllUnits, toolStripSeparator3, toolStripTextBoxUnitFastSearch, toolStripButtonRefreshUnits, openToolStripButtonUnits, toolStripSeparator5, copyToolStripButtonUnits, toolStripSeparator4, helpToolStripButtonUnits });
+            toolStripUnits.Items.AddRange(new ToolStripItem[] { newToolStripButtonUnits, toolStripButtonEditUnits, toolStripSeparator1, toolStripButtonDeleteUnits, toolStripButtonDeleteAllUnits, toolStripSeparator2, saveToolStripButtonUnits, toolStripButtonSaveAllUnits, toolStripSeparator3, toolStripTextBoxUnitFastSearch, toolStripButtonRefreshUnits, openToolStripButtonUnits, toolStripSeparator5, copyToolStripButtonUnits, toolStripSeparator4, helpToolStripButtonUnits, toolStripSeparator6, toolStripButtonSwapUnitsLayout });
             toolStripUnits.Location = new Point(3, 19);
             toolStripUnits.Name = "toolStripUnits";
             toolStripUnits.Size = new Size(756, 25);
@@ -225,6 +228,16 @@
             toolStripTextBoxUnitFastSearch.Size = new Size(100, 25);
             toolStripTextBoxUnitFastSearch.KeyDown += toolStripTextBoxUnitFastSearch_KeyDown;
             // 
+            // toolStripButtonRefreshUnits
+            // 
+            toolStripButtonRefreshUnits.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButtonRefreshUnits.Image = (Image)resources.GetObject("toolStripButtonRefreshUnits.Image");
+            toolStripButtonRefreshUnits.ImageTransparentColor = Color.Magenta;
+            toolStripButtonRefreshUnits.Name = "toolStripButtonRefreshUnits";
+            toolStripButtonRefreshUnits.Size = new Size(23, 22);
+            toolStripButtonRefreshUnits.Text = "Refresh";
+            toolStripButtonRefreshUnits.Click += toolStripButtonRefreshUnits_Click;
+            // 
             // openToolStripButtonUnits
             // 
             openToolStripButtonUnits.DisplayStyle = ToolStripItemDisplayStyle.Image;
@@ -265,20 +278,33 @@
             helpToolStripButtonUnits.Text = "He&lp";
             helpToolStripButtonUnits.Click += helpToolStripButtonUnits_Click;
             // 
+            // toolStripSeparator6
+            // 
+            toolStripSeparator6.Name = "toolStripSeparator6";
+            toolStripSeparator6.Size = new Size(6, 25);
+            // 
+            // toolStripButtonSwapUnitsLayout
+            // 
+            toolStripButtonSwapUnitsLayout.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButtonSwapUnitsLayout.Image = (Image)resources.GetObject("toolStripButtonSwapUnitsLayout.Image");
+            toolStripButtonSwapUnitsLayout.ImageTransparentColor = Color.Magenta;
+            toolStripButtonSwapUnitsLayout.Name = "toolStripButtonSwapUnitsLayout";
+            toolStripButtonSwapUnitsLayout.Size = new Size(23, 22);
+            toolStripButtonSwapUnitsLayout.Text = "Hide";
+            toolStripButtonSwapUnitsLayout.Click += toolStripButtonSwapUnitsLayout_Click;
+            // 
             // dataGridViewUnits
             // 
             dataGridViewUnits.BackgroundColor = SystemColors.Control;
             dataGridViewUnits.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewUnits.Location = new Point(3, 47);
+            dataGridViewUnits.Location = new Point(3, 70);
             dataGridViewUnits.MultiSelect = false;
             dataGridViewUnits.Name = "dataGridViewUnits";
             dataGridViewUnits.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             dataGridViewUnits.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridViewUnits.Size = new Size(756, 379);
+            dataGridViewUnits.Size = new Size(756, 356);
             dataGridViewUnits.TabIndex = 0;
             dataGridViewUnits.CellContentDoubleClick += dataGridViewUnitsAllies_CellContentDoubleClick;
-            dataGridViewUnits.UserAddedRow += dataGridViewUnitsAllies_UserAddedRow;
-            dataGridViewUnits.UserDeletingRow += dataGridViewUnitsAllies_UserDeletingRow;
             // 
             // tabPageArmies
             // 
@@ -320,15 +346,11 @@
             buttonSimulate.Text = "SIMULATE";
             buttonSimulate.UseVisualStyleBackColor = false;
             // 
-            // toolStripButtonRefreshUnits
+            // openFileDialog
             // 
-            toolStripButtonRefreshUnits.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButtonRefreshUnits.Image = (Image)resources.GetObject("toolStripButtonRefreshUnits.Image");
-            toolStripButtonRefreshUnits.ImageTransparentColor = Color.Magenta;
-            toolStripButtonRefreshUnits.Name = "toolStripButtonRefreshUnits";
-            toolStripButtonRefreshUnits.Size = new Size(23, 22);
-            toolStripButtonRefreshUnits.Text = "Refresh";
-            toolStripButtonRefreshUnits.Click += toolStripButtonRefreshUnits_Click;
+            openFileDialog.Filter = "JSON files|*.json|Text files |*.txt |All files |*.*";
+            openFileDialog.RestoreDirectory = true;
+            openFileDialog.Title = "Select file to open";
             // 
             // UTBS
             // 
@@ -390,5 +412,8 @@
         private ToolStripButton helpToolStripButtonUnits;
         private ToolStripButton toolStripButtonDeleteAllUnits;
         private ToolStripButton toolStripButtonRefreshUnits;
+        private ToolStripSeparator toolStripSeparator6;
+        private ToolStripButton toolStripButtonSwapUnitsLayout;
+        private OpenFileDialog openFileDialog;
     }
 }

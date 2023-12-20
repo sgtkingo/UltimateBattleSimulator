@@ -21,10 +21,20 @@ namespace UltimateBattleSimulator.interfaces
         public string Description { get; set; }
         public UnitType UnitType { get; }
 
+        public bool IsSelected { get; set; }
+        public bool IsLoadedFromFile { get; protected set; }
+
         public int Force { get; }
 
         public string GetInfo();
 
         public void Save();
+
+        public void Delete();
+
+        public void Load() 
+        {
+            IsLoadedFromFile = true;
+        }
     }
 }

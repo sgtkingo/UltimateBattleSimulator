@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using UltimateBattleSimulator.engine.global;
+using UltimateBattleSimulator.engine.system;
 using UltimateBattleSimulator.engine.units.types;
 using UltimateBattleSimulator.interfaces;
 
@@ -24,9 +25,17 @@ namespace UltimateBattleSimulator.engine.units
             };
         }
 
-        public static void SaveUnitAsJsonFile(IUnit? unit) 
+        public static void SaveUnitAsJsonFile(IUnit unit) 
         {
-            unit?.Save();
+            var jsonSerializerOptions = new JsonSerializerOptions()
+            {
+                AllowTrailingCommas = true,
+                WriteIndented = true
+            };
+
+            string jsonString = JsonSerializer.Serialize(unit, jsonSerializerOptions);
+            string filePath = $"{DirectoryManager.Units}/{unit.GUID}.json";
+            File.WriteAllText(filePath, jsonString);
         }
 
         public static IUnit? LoadUnitFromJsonFile(string jsonFile)
@@ -37,7 +46,7 @@ namespace UltimateBattleSimulator.engine.units
                 int typeProperty = JsonDocument.Parse(jsonString).RootElement.GetProperty("UnitType").GetInt32();
                 UnitType unitType = (UnitType)(typeProperty);
 
-                return unitType switch
+                IUnit? unit = unitType switch
                 {
                     UnitType.None => JsonSerializer.Deserialize<UnitPrototype>(jsonString),
                     UnitType.Infantry => JsonSerializer.Deserialize<UnitInfantry>(jsonString),
@@ -45,11 +54,20 @@ namespace UltimateBattleSimulator.engine.units
                     UnitType.Cavalerly => JsonSerializer.Deserialize<UnitCavarly>(jsonString),
                     _ => throw new ArgumentException("Unknown unit type")
                 };
+                unit?.Load();
+
+                return unit;
             }
             catch (Exception)
             {
                 throw;
             }
+        }
+
+        public static void DeleteUnitAsJsonFile(IUnit unit) 
+        {
+            string filePath = $"{DirectoryManager.Units}/{unit.GUID}.json";
+            File.Delete(filePath);
         }
     }
 }
