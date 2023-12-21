@@ -14,8 +14,6 @@ namespace UltimateBattleSimulator.UI.forms
 {
     public partial class SelectUnitForm : Form
     {
-        internal List<IUnit> SelectedUnits = new List<IUnit>();
-
         public SelectUnitForm()
         {
             InitializeComponent();
@@ -23,7 +21,6 @@ namespace UltimateBattleSimulator.UI.forms
 
         private void SelectUnitForm_Load(object sender, EventArgs e)
         {
-            UnitsManager.Reload();
             BindData();
         }
 
@@ -36,7 +33,7 @@ namespace UltimateBattleSimulator.UI.forms
                 checkedListBoxUnits.Items.Add(item);
                 index = checkedListBoxUnits.Items.IndexOf(item);
                 checkedListBoxUnits.SetItemChecked(index, item.IsSelected);
-            }      
+            }
         }
 
         private void checkedListBoxUnits_SelectedIndexChanged(object sender, EventArgs e)
@@ -52,13 +49,16 @@ namespace UltimateBattleSimulator.UI.forms
 
         private void buttonSelect_Click(object sender, EventArgs e)
         {
-            foreach (IUnit item in checkedListBoxUnits.CheckedItems)
-            {
-                item.IsSelected = true;
-            }
-
             DialogResult = DialogResult.OK;
             this.Close();
+        }
+
+        private void checkedListBoxUnits_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            if (checkedListBoxUnits.Items[e.Index] is IUnit item)
+            {
+                item.IsSelected = e.NewValue == CheckState.Checked;
+            }
         }
     }
 }

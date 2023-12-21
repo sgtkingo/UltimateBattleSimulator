@@ -14,14 +14,18 @@ namespace UltimateBattleSimulator.engine.units
 
         public static List<IUnit> LoadedUnits { get; private set; } = new List<IUnit>();
 
-        public static List<IUnit> GetUnits()
+        public static List<IUnit> GetUnits(bool onlySelected = false, bool includeFromFile = false)
         {
-            var units = new List<IUnit>();
-            units.AddRange(LoadedUnits);
-            units.AddRange(TempUnits);
+            TempUnits.RemoveAll(unit => unit.IsLoadedFromFile);
+            if ( includeFromFile ) 
+            {
+                TempUnits.AddRange(LoadedUnits.FindAll(u => u.IsSelected == true));
+            }
 
-            TempUnits = units;
-
+            if ( onlySelected ) 
+            {
+                return TempUnits.FindAll(u => u.IsSelected == true);
+            }
             return TempUnits;
         }
 
@@ -80,11 +84,14 @@ namespace UltimateBattleSimulator.engine.units
             }
         }
 
-        public static void DeleteAll()
+        public static void DeleteAll(bool permanent = false)
         {
-            foreach (var unit in TempUnits)
+            if (permanent)
             {
-                unit.Delete();
+                foreach (var unit in TempUnits)
+                {
+                    unit.Delete();
+                }
             }
 
             TempUnits.Clear();

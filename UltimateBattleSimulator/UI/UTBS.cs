@@ -30,12 +30,11 @@ namespace UltimateBattleSimulator.UI
 
         private void Init()
         {
-            //TODO: Init code here
+            ReloadUnits();
         }
 
         private void BindData()
         {
-            ReloadUnits();
             BindUnits();
         }
 
@@ -83,9 +82,9 @@ namespace UltimateBattleSimulator.UI
             return MessageBox.Show(message, "Delete record", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question) == DialogResult.Yes;
         }
 
-        private void DeleteObject(object? obj, BindingSource bindingSource) 
+        private void DeleteObject(object? obj, BindingSource bindingSource)
         {
-            if( DeleteObjectApprove(obj) ) 
+            if (DeleteObjectApprove(obj))
             {
                 bindingSource.Remove(obj);
             }
@@ -112,28 +111,33 @@ namespace UltimateBattleSimulator.UI
 
             autoCompleteCollection.AddRange(stringArray);
             toolStripTextBoxUnitFastSearch.AutoCompleteCustomSource = autoCompleteCollection;
+
+            BindUnits();
         }
 
-        private void BindUnits()
+        private void BindUnits(bool onlySelected = false, bool includeFromFile = false)
         {
-            bindingSourceUnits.DataSource = UnitsManager.GetUnits();
+            bindingSourceUnits.DataSource = UnitsManager.GetUnits(onlySelected, includeFromFile);
             dataGridViewUnits.DataSource = bindingSourceUnits;
+
+            Refresh(dataGridViewUnits, bindingSourceUnits);
         }
 
         private void toolStripButtonSwapUnitsLayout_Click(object sender, EventArgs e)
         {
             _hideUnits = !_hideUnits;
-            ;
+            dataGridViewUnits.CurrentCell = null;
+
             foreach (DataGridViewRow row in dataGridViewUnits.Rows)
             {
-                IUnit unit = row?.DataBoundItem as IUnit;
+                IUnit? unit = row?.DataBoundItem as IUnit ?? null;
                 if (unit != null && row != null)
                 {
                     if (_hideUnits)
                     {
-                        row.Visible = _hideUnits == unit.IsSelected;
+                        row.Visible = true == unit.IsSelected;
                     }
-                    else 
+                    else
                     {
                         row.Visible = true;
                     }
@@ -165,18 +169,22 @@ namespace UltimateBattleSimulator.UI
         private void toolStripButtonDeleteUnits_Click(object sender, EventArgs e)
         {
             IUnit obj = (IUnit)bindingSourceUnits.Current;
-
             DeleteObject(obj, bindingSourceUnits);
-            obj.Delete();
         }
 
+        private void dataGridViewUnits_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
+        {
+            var obj = e.Row?.DataBoundItem as IUnit;
+            e.Cancel = !DeleteObjectApprove(obj);
+        }
+
+        //TODO: Zjednodušit jen na Temp, používat selectUnitForm, nic víc, nemazat uplně jen ukladat, správa jinde
         private void toolStripButtonDeleteAllUnits_Click(object sender, EventArgs e)
         {
             string message = $"Do you wanna delete all units ({bindingSourceUnits.Count})?  \n This action is permanent!";
             if (MessageBox.Show(message, "Delete all units", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 UnitsManager.DeleteAll();
-                ReloadUnits();
                 BindUnits();
             }
         }
@@ -192,7 +200,7 @@ namespace UltimateBattleSimulator.UI
             string message = $"Do you wanna save {unit} ?";
             if (MessageBox.Show(message, "Save unit", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                unit.Save();
+                UnitsManager.Save(unit);
             }
         }
 
@@ -222,20 +230,28 @@ namespace UltimateBattleSimulator.UI
 
         private void openToolStripButtonUnits_Click(object sender, EventArgs e)
         {
-            if( openFileDialog.ShowDialog(this) == DialogResult.OK ) 
+            if (openFileDialog.ShowDialog(this) == DialogResult.OK)
             {
                 var unit = UnitFactory.LoadUnitFromJsonFile(openFileDialog.FileName);
-                if (unit == null) 
+                if (unit != null)
                 {
                     bindingSourceUnits.Add(unit);
                 }
             }
         }
 
+        private void toolStripButtonUnitsFromLoadedList_Click(object sender, EventArgs e)
+        {
+            var form = new SelectUnitForm();
+            if (form.ShowDialog(this) == DialogResult.OK) 
+            {
+                BindUnits(false, true);
+            }
+        }
+
         private void toolStripButtonRefreshUnits_Click(object sender, EventArgs e)
         {
             ReloadUnits();
-            BindUnits();
         }
 
         private void copyToolStripButtonUnits_Click(object sender, EventArgs e)

@@ -40,6 +40,7 @@
             checkedListBoxUnits.Name = "checkedListBoxUnits";
             checkedListBoxUnits.Size = new Size(235, 472);
             checkedListBoxUnits.TabIndex = 0;
+            checkedListBoxUnits.ItemCheck += checkedListBoxUnits_ItemCheck;
             checkedListBoxUnits.SelectedIndexChanged += checkedListBoxUnits_SelectedIndexChanged;
             // 
             // richTextBoxUnitInfo

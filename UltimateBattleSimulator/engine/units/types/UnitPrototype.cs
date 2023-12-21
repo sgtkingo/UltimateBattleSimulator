@@ -88,6 +88,7 @@ namespace UltimateBattleSimulator.engine.units.types
 
         public virtual void Save()
         {
+            this.IsSelected = false;
             UnitFactory.SaveUnitAsJsonFile(this);
         }
 

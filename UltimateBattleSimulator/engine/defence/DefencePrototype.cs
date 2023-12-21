@@ -13,6 +13,9 @@ namespace UltimateBattleSimulator.engine.defence
         public string Description { get; set; } = "";
         public Size3D Size { get; set; } = new Size3D(0,0,0);
 
+
+        public int MainForce { get; set; }
+        public int SecondaryForce { get; set; }
         public int Force { get; set; } = 0;
 
         public List<IArmy> AssignedArmies { get; protected set; } = new List<IArmy>();
