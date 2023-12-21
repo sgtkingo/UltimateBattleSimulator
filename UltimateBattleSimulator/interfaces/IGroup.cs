@@ -10,15 +10,9 @@ namespace UltimateBattleSimulator.interfaces
     {
         public Guid ID { get; } 
 
-        IUnit Unit { get; set; }
+        IUnit? Unit { get; }
         public int Amount { get; set; }
 
-        public int Force 
-        {
-            get 
-            {
-                return Unit.Force * Amount;
-            } 
-        }
+        public int Force { get; }
     }
 }

@@ -21,7 +21,7 @@ namespace UltimateBattleSimulator.engine.units.types
         {
             get
             {
-                return 0;
+                return AttackNumber * DefenceNumber;
             }
         }
 
@@ -89,12 +89,12 @@ namespace UltimateBattleSimulator.engine.units.types
         public virtual void Save()
         {
             this.IsSelected = false;
-            UnitFactory.SaveUnitAsJsonFile(this);
+            UnitFactory.SaveAsJsonFile(this);
         }
 
         public void Delete() 
         {
-            UnitFactory.DeleteUnitAsJsonFile(this);
+            UnitFactory.DeleteAsJsonFile(this);
         }
 
         public override string ToString()

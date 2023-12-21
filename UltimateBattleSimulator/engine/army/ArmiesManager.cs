@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UltimateBattleSimulator.engine.system;
+using UltimateBattleSimulator.engine.units;
 using UltimateBattleSimulator.interfaces;
 
 namespace UltimateBattleSimulator.engine.army
 {
-    internal static class ArmiesManager
+    internal class ArmiesManager : AbstractManager<IArmy>
     {
-        public static List<IArmy> Ally { get; private set; } = new List<IArmy>();
-        public static List<IArmy> Enemy { get; private set; } = new List<IArmy>();
+        public static ArmiesManager Instance { get; private set; } = new ArmiesManager();
     }
 }

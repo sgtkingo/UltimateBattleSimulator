@@ -8,31 +8,13 @@ using UltimateBattleSimulator.interfaces;
 
 namespace UltimateBattleSimulator.engine.units
 {
-    internal static class UnitsManager
+    internal class UnitsManager : AbstractManager<IUnit>
     {
-        public static List<IUnit> TempUnits { get; private set; } = new List<IUnit>();
+        public static UnitsManager Instance { get; private set; } = new UnitsManager();
 
-        public static List<IUnit> LoadedUnits { get; private set; } = new List<IUnit>();
-
-        public static List<IUnit> GetUnits(bool onlySelected = false, bool includeFromFile = false)
+        public override void Reload()
         {
-            TempUnits.RemoveAll(unit => unit.IsLoadedFromFile);
-            if ( includeFromFile ) 
-            {
-                TempUnits.AddRange(LoadedUnits.FindAll(u => u.IsSelected == true));
-            }
-
-            if ( onlySelected ) 
-            {
-                return TempUnits.FindAll(u => u.IsSelected == true);
-            }
-            return TempUnits;
-        }
-
-        public static void Reload()
-        {
-            LoadedUnits.Clear();
-            TempUnits.Clear();
+            base.Reload();
 
             string directoryPath = DirectoryManager.Units;
 
@@ -49,52 +31,12 @@ namespace UltimateBattleSimulator.engine.units
             // Process each file path
             foreach (var filePath in filePaths)
             {
-                var unit = UnitFactory.LoadUnitFromJsonFile(filePath);
+                var unit = UnitFactory.LoadFromJsonFile(filePath);
                 if (unit != null)
                 {
-                    LoadedUnits.Add(unit);
+                    Loaded.Add(unit);
                 }
             }
-        }
-
-        public static IUnit? Find(string text)
-        {
-            return LoadedUnits.Find(unit => unit?.ToString()?.Contains(text) ?? false);
-        }
-
-        public static void Save(IUnit unit)
-        {
-            unit.Save();
-        }
-
-        public static void SaveAll()
-        {
-            foreach (var unit in TempUnits)
-            {
-                unit.Save();
-            }
-        }
-
-        public static void Delete(IUnit unit, bool permanent = false)
-        {
-            TempUnits.Remove(unit);
-            if (permanent)
-            {
-                unit.Delete();
-            }
-        }
-
-        public static void DeleteAll(bool permanent = false)
-        {
-            if (permanent)
-            {
-                foreach (var unit in TempUnits)
-                {
-                    unit.Delete();
-                }
-            }
-
-            TempUnits.Clear();
         }
     }
 }

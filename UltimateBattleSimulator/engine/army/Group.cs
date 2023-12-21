@@ -12,7 +12,32 @@ namespace UltimateBattleSimulator.engine.army
     {
         public Guid ID { get; protected set; } = Guid.NewGuid();
 
-        public IUnit Unit { get; set; } = new UnitPrototype();
+        public IUnit? Unit { get; private set; } = null;
         public int Amount { get; set; } = 0;
+
+        public int Force
+        {
+            get
+            {
+                return (Unit?.Force ?? 0) * Amount;
+            }
+        }
+
+        public Group() { }
+
+        public Group(IUnit unit) 
+        {
+            Unit = unit;
+        }
+
+        public void SetUnit(IUnit unit) 
+        {
+            this.Unit = unit;
+        }
+
+        public override string ToString()
+        {
+            return $"{Unit} | {Amount} | {Force}";
+        }
     }
 }

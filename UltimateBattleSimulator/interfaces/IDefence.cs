@@ -59,7 +59,7 @@ namespace UltimateBattleSimulator.interfaces
             if( army.Amount <= FreeSpace ) 
             {
                 AssignedArmies.Add(army);
-                army.Defence = this;
+                army.SetDefence(this);
 
                 return true;
             }
@@ -72,7 +72,7 @@ namespace UltimateBattleSimulator.interfaces
         public void Dessigne(IArmy army) 
         {
             AssignedArmies.Remove(army);
-            army.Defence = null;
+            army.SetDefence(null);
         }
     }
 }

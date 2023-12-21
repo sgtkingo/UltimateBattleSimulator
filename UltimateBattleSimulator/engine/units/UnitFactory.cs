@@ -13,7 +13,7 @@ namespace UltimateBattleSimulator.engine.units
 {
     internal static class UnitFactory
     {
-        public static IUnit? CreateUnit(UnitType type = UnitType.None)
+        public static IUnit? Create(UnitType type = UnitType.None)
         {
             return type switch
             {
@@ -25,7 +25,7 @@ namespace UltimateBattleSimulator.engine.units
             };
         }
 
-        public static void SaveUnitAsJsonFile(IUnit unit) 
+        public static void SaveAsJsonFile(IUnit unit) 
         {
             var jsonSerializerOptions = new JsonSerializerOptions()
             {
@@ -38,7 +38,7 @@ namespace UltimateBattleSimulator.engine.units
             File.WriteAllText(filePath, jsonString);
         }
 
-        public static IUnit? LoadUnitFromJsonFile(string jsonFile)
+        public static IUnit? LoadFromJsonFile(string jsonFile)
         {
             try
             {
@@ -64,7 +64,7 @@ namespace UltimateBattleSimulator.engine.units
             }
         }
 
-        public static void DeleteUnitAsJsonFile(IUnit unit) 
+        public static void DeleteAsJsonFile(IUnit unit) 
         {
             string filePath = $"{DirectoryManager.Units}/{unit.GUID}.json";
             File.Delete(filePath);

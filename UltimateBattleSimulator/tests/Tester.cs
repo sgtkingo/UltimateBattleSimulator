@@ -12,13 +12,13 @@ namespace UltimateBattleSimulator.tests
     {
         public static void UnitsTest(int count = 1) 
         {
-            var unit = UnitFactory.CreateUnit(interfaces.UnitType.Cavalerly);
+            var unit = UnitFactory.Create(interfaces.UnitType.Cavalerly);
             Console.WriteLine(unit);
             //unit.Save();
 
 
             string fn = $"{DirectoryManager.Units}/2e5aada7-d57b-470d-92d2-a348920c4a27.json";
-            var desUnit = UnitFactory.LoadUnitFromJsonFile(fn);
+            var desUnit = UnitFactory.LoadFromJsonFile(fn);
             Console.WriteLine(desUnit); 
         }
     }

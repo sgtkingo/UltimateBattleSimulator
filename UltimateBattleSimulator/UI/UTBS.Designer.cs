@@ -39,6 +39,7 @@
             groupBoxUnits = new GroupBox();
             toolStripUnits = new ToolStrip();
             newToolStripButtonUnits = new ToolStripButton();
+            toolStripButtonUnitsFromLoadedList = new ToolStripButton();
             toolStripButtonEditUnits = new ToolStripButton();
             toolStripSeparator1 = new ToolStripSeparator();
             toolStripButtonDeleteUnits = new ToolStripButton();
@@ -55,22 +56,49 @@
             toolStripSeparator4 = new ToolStripSeparator();
             helpToolStripButtonUnits = new ToolStripButton();
             toolStripSeparator6 = new ToolStripSeparator();
-            toolStripButtonSwapUnitsLayout = new ToolStripButton();
+            toolStripButtonUnitsHide = new ToolStripButton();
             dataGridViewUnits = new DataGridView();
             tabPageArmies = new TabPage();
+            groupBoxArmies = new GroupBox();
+            toolStripArmies = new ToolStrip();
+            toolStripButtonArmiesNew = new ToolStripButton();
+            toolStripButtonArmiesFromList = new ToolStripButton();
+            toolStripButtonArmiesEdit = new ToolStripButton();
+            toolStripSeparator7 = new ToolStripSeparator();
+            toolStripButtonArmiesDelete = new ToolStripButton();
+            toolStripButtonArmiesDeleteAll = new ToolStripButton();
+            toolStripSeparator8 = new ToolStripSeparator();
+            toolStripButtonArmiesSave = new ToolStripButton();
+            toolStripButtonArmiesSaveAll = new ToolStripButton();
+            toolStripSeparator9 = new ToolStripSeparator();
+            toolStripTextBoxArmieSearch = new ToolStripTextBox();
+            toolStripButtonArmiesRefresh = new ToolStripButton();
+            toolStripButtonArmiesLoadFromFile = new ToolStripButton();
+            toolStripSeparator10 = new ToolStripSeparator();
+            toolStripButtonArmiesCopy = new ToolStripButton();
+            toolStripSeparator11 = new ToolStripSeparator();
+            toolStripButtonArmiesHelp = new ToolStripButton();
+            toolStripSeparator12 = new ToolStripSeparator();
+            toolStripButtonArmiesHide = new ToolStripButton();
+            dataGridViewArmies = new DataGridView();
             tabPageDefence = new TabPage();
             tabPageEnvironment = new TabPage();
             buttonSimulate = new Button();
             bindingSourceUnits = new BindingSource(components);
             openFileDialog = new OpenFileDialog();
-            toolStripButtonUnitsFromLoadedList = new ToolStripButton();
+            bindingSourceArmies = new BindingSource(components);
             menuStripMain.SuspendLayout();
             tabControlMain.SuspendLayout();
             tabPageUnits.SuspendLayout();
             groupBoxUnits.SuspendLayout();
             toolStripUnits.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridViewUnits).BeginInit();
+            tabPageArmies.SuspendLayout();
+            groupBoxArmies.SuspendLayout();
+            toolStripArmies.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewArmies).BeginInit();
             ((System.ComponentModel.ISupportInitialize)bindingSourceUnits).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)bindingSourceArmies).BeginInit();
             SuspendLayout();
             // 
             // menuStripMain
@@ -137,7 +165,7 @@
             // 
             // toolStripUnits
             // 
-            toolStripUnits.Items.AddRange(new ToolStripItem[] { newToolStripButtonUnits, toolStripButtonUnitsFromLoadedList, toolStripButtonEditUnits, toolStripSeparator1, toolStripButtonDeleteUnits, toolStripButtonDeleteAllUnits, toolStripSeparator2, saveToolStripButtonUnits, toolStripButtonSaveAllUnits, toolStripSeparator3, toolStripTextBoxUnitFastSearch, toolStripButtonRefreshUnits, openToolStripButtonUnits, toolStripSeparator5, copyToolStripButtonUnits, toolStripSeparator4, helpToolStripButtonUnits, toolStripSeparator6, toolStripButtonSwapUnitsLayout });
+            toolStripUnits.Items.AddRange(new ToolStripItem[] { newToolStripButtonUnits, toolStripButtonEditUnits, toolStripButtonUnitsFromLoadedList, toolStripSeparator1, toolStripButtonDeleteUnits, toolStripButtonDeleteAllUnits, toolStripSeparator2, saveToolStripButtonUnits, toolStripButtonSaveAllUnits, toolStripSeparator3, toolStripTextBoxUnitFastSearch, toolStripButtonRefreshUnits, openToolStripButtonUnits, toolStripSeparator5, copyToolStripButtonUnits, toolStripSeparator4, helpToolStripButtonUnits, toolStripSeparator6, toolStripButtonUnitsHide });
             toolStripUnits.Location = new Point(3, 19);
             toolStripUnits.Name = "toolStripUnits";
             toolStripUnits.Size = new Size(756, 25);
@@ -153,6 +181,16 @@
             newToolStripButtonUnits.Size = new Size(23, 22);
             newToolStripButtonUnits.Text = "&New";
             newToolStripButtonUnits.Click += newToolStripButtonUnits_Click;
+            // 
+            // toolStripButtonUnitsFromLoadedList
+            // 
+            toolStripButtonUnitsFromLoadedList.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButtonUnitsFromLoadedList.Image = (Image)resources.GetObject("toolStripButtonUnitsFromLoadedList.Image");
+            toolStripButtonUnitsFromLoadedList.ImageTransparentColor = Color.Magenta;
+            toolStripButtonUnitsFromLoadedList.Name = "toolStripButtonUnitsFromLoadedList";
+            toolStripButtonUnitsFromLoadedList.Size = new Size(23, 22);
+            toolStripButtonUnitsFromLoadedList.Text = "From list";
+            toolStripButtonUnitsFromLoadedList.Click += toolStripButtonUnitsFromLoadedList_Click;
             // 
             // toolStripButtonEditUnits
             // 
@@ -284,32 +322,33 @@
             toolStripSeparator6.Name = "toolStripSeparator6";
             toolStripSeparator6.Size = new Size(6, 25);
             // 
-            // toolStripButtonSwapUnitsLayout
+            // toolStripButtonUnitsHide
             // 
-            toolStripButtonSwapUnitsLayout.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButtonSwapUnitsLayout.Image = (Image)resources.GetObject("toolStripButtonSwapUnitsLayout.Image");
-            toolStripButtonSwapUnitsLayout.ImageTransparentColor = Color.Magenta;
-            toolStripButtonSwapUnitsLayout.Name = "toolStripButtonSwapUnitsLayout";
-            toolStripButtonSwapUnitsLayout.Size = new Size(23, 22);
-            toolStripButtonSwapUnitsLayout.Text = "Hide";
-            toolStripButtonSwapUnitsLayout.Click += toolStripButtonSwapUnitsLayout_Click;
+            toolStripButtonUnitsHide.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButtonUnitsHide.Image = (Image)resources.GetObject("toolStripButtonUnitsHide.Image");
+            toolStripButtonUnitsHide.ImageTransparentColor = Color.Magenta;
+            toolStripButtonUnitsHide.Name = "toolStripButtonUnitsHide";
+            toolStripButtonUnitsHide.Size = new Size(23, 22);
+            toolStripButtonUnitsHide.Text = "Hide";
+            toolStripButtonUnitsHide.Click += toolStripButtonUnitsHide_Click;
             // 
             // dataGridViewUnits
             // 
             dataGridViewUnits.BackgroundColor = SystemColors.Control;
             dataGridViewUnits.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewUnits.Location = new Point(3, 70);
+            dataGridViewUnits.Location = new Point(3, 47);
             dataGridViewUnits.MultiSelect = false;
             dataGridViewUnits.Name = "dataGridViewUnits";
             dataGridViewUnits.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             dataGridViewUnits.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridViewUnits.Size = new Size(756, 356);
+            dataGridViewUnits.Size = new Size(756, 379);
             dataGridViewUnits.TabIndex = 0;
             dataGridViewUnits.CellContentDoubleClick += dataGridViewUnitsAllies_CellContentDoubleClick;
             dataGridViewUnits.UserDeletingRow += dataGridViewUnits_UserDeletingRow;
             // 
             // tabPageArmies
             // 
+            tabPageArmies.Controls.Add(groupBoxArmies);
             tabPageArmies.Location = new Point(4, 24);
             tabPageArmies.Name = "tabPageArmies";
             tabPageArmies.Padding = new Padding(3);
@@ -317,6 +356,200 @@
             tabPageArmies.TabIndex = 1;
             tabPageArmies.Text = "Armies";
             tabPageArmies.UseVisualStyleBackColor = true;
+            // 
+            // groupBoxArmies
+            // 
+            groupBoxArmies.Controls.Add(toolStripArmies);
+            groupBoxArmies.Controls.Add(dataGridViewArmies);
+            groupBoxArmies.Location = new Point(7, 6);
+            groupBoxArmies.Name = "groupBoxArmies";
+            groupBoxArmies.Size = new Size(762, 429);
+            groupBoxArmies.TabIndex = 2;
+            groupBoxArmies.TabStop = false;
+            groupBoxArmies.Text = "Create and select armies ";
+            // 
+            // toolStripArmies
+            // 
+            toolStripArmies.Items.AddRange(new ToolStripItem[] { toolStripButtonArmiesNew, toolStripButtonArmiesEdit, toolStripButtonArmiesFromList, toolStripSeparator7, toolStripButtonArmiesDelete, toolStripButtonArmiesDeleteAll, toolStripSeparator8, toolStripButtonArmiesSave, toolStripButtonArmiesSaveAll, toolStripSeparator9, toolStripTextBoxArmieSearch, toolStripButtonArmiesRefresh, toolStripButtonArmiesLoadFromFile, toolStripSeparator10, toolStripButtonArmiesCopy, toolStripSeparator11, toolStripButtonArmiesHelp, toolStripSeparator12, toolStripButtonArmiesHide });
+            toolStripArmies.Location = new Point(3, 19);
+            toolStripArmies.Name = "toolStripArmies";
+            toolStripArmies.Size = new Size(756, 25);
+            toolStripArmies.TabIndex = 5;
+            toolStripArmies.Text = "Armies ToolBox";
+            // 
+            // toolStripButtonArmiesNew
+            // 
+            toolStripButtonArmiesNew.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButtonArmiesNew.Image = (Image)resources.GetObject("toolStripButtonArmiesNew.Image");
+            toolStripButtonArmiesNew.ImageTransparentColor = Color.Magenta;
+            toolStripButtonArmiesNew.Name = "toolStripButtonArmiesNew";
+            toolStripButtonArmiesNew.Size = new Size(23, 22);
+            toolStripButtonArmiesNew.Text = "&New";
+            toolStripButtonArmiesNew.Click += toolStripButtonArmiesNew_Click;
+            // 
+            // toolStripButtonArmiesFromList
+            // 
+            toolStripButtonArmiesFromList.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButtonArmiesFromList.Image = (Image)resources.GetObject("toolStripButtonArmiesFromList.Image");
+            toolStripButtonArmiesFromList.ImageTransparentColor = Color.Magenta;
+            toolStripButtonArmiesFromList.Name = "toolStripButtonArmiesFromList";
+            toolStripButtonArmiesFromList.Size = new Size(23, 22);
+            toolStripButtonArmiesFromList.Text = "From list";
+            toolStripButtonArmiesFromList.Click += toolStripButtonArmiesFromList_Click;
+            // 
+            // toolStripButtonArmiesEdit
+            // 
+            toolStripButtonArmiesEdit.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButtonArmiesEdit.Image = (Image)resources.GetObject("toolStripButtonArmiesEdit.Image");
+            toolStripButtonArmiesEdit.ImageTransparentColor = Color.Magenta;
+            toolStripButtonArmiesEdit.Name = "toolStripButtonArmiesEdit";
+            toolStripButtonArmiesEdit.Size = new Size(23, 22);
+            toolStripButtonArmiesEdit.Text = "&Edit";
+            toolStripButtonArmiesEdit.ToolTipText = "Edit";
+            toolStripButtonArmiesEdit.Click += toolStripButtonArmiesEdit_Click;
+            // 
+            // toolStripSeparator7
+            // 
+            toolStripSeparator7.Name = "toolStripSeparator7";
+            toolStripSeparator7.Size = new Size(6, 25);
+            // 
+            // toolStripButtonArmiesDelete
+            // 
+            toolStripButtonArmiesDelete.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButtonArmiesDelete.Image = (Image)resources.GetObject("toolStripButtonArmiesDelete.Image");
+            toolStripButtonArmiesDelete.ImageTransparentColor = Color.Magenta;
+            toolStripButtonArmiesDelete.Name = "toolStripButtonArmiesDelete";
+            toolStripButtonArmiesDelete.Size = new Size(23, 22);
+            toolStripButtonArmiesDelete.Text = "&Delete";
+            toolStripButtonArmiesDelete.ToolTipText = "Delete";
+            toolStripButtonArmiesDelete.Click += toolStripButtonArmiesDelete_Click;
+            // 
+            // toolStripButtonArmiesDeleteAll
+            // 
+            toolStripButtonArmiesDeleteAll.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButtonArmiesDeleteAll.Image = (Image)resources.GetObject("toolStripButtonArmiesDeleteAll.Image");
+            toolStripButtonArmiesDeleteAll.ImageTransparentColor = Color.Magenta;
+            toolStripButtonArmiesDeleteAll.Name = "toolStripButtonArmiesDeleteAll";
+            toolStripButtonArmiesDeleteAll.Size = new Size(23, 22);
+            toolStripButtonArmiesDeleteAll.Text = "Delete All";
+            toolStripButtonArmiesDeleteAll.Click += toolStripButtonArmiesDeleteAll_Click;
+            // 
+            // toolStripSeparator8
+            // 
+            toolStripSeparator8.Name = "toolStripSeparator8";
+            toolStripSeparator8.Size = new Size(6, 25);
+            // 
+            // toolStripButtonArmiesSave
+            // 
+            toolStripButtonArmiesSave.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButtonArmiesSave.Image = (Image)resources.GetObject("toolStripButtonArmiesSave.Image");
+            toolStripButtonArmiesSave.ImageTransparentColor = Color.Magenta;
+            toolStripButtonArmiesSave.Name = "toolStripButtonArmiesSave";
+            toolStripButtonArmiesSave.Size = new Size(23, 22);
+            toolStripButtonArmiesSave.Text = "&Save";
+            toolStripButtonArmiesSave.Click += toolStripButtonArmiesSave_Click;
+            // 
+            // toolStripButtonArmiesSaveAll
+            // 
+            toolStripButtonArmiesSaveAll.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButtonArmiesSaveAll.Image = (Image)resources.GetObject("toolStripButtonArmiesSaveAll.Image");
+            toolStripButtonArmiesSaveAll.ImageTransparentColor = Color.Magenta;
+            toolStripButtonArmiesSaveAll.Name = "toolStripButtonArmiesSaveAll";
+            toolStripButtonArmiesSaveAll.Size = new Size(23, 22);
+            toolStripButtonArmiesSaveAll.Text = "&Save All";
+            toolStripButtonArmiesSaveAll.Click += toolStripButtonArmiesSaveAll_Click;
+            // 
+            // toolStripSeparator9
+            // 
+            toolStripSeparator9.Name = "toolStripSeparator9";
+            toolStripSeparator9.Size = new Size(6, 25);
+            // 
+            // toolStripTextBoxArmieSearch
+            // 
+            toolStripTextBoxArmieSearch.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+            toolStripTextBoxArmieSearch.AutoCompleteSource = AutoCompleteSource.CustomSource;
+            toolStripTextBoxArmieSearch.Name = "toolStripTextBoxArmieSearch";
+            toolStripTextBoxArmieSearch.Size = new Size(100, 25);
+            toolStripTextBoxArmieSearch.Click += toolStripTextBoxArmieSearch_Click;
+            // 
+            // toolStripButtonArmiesRefresh
+            // 
+            toolStripButtonArmiesRefresh.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButtonArmiesRefresh.Image = (Image)resources.GetObject("toolStripButtonArmiesRefresh.Image");
+            toolStripButtonArmiesRefresh.ImageTransparentColor = Color.Magenta;
+            toolStripButtonArmiesRefresh.Name = "toolStripButtonArmiesRefresh";
+            toolStripButtonArmiesRefresh.Size = new Size(23, 22);
+            toolStripButtonArmiesRefresh.Text = "Refresh";
+            toolStripButtonArmiesRefresh.Click += toolStripButtonArmiesRefresh_Click;
+            // 
+            // toolStripButtonArmiesLoadFromFile
+            // 
+            toolStripButtonArmiesLoadFromFile.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButtonArmiesLoadFromFile.Image = (Image)resources.GetObject("toolStripButtonArmiesLoadFromFile.Image");
+            toolStripButtonArmiesLoadFromFile.ImageTransparentColor = Color.Magenta;
+            toolStripButtonArmiesLoadFromFile.Name = "toolStripButtonArmiesLoadFromFile";
+            toolStripButtonArmiesLoadFromFile.Size = new Size(23, 22);
+            toolStripButtonArmiesLoadFromFile.Text = "&Open";
+            toolStripButtonArmiesLoadFromFile.Click += toolStripButtonArmiesLoadFromFile_Click;
+            // 
+            // toolStripSeparator10
+            // 
+            toolStripSeparator10.Name = "toolStripSeparator10";
+            toolStripSeparator10.Size = new Size(6, 25);
+            // 
+            // toolStripButtonArmiesCopy
+            // 
+            toolStripButtonArmiesCopy.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButtonArmiesCopy.Image = (Image)resources.GetObject("toolStripButtonArmiesCopy.Image");
+            toolStripButtonArmiesCopy.ImageTransparentColor = Color.Magenta;
+            toolStripButtonArmiesCopy.Name = "toolStripButtonArmiesCopy";
+            toolStripButtonArmiesCopy.Size = new Size(23, 22);
+            toolStripButtonArmiesCopy.Text = "&Copy";
+            toolStripButtonArmiesCopy.Click += toolStripButtonArmiesCopy_Click;
+            // 
+            // toolStripSeparator11
+            // 
+            toolStripSeparator11.Name = "toolStripSeparator11";
+            toolStripSeparator11.Size = new Size(6, 25);
+            // 
+            // toolStripButtonArmiesHelp
+            // 
+            toolStripButtonArmiesHelp.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButtonArmiesHelp.Image = (Image)resources.GetObject("toolStripButtonArmiesHelp.Image");
+            toolStripButtonArmiesHelp.ImageTransparentColor = Color.Magenta;
+            toolStripButtonArmiesHelp.Name = "toolStripButtonArmiesHelp";
+            toolStripButtonArmiesHelp.Size = new Size(23, 22);
+            toolStripButtonArmiesHelp.Text = "He&lp";
+            toolStripButtonArmiesHelp.Click += toolStripButtonArmiesHelp_Click;
+            // 
+            // toolStripSeparator12
+            // 
+            toolStripSeparator12.Name = "toolStripSeparator12";
+            toolStripSeparator12.Size = new Size(6, 25);
+            // 
+            // toolStripButtonArmiesHide
+            // 
+            toolStripButtonArmiesHide.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButtonArmiesHide.Image = (Image)resources.GetObject("toolStripButtonArmiesHide.Image");
+            toolStripButtonArmiesHide.ImageTransparentColor = Color.Magenta;
+            toolStripButtonArmiesHide.Name = "toolStripButtonArmiesHide";
+            toolStripButtonArmiesHide.Size = new Size(23, 22);
+            toolStripButtonArmiesHide.Text = "Hide";
+            toolStripButtonArmiesHide.Click += toolStripButtonArmiesHide_Click;
+            // 
+            // dataGridViewArmies
+            // 
+            dataGridViewArmies.BackgroundColor = SystemColors.Control;
+            dataGridViewArmies.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewArmies.Location = new Point(3, 47);
+            dataGridViewArmies.MultiSelect = false;
+            dataGridViewArmies.Name = "dataGridViewArmies";
+            dataGridViewArmies.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
+            dataGridViewArmies.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridViewArmies.Size = new Size(756, 376);
+            dataGridViewArmies.TabIndex = 0;
+            dataGridViewArmies.CellContentDoubleClick += dataGridViewArmies_CellContentDoubleClick;
+            dataGridViewArmies.UserDeletingRow += dataGridViewArmies_UserDeletingRow;
             // 
             // tabPageDefence
             // 
@@ -354,16 +587,6 @@
             openFileDialog.RestoreDirectory = true;
             openFileDialog.Title = "Select file to open";
             // 
-            // toolStripButtonUnitsFromLoadedList
-            // 
-            toolStripButtonUnitsFromLoadedList.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButtonUnitsFromLoadedList.Image = (Image)resources.GetObject("toolStripButtonUnitsFromLoadedList.Image");
-            toolStripButtonUnitsFromLoadedList.ImageTransparentColor = Color.Magenta;
-            toolStripButtonUnitsFromLoadedList.Name = "toolStripButtonUnitsFromLoadedList";
-            toolStripButtonUnitsFromLoadedList.Size = new Size(23, 22);
-            toolStripButtonUnitsFromLoadedList.Text = "From list";
-            toolStripButtonUnitsFromLoadedList.Click += toolStripButtonUnitsFromLoadedList_Click;
-            // 
             // UTBS
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -388,7 +611,14 @@
             toolStripUnits.ResumeLayout(false);
             toolStripUnits.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridViewUnits).EndInit();
+            tabPageArmies.ResumeLayout(false);
+            groupBoxArmies.ResumeLayout(false);
+            groupBoxArmies.PerformLayout();
+            toolStripArmies.ResumeLayout(false);
+            toolStripArmies.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewArmies).EndInit();
             ((System.ComponentModel.ISupportInitialize)bindingSourceUnits).EndInit();
+            ((System.ComponentModel.ISupportInitialize)bindingSourceArmies).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -425,8 +655,31 @@
         private ToolStripButton toolStripButtonDeleteAllUnits;
         private ToolStripButton toolStripButtonRefreshUnits;
         private ToolStripSeparator toolStripSeparator6;
-        private ToolStripButton toolStripButtonSwapUnitsLayout;
+        private ToolStripButton toolStripButtonUnitsHide;
         private OpenFileDialog openFileDialog;
         private ToolStripButton toolStripButtonUnitsFromLoadedList;
+        private GroupBox groupBoxArmies;
+        private ToolStrip toolStripArmies;
+        private ToolStripButton toolStripButtonArmiesNew;
+        private ToolStripButton toolStripButtonArmiesFromList;
+        private ToolStripButton toolStripButtonArmiesEdit;
+        private ToolStripSeparator toolStripSeparator7;
+        private ToolStripButton toolStripButtonArmiesDelete;
+        private ToolStripButton toolStripButtonArmiesDeleteAll;
+        private ToolStripSeparator toolStripSeparator8;
+        private ToolStripButton toolStripButtonArmiesSave;
+        private ToolStripButton toolStripButtonArmiesSaveAll;
+        private ToolStripSeparator toolStripSeparator9;
+        private ToolStripTextBox toolStripTextBoxArmieSearch;
+        private ToolStripButton toolStripButtonArmiesRefresh;
+        private ToolStripButton toolStripButtonArmiesLoadFromFile;
+        private ToolStripSeparator toolStripSeparator10;
+        private ToolStripButton toolStripButtonArmiesCopy;
+        private ToolStripSeparator toolStripSeparator11;
+        private ToolStripButton toolStripButtonArmiesHelp;
+        private ToolStripSeparator toolStripSeparator12;
+        private ToolStripButton toolStripButtonArmiesHide;
+        private DataGridView dataGridViewArmies;
+        private BindingSource bindingSourceArmies;
     }
 }

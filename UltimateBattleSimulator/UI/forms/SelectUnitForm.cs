@@ -28,7 +28,7 @@ namespace UltimateBattleSimulator.UI.forms
         {
             checkedListBoxUnits.Items.Clear();
             int index = 0;
-            foreach (var item in UnitsManager.LoadedUnits)
+            foreach (var item in UnitsManager.Instance.Loaded)
             {
                 checkedListBoxUnits.Items.Add(item);
                 index = checkedListBoxUnits.Items.IndexOf(item);
