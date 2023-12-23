@@ -547,42 +547,60 @@ namespace UltimateBattleSimulator.UI
         private void trackBarTerain_Scroll(object sender, EventArgs e)
         {
             EnvironmentManager.Land.Terain = trackBarTerain.Value;
+            labelLandPenalty.Text = $"{EnvironmentManager.Land.GetPenalty():F2}";
         }
 
         private void trackBarRiversAndLakes_Scroll(object sender, EventArgs e)
         {
             EnvironmentManager.Land.RiversAndLakes = trackBarRiversAndLakes.Value;
+            labelLandPenalty.Text = $"{EnvironmentManager.Land.GetPenalty():F2}";
         }
 
         private void trackBarSwamps_Scroll(object sender, EventArgs e)
         {
             EnvironmentManager.Land.Swamps = trackBarSwamps.Value;
+            labelLandPenalty.Text = $"{EnvironmentManager.Land.GetPenalty():F2}";
         }
+        //------------------------------------------------------------------------
 
         private void trackBarRain_Scroll(object sender, EventArgs e)
         {
             EnvironmentManager.Weather.Rain = trackBarRain.Value;
+            labelWeatherPenalty.Text = $"{EnvironmentManager.Weather.GetPenalty():F2}";
         }
 
         private void trackBarWind_Scroll(object sender, EventArgs e)
         {
             EnvironmentManager.Weather.Wind = trackBarWind.Value;
+            labelWeatherPenalty.Text = $"{EnvironmentManager.Weather.GetPenalty():F2}";
         }
 
         private void trackBarFog_Scroll(object sender, EventArgs e)
         {
             EnvironmentManager.Weather.Fog = trackBarFog.Value;
+            labelWeatherPenalty.Text = $"{EnvironmentManager.Weather.GetPenalty():F2}";
         }
 
         private void trackBarSnow_Scroll(object sender, EventArgs e)
         {
             EnvironmentManager.Weather.Snow = trackBarSnow.Value;
+            labelWeatherPenalty.Text = $"{EnvironmentManager.Weather.GetPenalty():F2}";
+        }
+        private void buttonHelpLandConfig_Click(object sender, EventArgs e)
+        {
+            ShowHelp(HelpManager.LandConfigHelp);
+        }
+
+        private void buttonHelpWeatherConfig_Click(object sender, EventArgs e)
+        {
+            ShowHelp(HelpManager.WeatherConfigHelp);
         }
         #endregion
 
-        private void buttonHelpEnvironment_Click(object sender, EventArgs e)
+        private void buttonSimulate_Click(object sender, EventArgs e)
         {
-            ShowHelp(HelpManager.EnvironmentHelp);
+            var form = new SimulatorForm();
+            form.ShowDialog(this);
         }
     }
 }

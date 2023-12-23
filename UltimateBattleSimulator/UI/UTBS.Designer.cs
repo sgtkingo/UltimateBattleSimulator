@@ -105,7 +105,9 @@
             toolStripButtonDefenceHide = new ToolStripButton();
             dataGridViewDefence = new DataGridView();
             tabPageEnvironment = new TabPage();
-            groupBox1 = new GroupBox();
+            groupBoxWeather = new GroupBox();
+            labelWeatherPenalty = new Label();
+            buttonHelpWeatherConfig = new Button();
             labelSnow = new Label();
             trackBarSnow = new TrackBar();
             labelFog = new Label();
@@ -115,6 +117,8 @@
             trackBarWind = new TrackBar();
             trackBarRain = new TrackBar();
             groupBoxLand = new GroupBox();
+            labelLandPenalty = new Label();
+            buttonHelpLandConfig = new Button();
             labelSwamps = new Label();
             labelRiversAndLakes = new Label();
             labelTerain = new Label();
@@ -126,7 +130,6 @@
             openFileDialog = new OpenFileDialog();
             bindingSourceArmies = new BindingSource(components);
             bindingSourceDefence = new BindingSource(components);
-            buttonHelpEnvironment = new Button();
             menuStripMain.SuspendLayout();
             tabControlMain.SuspendLayout();
             tabPageUnits.SuspendLayout();
@@ -142,7 +145,7 @@
             toolStripDefence.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridViewDefence).BeginInit();
             tabPageEnvironment.SuspendLayout();
-            groupBox1.SuspendLayout();
+            groupBoxWeather.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)trackBarSnow).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trackBarFog).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trackBarWind).BeginInit();
@@ -816,7 +819,7 @@
             // 
             // tabPageEnvironment
             // 
-            tabPageEnvironment.Controls.Add(groupBox1);
+            tabPageEnvironment.Controls.Add(groupBoxWeather);
             tabPageEnvironment.Controls.Add(groupBoxLand);
             tabPageEnvironment.Location = new Point(4, 24);
             tabPageEnvironment.Name = "tabPageEnvironment";
@@ -825,22 +828,43 @@
             tabPageEnvironment.Text = "Environment";
             tabPageEnvironment.UseVisualStyleBackColor = true;
             // 
-            // groupBox1
+            // groupBoxWeather
             // 
-            groupBox1.Controls.Add(labelSnow);
-            groupBox1.Controls.Add(trackBarSnow);
-            groupBox1.Controls.Add(labelFog);
-            groupBox1.Controls.Add(labelWind);
-            groupBox1.Controls.Add(labelRain);
-            groupBox1.Controls.Add(trackBarFog);
-            groupBox1.Controls.Add(trackBarWind);
-            groupBox1.Controls.Add(trackBarRain);
-            groupBox1.Location = new Point(8, 237);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(760, 293);
-            groupBox1.TabIndex = 1;
-            groupBox1.TabStop = false;
-            groupBox1.Text = "Land Config";
+            groupBoxWeather.Controls.Add(labelWeatherPenalty);
+            groupBoxWeather.Controls.Add(buttonHelpWeatherConfig);
+            groupBoxWeather.Controls.Add(labelSnow);
+            groupBoxWeather.Controls.Add(trackBarSnow);
+            groupBoxWeather.Controls.Add(labelFog);
+            groupBoxWeather.Controls.Add(labelWind);
+            groupBoxWeather.Controls.Add(labelRain);
+            groupBoxWeather.Controls.Add(trackBarFog);
+            groupBoxWeather.Controls.Add(trackBarWind);
+            groupBoxWeather.Controls.Add(trackBarRain);
+            groupBoxWeather.Location = new Point(8, 237);
+            groupBoxWeather.Name = "groupBoxWeather";
+            groupBoxWeather.Size = new Size(760, 293);
+            groupBoxWeather.TabIndex = 1;
+            groupBoxWeather.TabStop = false;
+            groupBoxWeather.Text = "Weather Config";
+            // 
+            // labelWeatherPenalty
+            // 
+            labelWeatherPenalty.AutoSize = true;
+            labelWeatherPenalty.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 238);
+            labelWeatherPenalty.Location = new Point(710, 260);
+            labelWeatherPenalty.Name = "labelWeatherPenalty";
+            labelWeatherPenalty.Size = new Size(44, 21);
+            labelWeatherPenalty.TabIndex = 8;
+            labelWeatherPenalty.Text = "X.XX";
+            // 
+            // buttonHelpWeatherConfig
+            // 
+            buttonHelpWeatherConfig.Location = new Point(722, 19);
+            buttonHelpWeatherConfig.Name = "buttonHelpWeatherConfig";
+            buttonHelpWeatherConfig.Size = new Size(32, 32);
+            buttonHelpWeatherConfig.TabIndex = 8;
+            buttonHelpWeatherConfig.UseVisualStyleBackColor = true;
+            buttonHelpWeatherConfig.Click += buttonHelpWeatherConfig_Click;
             // 
             // labelSnow
             // 
@@ -912,7 +936,8 @@
             // 
             // groupBoxLand
             // 
-            groupBoxLand.Controls.Add(buttonHelpEnvironment);
+            groupBoxLand.Controls.Add(labelLandPenalty);
+            groupBoxLand.Controls.Add(buttonHelpLandConfig);
             groupBoxLand.Controls.Add(labelSwamps);
             groupBoxLand.Controls.Add(labelRiversAndLakes);
             groupBoxLand.Controls.Add(labelTerain);
@@ -925,6 +950,25 @@
             groupBoxLand.TabIndex = 0;
             groupBoxLand.TabStop = false;
             groupBoxLand.Text = "Land Config";
+            // 
+            // labelLandPenalty
+            // 
+            labelLandPenalty.AutoSize = true;
+            labelLandPenalty.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 238);
+            labelLandPenalty.Location = new Point(710, 194);
+            labelLandPenalty.Name = "labelLandPenalty";
+            labelLandPenalty.Size = new Size(44, 21);
+            labelLandPenalty.TabIndex = 7;
+            labelLandPenalty.Text = "X.XX";
+            // 
+            // buttonHelpLandConfig
+            // 
+            buttonHelpLandConfig.Location = new Point(722, 19);
+            buttonHelpLandConfig.Name = "buttonHelpLandConfig";
+            buttonHelpLandConfig.Size = new Size(32, 32);
+            buttonHelpLandConfig.TabIndex = 6;
+            buttonHelpLandConfig.UseVisualStyleBackColor = true;
+            buttonHelpLandConfig.Click += buttonHelpLandConfig_Click;
             // 
             // labelSwamps
             // 
@@ -987,21 +1031,13 @@
             buttonSimulate.TabIndex = 3;
             buttonSimulate.Text = "SIMULATE";
             buttonSimulate.UseVisualStyleBackColor = false;
+            buttonSimulate.Click += buttonSimulate_Click;
             // 
             // openFileDialog
             // 
             openFileDialog.Filter = "JSON files|*.json|Text files |*.txt |All files |*.*";
             openFileDialog.RestoreDirectory = true;
             openFileDialog.Title = "Select file to open";
-            // 
-            // buttonHelpEnvironment
-            // 
-            buttonHelpEnvironment.Location = new Point(722, 19);
-            buttonHelpEnvironment.Name = "buttonHelpEnvironment";
-            buttonHelpEnvironment.Size = new Size(32, 32);
-            buttonHelpEnvironment.TabIndex = 6;
-            buttonHelpEnvironment.UseVisualStyleBackColor = true;
-            buttonHelpEnvironment.Click += buttonHelpEnvironment_Click;
             // 
             // UTBS
             // 
@@ -1040,8 +1076,8 @@
             toolStripDefence.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridViewDefence).EndInit();
             tabPageEnvironment.ResumeLayout(false);
-            groupBox1.ResumeLayout(false);
-            groupBox1.PerformLayout();
+            groupBoxWeather.ResumeLayout(false);
+            groupBoxWeather.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)trackBarSnow).EndInit();
             ((System.ComponentModel.ISupportInitialize)trackBarFog).EndInit();
             ((System.ComponentModel.ISupportInitialize)trackBarWind).EndInit();
@@ -1146,7 +1182,7 @@
         private TrackBar trackBarSwamps;
         private TrackBar trackBarRiversAndLakes;
         private TrackBar trackBarTerain;
-        private GroupBox groupBox1;
+        private GroupBox groupBoxWeather;
         private Label labelFog;
         private Label labelWind;
         private Label labelRain;
@@ -1155,6 +1191,9 @@
         private TrackBar trackBarRain;
         private Label labelSnow;
         private TrackBar trackBarSnow;
-        private Button buttonHelpEnvironment;
+        private Button buttonHelpLandConfig;
+        private Button buttonHelpWeatherConfig;
+        private Label labelWeatherPenalty;
+        private Label labelLandPenalty;
     }
 }

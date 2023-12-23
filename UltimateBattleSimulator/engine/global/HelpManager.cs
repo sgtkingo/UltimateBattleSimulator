@@ -12,6 +12,9 @@ namespace UltimateBattleSimulator.engine.global
         public static readonly string ArmiesHelp = "";
         public static readonly string GroupHelp = "";
         public static readonly string DefenceHelp = "";
+
         public static readonly string EnvironmentHelp = "";
+        public static readonly string LandConfigHelp = "";
+        public static readonly string WeatherConfigHelp = "";
     }
 }
