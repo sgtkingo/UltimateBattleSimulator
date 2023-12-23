@@ -11,9 +11,39 @@ namespace UltimateBattleSimulator.engine.army
     internal class Group : IGroup
     {
         public Guid ID { get; protected set; } = Guid.NewGuid();
+        public string Name { get; set; } = "unknown";
 
-        public IUnit? Unit { get; private set; } = null;
-        public int Amount { get; set; } = 0;
+        private IUnit? _unit = null;
+        public IUnit? Unit 
+        {
+            get 
+            {
+                return _unit;
+            } 
+            private set 
+            {
+                _unit = value;
+                Name = _unit?.Name ?? Name;  
+            }
+        }
+
+        public IDefence? Defence { get; set; } = null;
+
+        private int _amount = 0;
+        public int Amount 
+        {
+            get 
+            {
+                return _amount;
+            }
+            set 
+            {
+                if ( Defence?.HaveEnoughtSpace(value) ?? true )
+                {
+                    _amount = value;
+                }
+            }
+        }
 
         public int Force
         {

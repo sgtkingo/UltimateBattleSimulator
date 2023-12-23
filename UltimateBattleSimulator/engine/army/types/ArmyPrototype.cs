@@ -12,12 +12,27 @@ namespace UltimateBattleSimulator.engine.army.types
     internal class ArmyPrototype : IArmy
     {
         public Guid GUID { get; set; } = Guid.NewGuid();
-        public string Name { get; set; } = "";
+        public string Name { get; set; } = "unknown";
         public string Description { get; set; } = "";
         public List<Group> Groups { get; set; } = new List<Group>();
         public ArmySide ArmySide { get; set; } = ArmySide.None;
 
-        public IDefence? Defence { get; private set; }
+        private IDefence? _defence = null;
+        public IDefence? Defence 
+        {
+            get 
+            {
+                return _defence;
+            } 
+            private set 
+            {
+                _defence = value;
+                foreach (var group in Groups)
+                {
+                    group.Defence = _defence;
+                }
+            } 
+        }
 
         public bool IsSelected { get; set; } = true;
         public bool IsLoadedFromFile { get; set; } = false;
@@ -38,6 +53,7 @@ namespace UltimateBattleSimulator.engine.army.types
                 return _force;
             }
         }
+
         public int Amount
         {
             get
@@ -93,9 +109,23 @@ namespace UltimateBattleSimulator.engine.army.types
             //TODO: add delete code here
         }
 
-        public void SetDefence(IDefence? defence) 
+        public bool SetDefence(IDefence? defence) 
         {
-            this.Defence = defence;
+            if( defence == null )  
+            {
+                this.Defence?.Dessigne(this);
+                this.Defence = defence;
+                return true;
+            }
+
+            if ( defence?.Assigne(this) ?? false ) 
+            {
+                this.Defence?.Dessigne(this);
+                this.Defence = defence;
+
+                return true;
+            }
+            else return false;
         }
 
         public override string ToString()

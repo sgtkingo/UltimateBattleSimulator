@@ -6,73 +6,36 @@ using System.Threading.Tasks;
 
 namespace UltimateBattleSimulator.interfaces
 {
-    internal interface IDefence
+    internal interface IDefence : Ideable
     {
+        public const int MaxMainDefenceForce = 50;
+        public const int MaxSecondaryDefenceForce = 20;
+
+        public const int MaxDefenceForceForBonus = 10;
+
         public string Name { get; set; }
         public string Description { get; set; }
-        public Size3D Size { get; set; }
+        public Size3D Size { get; }
 
         public int MainForce { get; set; }
         public int SecondaryForce { get; set; }
 
-        public int Force 
-        {
-            get 
-            {  
-                return MainForce + SecondaryForce; 
-            }
-        }
+        public int Force { get; }
 
-        public double Bonus 
-        {
-            get 
-            {
-                return Force/20.0; 
-            }
-        }
+        public double Bonus { get; }
+        public double RealBonus { get; }
 
-        public int MaxCapacity 
-        {
-            get 
-            {
-                return (int)(Size.Width * Size.Height * Size.Depth);
-            } 
-        }
+        public int MaxCapacity { get; }
 
-        public int FreeSpace
-        {
-            get
-            {
-                int _soilders = 0;
-                foreach (var army in AssignedArmies)
-                {
-                    _soilders += army.Amount;
-                }
-                return MaxCapacity - _soilders;
-            }
-        }
+        public int FreeSpace { get; }
 
         public List<IArmy> AssignedArmies { get; }
 
-        public bool Assigne(IArmy army)
-        {
-            if( army.Amount <= FreeSpace ) 
-            {
-                AssignedArmies.Add(army);
-                army.SetDefence(this);
+        public bool HaveEnoughtSpace(IArmy army);
+        public bool HaveEnoughtSpace(int amount);
 
-                return true;
-            }
-            else 
-            {
-                return false;
-            }
-        }
+        public bool Assigne(IArmy army);
 
-        public void Dessigne(IArmy army) 
-        {
-            AssignedArmies.Remove(army);
-            army.SetDefence(null);
-        }
+        public void Dessigne(IArmy army);
     }
 }

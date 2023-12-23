@@ -25,7 +25,7 @@ namespace UltimateBattleSimulator.UI.forms
         {
             if (obj == null)
             {
-                return;
+                throw new ArgumentNullException();
             }
 
             Group = (obj as Group) ?? new Group();

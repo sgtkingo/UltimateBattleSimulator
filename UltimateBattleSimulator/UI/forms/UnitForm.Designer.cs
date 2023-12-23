@@ -28,18 +28,46 @@
         /// </summary>
         private void InitializeComponent()
         {
+            propertyGrid = new PropertyGrid();
+            buttonSave = new Button();
             SuspendLayout();
+            // 
+            // propertyGrid
+            // 
+            propertyGrid.Location = new Point(12, 12);
+            propertyGrid.Name = "propertyGrid";
+            propertyGrid.Size = new Size(443, 507);
+            propertyGrid.TabIndex = 0;
+            // 
+            // buttonSave
+            // 
+            buttonSave.Location = new Point(273, 538);
+            buttonSave.Name = "buttonSave";
+            buttonSave.Size = new Size(182, 36);
+            buttonSave.TabIndex = 1;
+            buttonSave.Text = "Save changes";
+            buttonSave.UseVisualStyleBackColor = true;
+            buttonSave.Click += buttonSave_Click;
             // 
             // UnitForm
             // 
+            AcceptButton = buttonSave;
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(467, 453);
+            ClientSize = new Size(467, 586);
+            Controls.Add(buttonSave);
+            Controls.Add(propertyGrid);
+            FormBorderStyle = FormBorderStyle.FixedToolWindow;
             Name = "UnitForm";
-            Text = "UnitForm";
+            StartPosition = FormStartPosition.CenterParent;
+            Text = "Unit";
+            Load += UnitForm_Load;
             ResumeLayout(false);
         }
 
         #endregion
+
+        private PropertyGrid propertyGrid;
+        private Button buttonSave;
     }
 }

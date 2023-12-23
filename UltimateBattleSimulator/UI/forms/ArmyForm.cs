@@ -26,7 +26,7 @@ namespace UltimateBattleSimulator.UI.forms
         {
             if (obj == null)
             {
-                return;
+                throw new ArgumentNullException();
             }
 
             Army = (obj as IArmy) ?? new ArmyPrototype();
@@ -42,9 +42,12 @@ namespace UltimateBattleSimulator.UI.forms
             propertyGrid.SelectedObject = Army;
 
             bindingSourceGroups.DataSource = Army.Groups;
-            dataGridViewGroups.DataSource = bindingSourceGroups;    
+            dataGridViewGroups.DataSource = bindingSourceGroups;
+
+            ShowDefeceInfo(Army.Defence);
         }
 
+        #region Groups
         private DialogResult OpenObject(object? obj, IObjectHandleForm form)
         {
             if (obj == null)
@@ -128,6 +131,62 @@ namespace UltimateBattleSimulator.UI.forms
             var obj = e.Row?.DataBoundItem;
             e.Cancel = !DeleteObjectApprove(obj);
         }
+        #endregion
+
+        #region Defence
+        private string TrySetDefence()
+        {
+            string error = string.Empty;
+
+            var form = new SetDefenceForm();
+
+            if (form.ShowDialog(this) == DialogResult.OK)
+            {
+                if ( !Army.SetDefence(form.Defence) )
+                {
+                    error = "Can assigne unit to defence position, out of free space!";
+                }
+            }
+            else 
+            {
+                error = "None position selected..."; 
+            }
+
+            return error;
+        }
+
+        private void ShowDefeceInfo(IDefence? defence)
+        {
+            string message = defence?.GetInfo() ?? "No defence position selected...";
+            richTextBoxDefence.Text = message;
+        }
+
+        private void buttonSetDefence_Click(object sender, EventArgs e)
+        {
+            string error = TrySetDefence();
+            if ( !string.IsNullOrEmpty( error ) ) 
+            {
+                MessageBox.Show(error, "Defence info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
+            ShowDefeceInfo(Army.Defence);
+        }
+
+
+        private void buttonDessigne_Click(object sender, EventArgs e)
+        {
+            if( Army.Defence == null) 
+            {
+                return;
+            }
+
+            if( MessageBox.Show("Do you wanna dessigne army from current position?", "Dessigne", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question) == DialogResult.Yes) 
+            {
+                Army.SetDefence(null);
+                ShowDefeceInfo(Army.Defence);
+            }
+        }
+        #endregion
 
         private void buttonSave_Click(object sender, EventArgs e)
         {

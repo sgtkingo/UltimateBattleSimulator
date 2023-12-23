@@ -28,6 +28,6 @@ namespace UltimateBattleSimulator.interfaces
 
         public int Amount { get; }
 
-        public void SetDefence(IDefence? defence);
+        public bool SetDefence(IDefence? defence);
     }
 }

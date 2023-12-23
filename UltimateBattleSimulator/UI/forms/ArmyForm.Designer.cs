@@ -35,20 +35,25 @@
             groupBoxGroups = new GroupBox();
             toolStripGroups = new ToolStrip();
             toolStripButtonGroupsNew = new ToolStripButton();
-            toolStripButtonGroupsDelete = new ToolStripButton();
             toolStripButtonGroupsEdit = new ToolStripButton();
+            toolStripSeparator1 = new ToolStripSeparator();
+            toolStripButtonGroupsDelete = new ToolStripButton();
             dataGridViewGroups = new DataGridView();
             bindingSourceGroups = new BindingSource(components);
-            toolStripSeparator1 = new ToolStripSeparator();
+            groupBoxDefence = new GroupBox();
+            buttonDessigne = new Button();
+            buttonSetDefence = new Button();
+            richTextBoxDefence = new RichTextBox();
             groupBoxGroups.SuspendLayout();
             toolStripGroups.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridViewGroups).BeginInit();
             ((System.ComponentModel.ISupportInitialize)bindingSourceGroups).BeginInit();
+            groupBoxDefence.SuspendLayout();
             SuspendLayout();
             // 
             // buttonSave
             // 
-            buttonSave.Location = new Point(161, 564);
+            buttonSave.Location = new Point(481, 564);
             buttonSave.Name = "buttonSave";
             buttonSave.Size = new Size(240, 41);
             buttonSave.TabIndex = 0;
@@ -69,7 +74,7 @@
             groupBoxGroups.Controls.Add(dataGridViewGroups);
             groupBoxGroups.Location = new Point(12, 12);
             groupBoxGroups.Name = "groupBoxGroups";
-            groupBoxGroups.Size = new Size(389, 220);
+            groupBoxGroups.Size = new Size(709, 220);
             groupBoxGroups.TabIndex = 2;
             groupBoxGroups.TabStop = false;
             groupBoxGroups.Text = "Groups";
@@ -79,7 +84,7 @@
             toolStripGroups.Items.AddRange(new ToolStripItem[] { toolStripButtonGroupsNew, toolStripButtonGroupsEdit, toolStripSeparator1, toolStripButtonGroupsDelete });
             toolStripGroups.Location = new Point(3, 19);
             toolStripGroups.Name = "toolStripGroups";
-            toolStripGroups.Size = new Size(383, 25);
+            toolStripGroups.Size = new Size(703, 25);
             toolStripGroups.TabIndex = 1;
             toolStripGroups.Text = "Groups";
             // 
@@ -93,16 +98,6 @@
             toolStripButtonGroupsNew.Text = "New";
             toolStripButtonGroupsNew.Click += toolStripButtonGroupsNew_Click;
             // 
-            // toolStripButtonGroupsDelete
-            // 
-            toolStripButtonGroupsDelete.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButtonGroupsDelete.Image = (Image)resources.GetObject("toolStripButtonGroupsDelete.Image");
-            toolStripButtonGroupsDelete.ImageTransparentColor = Color.Magenta;
-            toolStripButtonGroupsDelete.Name = "toolStripButtonGroupsDelete";
-            toolStripButtonGroupsDelete.Size = new Size(23, 22);
-            toolStripButtonGroupsDelete.Text = "Delete";
-            toolStripButtonGroupsDelete.Click += toolStripButtonGroupsDelete_Click;
-            // 
             // toolStripButtonGroupsEdit
             // 
             toolStripButtonGroupsEdit.DisplayStyle = ToolStripItemDisplayStyle.Image;
@@ -113,6 +108,21 @@
             toolStripButtonGroupsEdit.Text = "Edit";
             toolStripButtonGroupsEdit.Click += toolStripButtonGroupsEdit_Click;
             // 
+            // toolStripSeparator1
+            // 
+            toolStripSeparator1.Name = "toolStripSeparator1";
+            toolStripSeparator1.Size = new Size(6, 25);
+            // 
+            // toolStripButtonGroupsDelete
+            // 
+            toolStripButtonGroupsDelete.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButtonGroupsDelete.Image = (Image)resources.GetObject("toolStripButtonGroupsDelete.Image");
+            toolStripButtonGroupsDelete.ImageTransparentColor = Color.Magenta;
+            toolStripButtonGroupsDelete.Name = "toolStripButtonGroupsDelete";
+            toolStripButtonGroupsDelete.Size = new Size(23, 22);
+            toolStripButtonGroupsDelete.Text = "Delete";
+            toolStripButtonGroupsDelete.Click += toolStripButtonGroupsDelete_Click;
+            // 
             // dataGridViewGroups
             // 
             dataGridViewGroups.AllowUserToAddRows = false;
@@ -121,22 +131,61 @@
             dataGridViewGroups.MultiSelect = false;
             dataGridViewGroups.Name = "dataGridViewGroups";
             dataGridViewGroups.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridViewGroups.Size = new Size(377, 170);
+            dataGridViewGroups.Size = new Size(697, 170);
             dataGridViewGroups.TabIndex = 0;
             dataGridViewGroups.CellContentClick += dataGridViewGroups_CellContentClick;
             dataGridViewGroups.UserDeletingRow += dataGridViewGroups_UserDeletingRow;
             // 
-            // toolStripSeparator1
+            // groupBoxDefence
             // 
-            toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new Size(6, 25);
+            groupBoxDefence.Controls.Add(buttonDessigne);
+            groupBoxDefence.Controls.Add(buttonSetDefence);
+            groupBoxDefence.Controls.Add(richTextBoxDefence);
+            groupBoxDefence.Location = new Point(407, 238);
+            groupBoxDefence.Name = "groupBoxDefence";
+            groupBoxDefence.Size = new Size(314, 260);
+            groupBoxDefence.TabIndex = 3;
+            groupBoxDefence.TabStop = false;
+            groupBoxDefence.Text = "Defence";
+            // 
+            // buttonDessigne
+            // 
+            buttonDessigne.BackColor = Color.Red;
+            buttonDessigne.Location = new Point(191, 22);
+            buttonDessigne.Name = "buttonDessigne";
+            buttonDessigne.Size = new Size(117, 45);
+            buttonDessigne.TabIndex = 2;
+            buttonDessigne.Text = "Unssigne";
+            buttonDessigne.UseVisualStyleBackColor = false;
+            buttonDessigne.Click += buttonDessigne_Click;
+            // 
+            // buttonSetDefence
+            // 
+            buttonSetDefence.BackColor = SystemColors.Highlight;
+            buttonSetDefence.Location = new Point(6, 22);
+            buttonSetDefence.Name = "buttonSetDefence";
+            buttonSetDefence.Size = new Size(164, 45);
+            buttonSetDefence.TabIndex = 1;
+            buttonSetDefence.Text = "Assigne unit to defence ";
+            buttonSetDefence.UseVisualStyleBackColor = false;
+            buttonSetDefence.Click += buttonSetDefence_Click;
+            // 
+            // richTextBoxDefence
+            // 
+            richTextBoxDefence.Location = new Point(6, 73);
+            richTextBoxDefence.Name = "richTextBoxDefence";
+            richTextBoxDefence.ReadOnly = true;
+            richTextBoxDefence.Size = new Size(302, 181);
+            richTextBoxDefence.TabIndex = 0;
+            richTextBoxDefence.Text = "";
             // 
             // ArmyForm
             // 
             AcceptButton = buttonSave;
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(417, 617);
+            ClientSize = new Size(733, 617);
+            Controls.Add(groupBoxDefence);
             Controls.Add(groupBoxGroups);
             Controls.Add(propertyGrid);
             Controls.Add(buttonSave);
@@ -152,6 +201,7 @@
             toolStripGroups.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridViewGroups).EndInit();
             ((System.ComponentModel.ISupportInitialize)bindingSourceGroups).EndInit();
+            groupBoxDefence.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -167,5 +217,9 @@
         private ToolStripButton toolStripButtonGroupsDelete;
         private ToolStripButton toolStripButtonGroupsEdit;
         private ToolStripSeparator toolStripSeparator1;
+        private GroupBox groupBoxDefence;
+        private RichTextBox richTextBoxDefence;
+        private Button buttonSetDefence;
+        private Button buttonDessigne;
     }
 }

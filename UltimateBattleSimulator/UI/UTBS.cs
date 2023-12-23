@@ -4,10 +4,14 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using UltimateBattleSimulator.engine.army;
+using UltimateBattleSimulator.engine.defence;
+using UltimateBattleSimulator.engine.defence.types;
+using UltimateBattleSimulator.engine.global;
 using UltimateBattleSimulator.engine.units;
 using UltimateBattleSimulator.interfaces;
 using UltimateBattleSimulator.UI.forms;
@@ -18,6 +22,7 @@ namespace UltimateBattleSimulator.UI
     {
         bool _hideUnits = false;
         bool _hideArmies = false;
+        bool _hideDefence = false;
 
         public UTBS()
         {
@@ -33,6 +38,7 @@ namespace UltimateBattleSimulator.UI
         {
             ReloadUnits();
             ReloadArmies();
+            ReloadDefence();
         }
 
         private void tabControlMain_SelectedIndexChanged(object sender, EventArgs e)
@@ -44,6 +50,11 @@ namespace UltimateBattleSimulator.UI
                 default:
                     break;
             }
+        }
+
+        private void ShowHelp(string helpMessage)
+        {
+            MessageBox.Show(helpMessage, "Help", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private DialogResult OpenObject(object? obj, IObjectHandleForm form)
@@ -97,8 +108,28 @@ namespace UltimateBattleSimulator.UI
             dataGridView.DataSource = bindingSource;
         }
 
-        #region Units
+        private void HideUnselectedRecords(DataGridView dataGridView, bool hide)
+        {
+            dataGridView.CurrentCell = null;
 
+            foreach (DataGridViewRow row in dataGridView.Rows)
+            {
+                Ideable? item = row?.DataBoundItem as Ideable ?? null;
+                if (item != null && row != null)
+                {
+                    if (hide)
+                    {
+                        row.Visible = true == item.IsSelected;
+                    }
+                    else
+                    {
+                        row.Visible = true;
+                    }
+                }
+            }
+        }
+
+        #region Units
         private void ReloadUnits()
         {
             UnitsManager.Instance.Reload();
@@ -120,33 +151,11 @@ namespace UltimateBattleSimulator.UI
             Refresh(dataGridViewUnits, bindingSourceUnits);
         }
 
-        private void toolStripButtonUnitsHide_Click(object sender, EventArgs e)
-        {
-            _hideUnits = !_hideUnits;
-            dataGridViewUnits.CurrentCell = null;
-
-            foreach (DataGridViewRow row in dataGridViewUnits.Rows)
-            {
-                IUnit? unit = row?.DataBoundItem as IUnit ?? null;
-                if (unit != null && row != null)
-                {
-                    if (_hideUnits)
-                    {
-                        row.Visible = true == unit.IsSelected;
-                    }
-                    else
-                    {
-                        row.Visible = true;
-                    }
-                }
-            }
-        }
-
         private void newToolStripButtonUnits_Click(object sender, EventArgs e)
         {
             var unit = UnitFactory.Create(UnitType.None);
 
-            var result = OpenObject(unit, new UniversalForm());
+            var result = OpenObject(unit, new UnitForm());
             if (result == DialogResult.OK)
             {
                 AddObject(unit, dataGridViewUnits, bindingSourceUnits);
@@ -155,12 +164,12 @@ namespace UltimateBattleSimulator.UI
 
         private void dataGridViewUnitsAllies_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            OpenObject(bindingSourceUnits.Current, new UniversalForm());
+            OpenObject(bindingSourceUnits.Current, new UnitForm());
         }
 
         private void toolStripButtonEditUnits_Click(object sender, EventArgs e)
         {
-            OpenObject(bindingSourceUnits.Current, new UniversalForm());
+            OpenObject(bindingSourceUnits.Current, new UnitForm());
         }
 
         private void toolStripButtonDeleteUnits_Click(object sender, EventArgs e)
@@ -207,6 +216,11 @@ namespace UltimateBattleSimulator.UI
             {
                 UnitsManager.Instance.SaveAll();
             }
+        }
+
+        private void toolStripTextBoxUnitFastSearch_Click(object sender, EventArgs e)
+        {
+            //TODO: add fast search click code here
         }
 
         private void toolStripTextBoxUnitFastSearch_KeyDown(object sender, KeyEventArgs e)
@@ -262,8 +276,13 @@ namespace UltimateBattleSimulator.UI
 
         private void helpToolStripButtonUnits_Click(object sender, EventArgs e)
         {
-            string message = "Here you can create or select units for your armies.";
-            MessageBox.Show(message, "Help");
+            ShowHelp(HelpManager.UnitsHelp);
+        }
+
+        private void toolStripButtonUnitsHide_Click(object sender, EventArgs e)
+        {
+            _hideUnits = !_hideUnits;
+            HideUnselectedRecords(dataGridViewUnits, _hideUnits);
         }
         #endregion
 
@@ -281,7 +300,7 @@ namespace UltimateBattleSimulator.UI
 
             Refresh(dataGridViewArmies, bindingSourceArmies);
         }
-        #endregion
+
         private void dataGridViewArmies_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             OpenObject(bindingSourceArmies.Current, new ArmyForm());
@@ -289,12 +308,12 @@ namespace UltimateBattleSimulator.UI
 
         private void toolStripButtonArmiesNew_Click(object sender, EventArgs e)
         {
-            var unit = ArmiesFactory.Create(ArmySide.None);
+            var army = ArmiesFactory.Create(ArmySide.None);
 
-            var result = OpenObject(unit, new ArmyForm());
+            var result = OpenObject(army, new ArmyForm());
             if (result == DialogResult.OK)
             {
-                AddObject(unit, dataGridViewArmies, bindingSourceArmies);
+                AddObject(army, dataGridViewArmies, bindingSourceArmies);
             }
         }
 
@@ -342,7 +361,7 @@ namespace UltimateBattleSimulator.UI
             string message = $"Do you wanna save {army} ?";
             if (MessageBox.Show(message, "Save army", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                
+
                 ArmiesManager.Instance.Save(army);
             }
         }
@@ -363,6 +382,11 @@ namespace UltimateBattleSimulator.UI
 
         private void toolStripTextBoxArmieSearch_Click(object sender, EventArgs e)
         {
+            //TODO: add fast search click code here
+        }
+
+        private void toolStripTextBoxArmieFastSearch_KeyDown(object sender, KeyEventArgs e)
+        {
             //TODO: search army from list code here
         }
 
@@ -381,30 +405,184 @@ namespace UltimateBattleSimulator.UI
 
         private void toolStripButtonArmiesHelp_Click(object sender, EventArgs e)
         {
-            string message = "Here you can create or select armies for your simulation.";
-            MessageBox.Show(message, "Help");
+            ShowHelp(HelpManager.ArmiesHelp);
         }
 
         private void toolStripButtonArmiesHide_Click(object sender, EventArgs e)
         {
             _hideArmies = !_hideArmies;
-            dataGridViewArmies.CurrentCell = null;
+            HideUnselectedRecords(dataGridViewArmies, _hideArmies);
+        }
+        #endregion
 
-            foreach (DataGridViewRow row in dataGridViewArmies.Rows)
+        #region Defence
+        private void ReloadDefence()
+        {
+            DefenceManager.Instance.Reload();
+            BindDefence();
+        }
+
+        private void BindDefence(bool onlySelected = false, bool includeFromFile = false)
+        {
+            bindingSourceDefence.DataSource = DefenceManager.Instance.Get(onlySelected, includeFromFile);
+            dataGridViewDefence.DataSource = bindingSourceDefence;
+
+            Refresh(dataGridViewDefence, bindingSourceDefence);
+        }
+
+        private void toolStripButtonDefenceNew_Click(object sender, EventArgs e)
+        {
+            var defence = DefenceFactory.Create();
+
+            var result = OpenObject(defence, new DefenceForm());
+            if (result == DialogResult.OK)
             {
-                IArmy? army = row?.DataBoundItem as IArmy ?? null;
-                if (army != null && row != null)
-                {
-                    if (_hideArmies)
-                    {
-                        row.Visible = true == army.IsSelected;
-                    }
-                    else
-                    {
-                        row.Visible = true;
-                    }
-                }
+                AddObject(defence, dataGridViewDefence, bindingSourceDefence);
             }
+        }
+
+        private void dataGridViewDefence_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            OpenObject(bindingSourceDefence.Current, new DefenceForm());
+        }
+
+        private void toolStripButtonDefenceEdit_Click(object sender, EventArgs e)
+        {
+            OpenObject(bindingSourceDefence.Current, new DefenceForm());
+        }
+
+        private void toolStripButtonDefenceFromList_Click(object sender, EventArgs e)
+        {
+            //TODO: select defence from list here
+        }
+
+        private void dataGridViewDefence_UserDeletingRow(object sender, DataGridViewRowCancelEventArgs e)
+        {
+            var obj = e.Row?.DataBoundItem;
+            e.Cancel = !DeleteObjectApprove(obj);
+        }
+
+        private void toolStripButtonDefenceDelete_Click(object sender, EventArgs e)
+        {
+            object obj = bindingSourceDefence.Current;
+            DeleteObject(obj, bindingSourceDefence);
+        }
+
+        private void toolStripButtonDefenceDeleteAll_Click(object sender, EventArgs e)
+        {
+            string message = $"Do you wanna delete all defence ({bindingSourceDefence.Count})?  \n This action is permanent!";
+            if (MessageBox.Show(message, "Delete all units", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                DefenceManager.Instance.DeleteAll();
+                BindDefence();
+            }
+        }
+
+        private void toolStripButtonDefenceSave_Click(object sender, EventArgs e)
+        {
+            var defence = (IDefence)bindingSourceDefence.Current;
+            if (defence == null)
+            {
+                return;
+            }
+
+            string message = $"Do you wanna save {defence} ?";
+            if (MessageBox.Show(message, "Save defence", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+
+                DefenceManager.Instance.Save(defence);
+            }
+        }
+
+        private void toolStripButtonDefenceSaveAll_Click(object sender, EventArgs e)
+        {
+            string message = $"Do you wanna save all defences in list ({bindingSourceDefence.Count})?";
+            if (MessageBox.Show(message, "Save all armies", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                DefenceManager.Instance.SaveAll();
+            }
+        }
+
+        private void toolStripTextBoxDefenceSearch_Click(object sender, EventArgs e)
+        {
+            //TODO: add fast search click code here
+        }
+
+        private void toolStripTextBoxDefenceFastSearch_KeyDown(object sender, KeyEventArgs e)
+        {
+            //TODO: add fast search from list here
+        }
+
+        private void toolStripButtonDefenceRefresh_Click(object sender, EventArgs e)
+        {
+            ReloadDefence();
+        }
+
+        private void toolStripButtonDefenceFromfile_Click(object sender, EventArgs e)
+        {
+            //TODO: add load from file code here
+        }
+
+        private void toolStripButtonDefenceCopy_Click(object sender, EventArgs e)
+        {
+            var defence = (IDefence?)bindingSourceDefence.Current;
+            var clone = defence?.Clone();
+
+            AddObject(defence, dataGridViewDefence, bindingSourceDefence);
+        }
+
+        private void toolStripButtonDefenceHelp_Click(object sender, EventArgs e)
+        {
+            ShowHelp(HelpManager.DefenceHelp);
+        }
+
+        private void toolStripButtonDefenceHide_Click(object sender, EventArgs e)
+        {
+            _hideDefence = !_hideDefence;
+            HideUnselectedRecords(dataGridViewDefence, _hideDefence);
+        }
+        #endregion
+
+        #region Environment
+        private void trackBarTerain_Scroll(object sender, EventArgs e)
+        {
+            EnvironmentManager.Land.Terain = trackBarTerain.Value;
+        }
+
+        private void trackBarRiversAndLakes_Scroll(object sender, EventArgs e)
+        {
+            EnvironmentManager.Land.RiversAndLakes = trackBarRiversAndLakes.Value;
+        }
+
+        private void trackBarSwamps_Scroll(object sender, EventArgs e)
+        {
+            EnvironmentManager.Land.Swamps = trackBarSwamps.Value;
+        }
+
+        private void trackBarRain_Scroll(object sender, EventArgs e)
+        {
+            EnvironmentManager.Weather.Rain = trackBarRain.Value;
+        }
+
+        private void trackBarWind_Scroll(object sender, EventArgs e)
+        {
+            EnvironmentManager.Weather.Wind = trackBarWind.Value;
+        }
+
+        private void trackBarFog_Scroll(object sender, EventArgs e)
+        {
+            EnvironmentManager.Weather.Fog = trackBarFog.Value;
+        }
+
+        private void trackBarSnow_Scroll(object sender, EventArgs e)
+        {
+            EnvironmentManager.Weather.Snow = trackBarSnow.Value;
+        }
+        #endregion
+
+        private void buttonHelpEnvironment_Click(object sender, EventArgs e)
+        {
+            ShowHelp(HelpManager.EnvironmentHelp);
         }
     }
 }
