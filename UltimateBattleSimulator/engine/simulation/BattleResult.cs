@@ -15,7 +15,10 @@ namespace UltimateBattleSimulator.engine.simulation
         public Dictionary<IArmy, int> Losses = new Dictionary<IArmy, int>();
         public Dictionary<IArmy, int> Rools = new Dictionary<IArmy, int>();
 
-        public int LuckAlly {  get; set; } = 0;
+        public int TotalAmountAlly { get; set; } = 0;
+        public int TotalAmountEnemy { get; set; } = 0;
+
+        public int LuckAlly { get; set; } = 0;
         public int LuckEnemy { get; set; } = 0;
 
         public override string ToString()

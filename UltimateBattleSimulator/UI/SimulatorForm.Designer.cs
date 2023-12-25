@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             buttonStart = new Button();
             buttonStop = new Button();
             progressBar = new ProgressBar();
@@ -40,12 +41,17 @@
             numericUpDownBattles = new NumericUpDown();
             trackBarWinnerConfidence = new TrackBar();
             labelWins = new Label();
+            bindingSourceAllyStats = new BindingSource(components);
+            bindingSourceEnemyStats = new BindingSource(components);
+            labelBattles = new Label();
             groupBoxAllyStats.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridViewAllyStats).BeginInit();
             groupBoxEnemyStats.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridViewEnemyStats).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownBattles).BeginInit();
             ((System.ComponentModel.ISupportInitialize)trackBarWinnerConfidence).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)bindingSourceAllyStats).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)bindingSourceEnemyStats).BeginInit();
             SuspendLayout();
             // 
             // buttonStart
@@ -83,7 +89,7 @@
             // 
             labelWinner.AutoSize = true;
             labelWinner.Font = new Font("Segoe UI", 27.75F, FontStyle.Bold, GraphicsUnit.Point, 238);
-            labelWinner.Location = new Point(328, 291);
+            labelWinner.Location = new Point(227, 293);
             labelWinner.Name = "labelWinner";
             labelWinner.Size = new Size(37, 50);
             labelWinner.TabIndex = 3;
@@ -105,6 +111,7 @@
             dataGridViewAllyStats.AllowUserToAddRows = false;
             dataGridViewAllyStats.AllowUserToDeleteRows = false;
             dataGridViewAllyStats.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewAllyStats.EditMode = DataGridViewEditMode.EditProgrammatically;
             dataGridViewAllyStats.Location = new Point(6, 22);
             dataGridViewAllyStats.MultiSelect = false;
             dataGridViewAllyStats.Name = "dataGridViewAllyStats";
@@ -128,6 +135,7 @@
             dataGridViewEnemyStats.AllowUserToAddRows = false;
             dataGridViewEnemyStats.AllowUserToDeleteRows = false;
             dataGridViewEnemyStats.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewEnemyStats.EditMode = DataGridViewEditMode.EditProgrammatically;
             dataGridViewEnemyStats.Location = new Point(6, 22);
             dataGridViewEnemyStats.MultiSelect = false;
             dataGridViewEnemyStats.Name = "dataGridViewEnemyStats";
@@ -171,17 +179,28 @@
             // 
             labelWins.AutoSize = true;
             labelWins.Font = new Font("Segoe UI", 27.75F, FontStyle.Regular, GraphicsUnit.Point, 238);
-            labelWins.Location = new Point(328, 358);
+            labelWins.Location = new Point(328, 349);
             labelWins.Name = "labelWins";
             labelWins.Size = new Size(37, 50);
             labelWins.TabIndex = 9;
             labelWins.Text = "-";
+            labelWins.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // labelBattles
+            // 
+            labelBattles.AutoSize = true;
+            labelBattles.Location = new Point(192, 500);
+            labelBattles.Name = "labelBattles";
+            labelBattles.Size = new Size(45, 15);
+            labelBattles.TabIndex = 10;
+            labelBattles.Text = "Battles:";
             // 
             // SimulatorForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(699, 553);
+            Controls.Add(labelBattles);
             Controls.Add(labelWins);
             Controls.Add(trackBarWinnerConfidence);
             Controls.Add(numericUpDownBattles);
@@ -204,6 +223,8 @@
             ((System.ComponentModel.ISupportInitialize)dataGridViewEnemyStats).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownBattles).EndInit();
             ((System.ComponentModel.ISupportInitialize)trackBarWinnerConfidence).EndInit();
+            ((System.ComponentModel.ISupportInitialize)bindingSourceAllyStats).EndInit();
+            ((System.ComponentModel.ISupportInitialize)bindingSourceEnemyStats).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -222,5 +243,8 @@
         private NumericUpDown numericUpDownBattles;
         private TrackBar trackBarWinnerConfidence;
         private Label labelWins;
+        private BindingSource bindingSourceAllyStats;
+        private BindingSource bindingSourceEnemyStats;
+        private Label labelBattles;
     }
 }

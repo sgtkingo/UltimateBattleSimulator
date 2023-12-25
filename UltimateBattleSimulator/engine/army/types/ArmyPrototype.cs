@@ -68,6 +68,19 @@ namespace UltimateBattleSimulator.engine.army.types
             }
         }
 
+        public virtual double MoraleBonus
+        {
+            get
+            {
+                int maxLevelFromGroups = 0;
+                if (Groups.Count > 0) 
+                {
+                    maxLevelFromGroups = Groups.Select(g => (g.Unit?.Level ?? 0)).Max();
+                }
+                return (double)maxLevelFromGroups/IUnit.MaxLevel;
+            }
+        }
+
         public ArmyPrototype(ArmySide side = ArmySide.None)
         {
             ArmySide = side;

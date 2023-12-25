@@ -16,9 +16,18 @@ namespace UltimateBattleSimulator.interfaces
 
     internal interface IUnit : Ideable
     {
+        public const int MaxLevel = 36;
+
         public string Name { get; set; }
         public string Description { get; set; }
         public UnitType UnitType { get; }
+
+        public int AttackNumber { get; set; }
+        public int DefenceNumber { get; set; }
+        public int Iniciative { get; set; }
+        public int Life { get; set; }
+        public int Level { get; set; }
+        public int Move { get; set; }
 
         public int Force { get; }
 

@@ -13,6 +13,7 @@ namespace UltimateBattleSimulator.engine.simulation
     internal class Battle
     {
         private List<IArmy> _Armies = new List<IArmy>();
+        private Dictionary<IArmy, int> _ArmiesAmounts = new Dictionary<IArmy, int>();
 
         private LandConfig _LandConfig;
         private WeatherConfig _WeatherConfig;
@@ -28,9 +29,12 @@ namespace UltimateBattleSimulator.engine.simulation
             BattleCompleted?.Invoke(this, result);
         }
 
-        public Battle(List<IArmy> armies, LandConfig landConfig, WeatherConfig weatherConfig) 
+        public Battle(List<IArmy> armies, Dictionary<IArmy, int> armiesAmounts, LandConfig landConfig, WeatherConfig weatherConfig) 
         {
             _Armies = armies;
+            //Create shallow copy
+            _ArmiesAmounts = new Dictionary<IArmy, int>(armiesAmounts); 
+
             _LandConfig = landConfig;
             _WeatherConfig = weatherConfig;
         }
@@ -66,8 +70,8 @@ namespace UltimateBattleSimulator.engine.simulation
             }
 
             //Battle here
-            battleResult.LuckAlly = Dice_1k100.Roll();
-            battleResult.LuckEnemy = Dice_1k100.Roll();
+            battleResult.LuckAlly = Dice_1k100.Roll(false);
+            battleResult.LuckEnemy = Dice_1k100.Roll(false);
 
             battleResult.ConfidenceLevel = Random.Shared.NextDouble();
 
@@ -78,6 +82,15 @@ namespace UltimateBattleSimulator.engine.simulation
             else 
             {
                 battleResult.Winner = ArmySide.Enemy;
+            }
+
+            //Calculate looles 
+            var losses = new Dictionary<IArmy, int>();
+            IArmy? a = null;
+            foreach (var army in _Armies) 
+            {
+                a = _Armies.Find(a => a.GUID == army.GUID);
+                losses.Add(army, (a?.Amount ?? 0) - _ArmiesAmounts[army]);
             }
 
             return battleResult;

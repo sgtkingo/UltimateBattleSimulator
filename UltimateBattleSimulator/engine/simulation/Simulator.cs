@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,10 +27,11 @@ namespace UltimateBattleSimulator.engine.simulation
             List<BattleResult> results = new List<BattleResult>();
 
             var armies = ArmiesManager.Instance.Get();
+            Dictionary<IArmy, int> amounts = armies.ToDictionary(army => army, army => army.Amount);
 
             for (int i = 0; i < nBattles; i++) 
             {
-                var battle = new Battle(armies, EnvironmentManager.Land, EnvironmentManager.Weather);
+                var battle = new Battle(armies, amounts, EnvironmentManager.Land, EnvironmentManager.Weather);
                 battle.BattleCompleted += eventHandler;
 
                 battles.Add(battle);
@@ -52,23 +54,8 @@ namespace UltimateBattleSimulator.engine.simulation
 
         private static void ProcessResults(List<BattleResult> results) 
         {
-            //Get wins ratio
-            SimulationResult.AllyWins = results.Where( r => r.Winner == ArmySide.Ally ).Count();
-            SimulationResult.EnemyWins = results.Where( r => r.Winner == ArmySide.Enemy ).Count();
-
-            //Set winner
-            SimulationResult.Winner = SimulationResult.AllyWins > SimulationResult.EnemyWins ? ArmySide.Ally : ArmySide.Enemy;
-            if(SimulationResult.AllyWins == SimulationResult.EnemyWins) 
-            {
-                SimulationResult.Winner = ArmySide.None;
-            }
-
-            //Get confidence level
-            SimulationResult.ConfidenceLevel = results.Where( r => r.Winner == SimulationResult.Winner ).Select( r => r.ConfidenceLevel ).Average() * 100;
-
-            //Get rools stats
-            SimulationResult.BestRoll = results.Select(d => d.Rools).SelectMany(dict => dict.Values).Max();
-            SimulationResult.RoolsCount = results.Select(d => d.Rools).SelectMany(dict => dict.Values).Count();
+            SimulationResult.CalculateStats(results);
+            SimulationResult.FillStats();
         }
     }
 }

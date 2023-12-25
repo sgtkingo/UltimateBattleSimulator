@@ -34,6 +34,9 @@ namespace UltimateBattleSimulator.UI
             progressBar.Value = progress = 0;
             numericUpDownBattles.Value = maxBattles;
 
+            dataGridViewAllyStats.DataSource = bindingSourceAllyStats;
+            dataGridViewEnemyStats.DataSource = bindingSourceEnemyStats;
+
             Simulator.Init();
         }
 
@@ -87,8 +90,14 @@ namespace UltimateBattleSimulator.UI
             //Set tracker bar
             int confidenceLevel = (int)(Simulator.SimulationResult.ConfidenceLevel);
             confidenceLevel *= Simulator.SimulationResult.Winner == interfaces.ArmySide.Ally ? -1 : 1;
-
             trackBarWinnerConfidence.Value = confidenceLevel;
+
+            //Show stats
+            bindingSourceAllyStats.DataSource = null;
+            bindingSourceAllyStats.DataSource = Simulator.SimulationResult.AllyStats;
+
+            bindingSourceEnemyStats.DataSource = null;
+            bindingSourceEnemyStats.DataSource = Simulator.SimulationResult.EnemyStats;
         }
 
         private async void buttonStart_Click(object sender, EventArgs e)
