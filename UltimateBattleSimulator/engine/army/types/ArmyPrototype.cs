@@ -68,6 +68,16 @@ namespace UltimateBattleSimulator.engine.army.types
             }
         }
 
+        public int MinimalAmoutToFight 
+        {
+            get 
+            {
+                double armyMinimalAmoutByMorale = Amount * (0.2);
+                armyMinimalAmoutByMorale = armyMinimalAmoutByMorale - (armyMinimalAmoutByMorale * MoraleBonus);
+                return (int)armyMinimalAmoutByMorale;
+            }
+        }
+
         public virtual double MoraleBonus
         {
             get

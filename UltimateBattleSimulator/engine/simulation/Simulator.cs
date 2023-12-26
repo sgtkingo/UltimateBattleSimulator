@@ -29,21 +29,19 @@ namespace UltimateBattleSimulator.engine.simulation
             List<BattleResult> results = new List<BattleResult>();
 
             var armies = ArmiesManager.Instance.Get();
-            Dictionary<IArmy, int> amounts = armies.ToDictionary(army => army, army => army.Amount);
-
             //Check if all sides exist
-            if( armies.Where( a=> a.ArmySide == ArmySide.Ally ).Count() == 0) 
+            if ( armies.Where( a=> a.ArmySide == ArmySide.Ally ).Count() == 0) 
             {
                 throw new MissingSideException(ArmySide.Ally);
             }
-            if (armies.Where(a => a.ArmySide == ArmySide.Enemy).Count() == 0)
+            if ( armies.Where( a => a.ArmySide == ArmySide.Enemy ).Count() == 0)
             {
                 throw new MissingSideException(ArmySide.Enemy);
             }
 
             for (int i = 0; i < nBattles; i++) 
             {
-                var battle = new Battle(armies, amounts, EnvironmentManager.Land, EnvironmentManager.Weather);
+                var battle = new Battle(armies, EnvironmentManager.Land, EnvironmentManager.Weather);
                 battle.BattleCompleted += eventHandler;
 
                 battles.Add(battle);

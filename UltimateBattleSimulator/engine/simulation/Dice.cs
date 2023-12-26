@@ -27,12 +27,24 @@ namespace UltimateBattleSimulator.engine.simulation
             return roll;
         }
 
+        public int RollX(int roolsAmount, bool allowRepeating = true) 
+        {
+            int roll = 0;
+            for (int i = 0; i < roolsAmount; i++) 
+            {
+                roll += Roll(allowRepeating);
+            }
+            return roll;
+        }
+
         public int GetRoolsCount(int roolValue) 
         {
-            int count = 1;
-            while ( roolValue % _DiceMaxRoll == 0 )
+            int count = 0;
+            int tmp = 0;
+
+            while ( tmp < roolValue )
             {
-                roolValue /= _DiceMaxRoll;
+                tmp += _DiceMaxRoll;
                 count++;
             }
             return count;

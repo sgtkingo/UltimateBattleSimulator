@@ -44,6 +44,7 @@
             bindingSourceAllyStats = new BindingSource(components);
             bindingSourceEnemyStats = new BindingSource(components);
             labelBattles = new Label();
+            buttonShowDetailedResults = new Button();
             groupBoxAllyStats.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridViewAllyStats).BeginInit();
             groupBoxEnemyStats.SuspendLayout();
@@ -195,11 +196,22 @@
             labelBattles.TabIndex = 10;
             labelBattles.Text = "Battles:";
             // 
+            // buttonShowDetailedResults
+            // 
+            buttonShowDetailedResults.Location = new Point(18, 471);
+            buttonShowDetailedResults.Name = "buttonShowDetailedResults";
+            buttonShowDetailedResults.Size = new Size(75, 70);
+            buttonShowDetailedResults.TabIndex = 11;
+            buttonShowDetailedResults.Text = "DETAIL";
+            buttonShowDetailedResults.UseVisualStyleBackColor = true;
+            buttonShowDetailedResults.Click += buttonShowDetailedResults_Click;
+            // 
             // SimulatorForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(699, 553);
+            Controls.Add(buttonShowDetailedResults);
             Controls.Add(labelBattles);
             Controls.Add(labelWins);
             Controls.Add(trackBarWinnerConfidence);
@@ -246,5 +258,6 @@
         private BindingSource bindingSourceAllyStats;
         private BindingSource bindingSourceEnemyStats;
         private Label labelBattles;
+        private Button buttonShowDetailedResults;
     }
 }

@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using UltimateBattleSimulator.engine.simulation;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using UltimateBattleSimulator.UI.forms;
 
 namespace UltimateBattleSimulator.UI
 {
@@ -16,7 +16,7 @@ namespace UltimateBattleSimulator.UI
     {
         CancellationTokenSource _cts = new CancellationTokenSource();
 
-        private int maxBattles = 100;
+        private int maxBattles = 1;
         private int progress = 0;
 
         public SimulatorForm()
@@ -40,7 +40,7 @@ namespace UltimateBattleSimulator.UI
             Simulator.Init();
         }
 
-        private void Restart() 
+        private void Restart()
         {
             Simulator.Init();
 
@@ -56,7 +56,7 @@ namespace UltimateBattleSimulator.UI
         {
             progress++;
             int progressValue = (int)(((double)progress / maxBattles) * 100);
-            if( progressValue > 100 ) 
+            if (progressValue > 100)
             {
                 progressValue = 100;
             }
@@ -80,7 +80,7 @@ namespace UltimateBattleSimulator.UI
                 MessageBox.Show($"{ex.Message} | {ex.Source}");
                 _cts.Cancel();
 
-                await Task.Delay(100); 
+                await Task.Delay(100);
                 Restart();
             }
         }
@@ -128,6 +128,14 @@ namespace UltimateBattleSimulator.UI
         private void numericUpDownBattles_ValueChanged(object sender, EventArgs e)
         {
             maxBattles = (int)numericUpDownBattles.Value;
+        }
+
+        private void buttonShowDetailedResults_Click(object sender, EventArgs e)
+        {
+            var form = new ShowSimulationResults();
+            form.SetObject(Simulator.SimulationResult);
+
+            form.ShowDialog(this);
         }
     }
 }
