@@ -12,8 +12,10 @@ namespace UltimateBattleSimulator.engine.simulation
         public ArmySide Winner { get; set; } = ArmySide.None;
         public double ConfidenceLevel { get; set; } = 0.0;
 
-        public Dictionary<IArmy, int> Losses = new Dictionary<IArmy, int>();
-        public Dictionary<IArmy, int> Rools = new Dictionary<IArmy, int>();
+        public Dictionary<IArmy, int> Losses { get; set; } = new Dictionary<IArmy, int>();
+        public Dictionary<IArmy, int> Rools { get; set; } = new Dictionary<IArmy, int>();
+
+        public Dictionary<IArmy, int> RoolsCount { get; set; } = new Dictionary<IArmy, int>();
 
         public int TotalAmountAlly { get; set; } = 0;
         public int TotalAmountEnemy { get; set; } = 0;

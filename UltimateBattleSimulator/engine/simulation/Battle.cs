@@ -61,12 +61,16 @@ namespace UltimateBattleSimulator.engine.simulation
             var enemy = _Armies.Where(army => army.ArmySide == ArmySide.Enemy).ToList();
 
             int roll  =  0;
+            int count = 0;
             foreach (var army in _Armies)
             {
                 battleResult.Losses.Add(army, 0);
 
                 roll = Dice_1k6.Roll();
                 battleResult.Rools.Add(army, roll);
+
+                count = Dice_1k6.GetRoolsCount(roll);
+                battleResult.RoolsCount.Add(army, count);
             }
 
             //Battle here

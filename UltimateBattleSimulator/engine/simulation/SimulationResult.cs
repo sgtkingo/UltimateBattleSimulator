@@ -9,40 +9,40 @@ namespace UltimateBattleSimulator.engine.simulation
 {
     internal class SimulationResult
     {
-        public ArmySide Winner { get; set; } = ArmySide.None;
-        public double ConfidenceLevel { get; set; } = 0.0;
+        public ArmySide Winner { get; private set; } = ArmySide.None;
+        public double ConfidenceLevel { get; private set; } = 0.0;
 
-        public int TotalBattles { get; set; } = 0;
+        public int TotalBattles { get; private set; } = 0;
         public int AllyWins { get; set;  } = 0;
-        public int EnemyWins { get; set; } = 0;
+        public int EnemyWins { get; private set; } = 0;
 
-        public double AllyWinsConfidence { get; set; } = 0.0;
-        public double EnemyWinsConfidence { get; set; } = 0.0;
+        public double AllyWinsConfidence { get; private set; } = 0.0;
+        public double EnemyWinsConfidence { get; private set; } = 0.0;
 
-        public int AllyLuck { get; set; } = 0;
-        public int AllyBestLuck { get; set; } = 0;
-        public int EnemyLuck { get; set; } = 0;
-        public int EnemyBestLuck { get; set; } = 0;
+        public int AllyLuck { get; private set; } = 0;
+        public int AllyBestLuck { get; private set; } = 0;
+        public int EnemyLuck { get; private set; } = 0;
+        public int EnemyBestLuck { get; private set; } = 0;
 
-        public int TotalBestRoll { get; set; } = 0;
-        public int TotalRoolsCount { get; set; } = 0;
+        public int TotalBestRoll { get; private set; } = 0;
+        public int TotalRoolsCount { get; private set; } = 0;
 
-        public int AllyBestRoll { get; set; } = 0;
-        public int EnemyBestRoll { get; set; } = 0;
+        public int AllyBestRoll { get; private set; } = 0;
+        public int EnemyBestRoll { get; private set; } = 0;
 
-        public int AllyRoolsCount { get; set; } = 0;
-        public int EnemyRoolsCount { get; set; } = 0;
+        public int AllyRoolsCount { get; private set; } = 0;
+        public int EnemyRoolsCount { get; private set; } = 0;
 
-        public int AllyTotalAmount { get; set; } = 0;
-        public int AllyAverageLooses { get; set; } = 0;
-        public int AllyWorstLooses { get; set; } = 0;
+        public int AllyTotalAmount { get; private set; } = 0;
+        public int AllyAverageLooses { get; private set; } = 0;
+        public int AllyWorstLooses { get; private set; } = 0;
 
-        public int EnemyTotalAmount { get; set; } = 0;
-        public int EnemyAverageLooses { get; set; } = 0;
-        public int EnemyWorstLooses { get; set; } = 0;
+        public int EnemyTotalAmount { get; private set; } = 0;
+        public int EnemyAverageLooses { get; private set; } = 0;
+        public int EnemyWorstLooses { get; private set; } = 0;
 
-        public Dictionary<string, string> AllyStats { get; set; } = new Dictionary<string, string>();
-        public Dictionary<string, string> EnemyStats { get; set; } = new Dictionary<string, string>();
+        public Dictionary<string, string> AllyStats { get; private set; } = new Dictionary<string, string>();
+        public Dictionary<string, string> EnemyStats { get; private set; } = new Dictionary<string, string>();
 
         public void Clear() 
         {
@@ -116,12 +116,16 @@ namespace UltimateBattleSimulator.engine.simulation
             if( results.Select(d => d.Rools.Count).Sum() != 0 ) 
             {
                 this.AllyBestRoll = results.Select(d => d.Rools).Where(d => d.Keys.All(a => a.ArmySide == ArmySide.Ally)).SelectMany(dict => dict.Values).Max();
-                this.AllyRoolsCount = results.Select(d => d.Rools).Where(d => d.Keys.All(a => a.ArmySide == ArmySide.Ally)).SelectMany(dict => dict.Values).Count();
-
                 this.EnemyBestRoll = results.Select(d => d.Rools).Where(d => d.Keys.All(a => a.ArmySide == ArmySide.Enemy)).SelectMany(dict => dict.Values).Max();
-                this.EnemyRoolsCount = results.Select(d => d.Rools).Where(d => d.Keys.All(a => a.ArmySide == ArmySide.Enemy)).SelectMany(dict => dict.Values).Count();
 
                 this.TotalBestRoll = this.AllyBestRoll > this.EnemyBestRoll ? this.AllyBestRoll : this.EnemyBestRoll;
+            }
+
+            if (results.Select(d => d.RoolsCount.Count).Sum() != 0)
+            {
+                this.AllyRoolsCount = results.Select(d => d.RoolsCount).Where(d => d.Keys.All(a => a.ArmySide == ArmySide.Ally)).SelectMany(dict => dict.Values).Sum();
+                this.EnemyRoolsCount = results.Select(d => d.RoolsCount).Where(d => d.Keys.All(a => a.ArmySide == ArmySide.Enemy)).SelectMany(dict => dict.Values).Sum();
+
                 this.TotalRoolsCount = this.AllyRoolsCount + this.EnemyRoolsCount;
             }
 

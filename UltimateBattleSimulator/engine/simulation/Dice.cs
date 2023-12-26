@@ -26,5 +26,16 @@ namespace UltimateBattleSimulator.engine.simulation
 
             return roll;
         }
+
+        public int GetRoolsCount(int roolValue) 
+        {
+            int count = 1;
+            while ( roolValue % _DiceMaxRoll == 0 )
+            {
+                roolValue /= _DiceMaxRoll;
+                count++;
+            }
+            return count;
+        }
     }
 }
