@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UltimateBattleSimulator.engine.army;
 using UltimateBattleSimulator.engine.global;
+using UltimateBattleSimulator.engine.simulation.exceptions;
 using UltimateBattleSimulator.interfaces;
 
 namespace UltimateBattleSimulator.engine.simulation
@@ -16,6 +17,7 @@ namespace UltimateBattleSimulator.engine.simulation
 
         public static void Init()
         {
+            SimulationResult?.Dispose();
             SimulationResult = new SimulationResult();
         }
 
@@ -28,6 +30,16 @@ namespace UltimateBattleSimulator.engine.simulation
 
             var armies = ArmiesManager.Instance.Get();
             Dictionary<IArmy, int> amounts = armies.ToDictionary(army => army, army => army.Amount);
+
+            //Check if all sides exist
+            if( armies.Where( a=> a.ArmySide == ArmySide.Ally ).Count() == 0) 
+            {
+                throw new MissingSideException(ArmySide.Ally);
+            }
+            if (armies.Where(a => a.ArmySide == ArmySide.Enemy).Count() == 0)
+            {
+                throw new MissingSideException(ArmySide.Enemy);
+            }
 
             for (int i = 0; i < nBattles; i++) 
             {
@@ -46,7 +58,7 @@ namespace UltimateBattleSimulator.engine.simulation
 
                 ProcessResults(results);
             }
-            catch (OperationCanceledException)
+            catch (Exception)
             {
                 throw;
             }
@@ -56,6 +68,11 @@ namespace UltimateBattleSimulator.engine.simulation
         {
             SimulationResult.CalculateStats(results);
             SimulationResult.FillStats();
+        }
+
+        public static void Dispose()
+        {
+            SimulationResult.Dispose();
         }
     }
 }

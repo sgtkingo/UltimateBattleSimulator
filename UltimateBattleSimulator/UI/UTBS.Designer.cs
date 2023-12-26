@@ -1053,6 +1053,7 @@
             Name = "UTBS";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "UTBS";
+            FormClosing += UTBS_FormClosing;
             Load += UTBS_Load;
             menuStripMain.ResumeLayout(false);
             menuStripMain.PerformLayout();

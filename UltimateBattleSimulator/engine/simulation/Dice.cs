@@ -15,14 +15,14 @@ namespace UltimateBattleSimulator.engine.simulation
             _DiceMaxRoll = diceMaxRoll;
         }
 
-        public int Roll(bool allowRepeating = true) 
+        public int Roll(bool allowRepeating = true)
         {
             int roll = 0;
             do
             {
-                roll += Random.Shared.Next(1, _DiceMaxRoll+1);
-            } 
-            while ( roll == _DiceMaxRoll && allowRepeating );
+                roll += Random.Shared.Next(1, _DiceMaxRoll + 1);
+            }
+            while ( (roll % _DiceMaxRoll == 0) && allowRepeating );
 
             return roll;
         }

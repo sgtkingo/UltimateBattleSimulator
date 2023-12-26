@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using UltimateBattleSimulator.engine.global;
+using UltimateBattleSimulator.engine.simulation.exceptions;
 using UltimateBattleSimulator.interfaces;
 
 namespace UltimateBattleSimulator.engine.simulation
@@ -41,11 +42,18 @@ namespace UltimateBattleSimulator.engine.simulation
 
         public async Task<BattleResult> StartAsync(CancellationToken cancellationToken) 
         {
-            await Task.Delay(Random.Shared.Next(2500), cancellationToken);
+            await Task.Delay(100, cancellationToken);
 
             var taskResult = await Task.Run<BattleResult>(() => 
             {
-                return Start();
+                try
+                {
+                    return Start();
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
             }, cancellationToken);
             // Raise the event when done
             OnBattleCompleted(taskResult);
@@ -60,12 +68,19 @@ namespace UltimateBattleSimulator.engine.simulation
             var ally = _Armies.Where(army => army.ArmySide == ArmySide.Ally).ToList();
             var enemy = _Armies.Where(army => army.ArmySide == ArmySide.Enemy).ToList();
 
+            //Count amounts
+            battleResult.TotalAmountAlly = ally.Select(a => a.Amount).Sum();
+            battleResult.TotalAmountEnemy = enemy.Select(a => a.Amount).Sum();
+
+            //Luck Rools here
+            battleResult.LuckAlly = Dice_1k100.Roll(false);
+            battleResult.LuckEnemy = Dice_1k100.Roll(false);
+
+            //Rools here
             int roll  =  0;
             int count = 0;
             foreach (var army in _Armies)
-            {
-                battleResult.Losses.Add(army, 0);
-
+            { 
                 roll = Dice_1k6.Roll();
                 battleResult.Rools.Add(army, roll);
 
@@ -74,9 +89,6 @@ namespace UltimateBattleSimulator.engine.simulation
             }
 
             //Battle here
-            battleResult.LuckAlly = Dice_1k100.Roll(false);
-            battleResult.LuckEnemy = Dice_1k100.Roll(false);
-
             battleResult.ConfidenceLevel = Random.Shared.NextDouble();
 
             if (Dice_1k6.Roll() > 2)
@@ -89,13 +101,15 @@ namespace UltimateBattleSimulator.engine.simulation
             }
 
             //Calculate looles 
-            var losses = new Dictionary<IArmy, int>();
             IArmy? a = null;
             foreach (var army in _Armies) 
             {
                 a = _Armies.Find(a => a.GUID == army.GUID);
-                losses.Add(army, (a?.Amount ?? 0) - _ArmiesAmounts[army]);
+                battleResult.Losses.Add(army, (a?.Amount ?? 0) - _ArmiesAmounts[army]);
             }
+
+            //Postproccesing
+            battleResult.Postproccesing();
 
             return battleResult;
         }

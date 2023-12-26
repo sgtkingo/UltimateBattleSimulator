@@ -12,6 +12,7 @@ using UltimateBattleSimulator.engine.army;
 using UltimateBattleSimulator.engine.defence;
 using UltimateBattleSimulator.engine.defence.types;
 using UltimateBattleSimulator.engine.global;
+using UltimateBattleSimulator.engine.simulation;
 using UltimateBattleSimulator.engine.units;
 using UltimateBattleSimulator.interfaces;
 using UltimateBattleSimulator.UI.forms;
@@ -601,6 +602,12 @@ namespace UltimateBattleSimulator.UI
         {
             var form = new SimulatorForm();
             form.ShowDialog(this);
+        }
+
+        private void UTBS_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //TODO: Dispose all objects
+            Simulator.Dispose();
         }
     }
 }

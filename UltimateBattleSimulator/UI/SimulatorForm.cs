@@ -75,6 +75,14 @@ namespace UltimateBattleSimulator.UI
                 MessageBox.Show("Simulation STOP!");
                 Restart();
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"{ex.Message} | {ex.Source}");
+                _cts.Cancel();
+
+                await Task.Delay(100); 
+                Restart();
+            }
         }
 
         private void StopSimulation()
