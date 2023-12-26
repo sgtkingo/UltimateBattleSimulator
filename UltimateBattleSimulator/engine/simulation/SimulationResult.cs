@@ -118,6 +118,7 @@ namespace UltimateBattleSimulator.engine.simulation
                 this.ConfidenceLevel = this.Winner == ArmySide.Ally ? (double)this.AllyWins / this.TotalBattles : (double)this.EnemyWins / this.TotalBattles;
                 this.ConfidenceLevel *= 100;
 
+                //TODO: Error is here when some side doent win!!!
                 this.AllyWinsConfidence = results.Where(r => r.Winner == ArmySide.Ally).Select(r => r.ConfidenceLevel).Average() * 100;
                 this.EnemyWinsConfidence = results.Where(r => r.Winner == ArmySide.Enemy).Select(r => r.ConfidenceLevel).Average() * 100;
 

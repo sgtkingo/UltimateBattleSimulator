@@ -125,7 +125,7 @@ namespace UltimateBattleSimulator.engine.simulation
 
             //With confidence
             int totalSurvivals = _ArmiesStatus.Where(kv => kv.Value.Army?.ArmySide == battleResult.Winner).Select(kv => kv.Value.Amount).Sum();
-            battleResult.ConfidenceLevel = battleResult.Winner == ArmySide.Ally ? totalSurvivals / battleResult.TotalAmountAlly : totalSurvivals / battleResult.TotalAmountEnemy;
+            battleResult.ConfidenceLevel = battleResult.Winner == ArmySide.Ally ? ((double)totalSurvivals / battleResult.TotalAmountAlly) : ((double)totalSurvivals / battleResult.TotalAmountEnemy);
 
             //Calculate looses 
             foreach (var army in _ArmiesStatus.Keys) 
