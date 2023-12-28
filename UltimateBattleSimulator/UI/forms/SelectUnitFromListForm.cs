@@ -12,9 +12,9 @@ using UltimateBattleSimulator.interfaces;
 
 namespace UltimateBattleSimulator.UI.forms
 {
-    public partial class SelectUnitForm : Form
+    public partial class SelectUnitFromListForm : Form
     {
-        public SelectUnitForm()
+        public SelectUnitFromListForm()
         {
             InitializeComponent();
         }

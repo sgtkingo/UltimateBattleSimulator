@@ -15,13 +15,24 @@ namespace UltimateBattleSimulator.engine.units.types
         {
             get
             {
-                return this.AttackNumber * this.DefenceNumber * (this.Iniciative + this.Move);
+                int force = base.Force;
+                force += (this.AttackNumber * (this.HorseMove/this.HorseDefence));
+
+                return force;
             }
         }
 
-        public int HorseLife { get; set; } = 0;
-        public int HorseMove { get; set; } = 0;
-        public int HorseDefence { get; set; } = 0;
+        public override int Vitality
+        {
+            get
+            {
+                return base.Vitality + this.HorseLife;
+            }
+        }
+
+        public int HorseLife { get; set; } = 1;
+        public int HorseMove { get; set; } = 1;
+        public int HorseDefence { get; set; } = 1;
 
         public UnitCavarly() : base() 
         {
@@ -42,19 +53,6 @@ namespace UltimateBattleSimulator.engine.units.types
             clone.HorseMove = this.HorseMove;
 
             return clone;
-        }
-
-        public override void Save()
-        {
-            var jsonSerializerOptions = new JsonSerializerOptions()
-            {
-                AllowTrailingCommas = true,
-                WriteIndented = true
-            };
-
-            string jsonString = JsonSerializer.Serialize(this, jsonSerializerOptions);
-            string filePath = $"{DirectoryManager.Units}/{GUID}.json";
-            File.WriteAllText(filePath, jsonString);
         }
     }
 }

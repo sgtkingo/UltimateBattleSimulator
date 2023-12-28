@@ -40,16 +40,11 @@ namespace UltimateBattleSimulator.UI.forms
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            if( Defence == null ) 
-            {
-                this.DialogResult = DialogResult.Cancel;    
-            }
-            else
+            if( Defence != null ) 
             {
                 this.DialogResult = DialogResult.OK;
+                this.Close();
             }
-
-            this.Close();
         }
     }
 }

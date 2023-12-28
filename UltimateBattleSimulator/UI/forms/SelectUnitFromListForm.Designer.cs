@@ -1,6 +1,6 @@
 ﻿namespace UltimateBattleSimulator.UI.forms
 {
-    partial class SelectUnitForm
+    partial class SelectUnitFromListForm
     {
         /// <summary>
         /// Required designer variable.
@@ -64,7 +64,7 @@
             buttonSelect.UseVisualStyleBackColor = false;
             buttonSelect.Click += buttonSelect_Click;
             // 
-            // SelectUnitForm
+            // SelectUnitFromListForm
             // 
             AcceptButton = buttonSelect;
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -75,9 +75,9 @@
             Controls.Add(checkedListBoxUnits);
             FormBorderStyle = FormBorderStyle.FixedToolWindow;
             MaximizeBox = false;
-            Name = "SelectUnitForm";
+            Name = "SelectUnitFromListForm";
             StartPosition = FormStartPosition.CenterParent;
-            Text = "Select Unit";
+            Text = "Select Unit From List";
             Load += SelectUnitForm_Load;
             ResumeLayout(false);
         }

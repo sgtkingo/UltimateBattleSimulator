@@ -13,6 +13,7 @@ using UltimateBattleSimulator.engine.defence;
 using UltimateBattleSimulator.engine.defence.types;
 using UltimateBattleSimulator.engine.global;
 using UltimateBattleSimulator.engine.simulation;
+using UltimateBattleSimulator.engine.system;
 using UltimateBattleSimulator.engine.units;
 using UltimateBattleSimulator.interfaces;
 using UltimateBattleSimulator.UI.forms;
@@ -32,6 +33,7 @@ namespace UltimateBattleSimulator.UI
 
         private void UTBS_Load(object sender, EventArgs e)
         {
+            DirectoryManager.InitDirectories();
             Init();
         }
 
@@ -152,9 +154,22 @@ namespace UltimateBattleSimulator.UI
             Refresh(dataGridViewUnits, bindingSourceUnits);
         }
 
+        private IUnit? CreateUnit()
+        {
+            var form = new CreateUnitForm();
+            if( form.ShowDialog(this) == DialogResult.OK ) 
+            {
+                return form.Unit;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         private void newToolStripButtonUnits_Click(object sender, EventArgs e)
         {
-            var unit = UnitFactory.Create(UnitType.None);
+            var unit = CreateUnit();
 
             var result = OpenObject(unit, new UnitForm());
             if (result == DialogResult.OK)
@@ -253,7 +268,7 @@ namespace UltimateBattleSimulator.UI
 
         private void toolStripButtonUnitsFromLoadedList_Click(object sender, EventArgs e)
         {
-            var form = new SelectUnitForm();
+            var form = new SelectUnitFromListForm();
             if (form.ShowDialog(this) == DialogResult.OK)
             {
                 BindUnits(false, true);

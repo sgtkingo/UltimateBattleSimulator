@@ -126,11 +126,16 @@ namespace UltimateBattleSimulator.engine.simulation
             //With confidence
             int totalSurvivals = _ArmiesStatus.Where(kv => kv.Value.Army?.ArmySide == battleResult.Winner).Select(kv => kv.Value.Amount).Sum();
             battleResult.ConfidenceLevel = battleResult.Winner == ArmySide.Ally ? ((double)totalSurvivals / battleResult.TotalAmountAlly) : ((double)totalSurvivals / battleResult.TotalAmountEnemy);
+            if( battleResult.ConfidenceLevel == 0) 
+            {
+                battleResult.Winner = ArmySide.None;
+            }
 
             //Calculate looses 
             foreach (var army in _ArmiesStatus.Keys) 
             {
                 battleResult.Losses.Add(army, _ArmiesStatus[army].GetLooses);
+                battleResult.Survivals.Add(army, _ArmiesStatus[army].Amount);
             }
 
             //Postproccesing
@@ -143,6 +148,8 @@ namespace UltimateBattleSimulator.engine.simulation
         {
             int rollAlly = 0;
             int rollEnemy = 0;
+
+            int roll = 0;
             int count = 0;
 
             int forceAlly = 0;
@@ -152,34 +159,38 @@ namespace UltimateBattleSimulator.engine.simulation
             {
                 //Rools here
                 //Ally
-                rollAlly = Dice_1k6.RollX(_ArmiesStatus[ally].Amount);
-                battleResult.Rools[ally].Add(rollAlly);
-                count = Dice_1k6.GetRoolsCount(rollAlly);
-                battleResult.RoolsCount[ally].Add(count);
+                for (int i = 0; i < _ArmiesStatus[ally].Amount; i++)
+                {
+                    roll = Dice_1k6.Roll();
+                    count = Dice_1k6.GetRoolsCount(roll);
+
+                    battleResult.Rools[ally].Add(roll);
+                    battleResult.RoolsCount[ally].Add(count);
+
+                    rollAlly += roll;
+                }
 
                 //Enemy
-                rollEnemy = Dice_1k6.RollX(_ArmiesStatus[enemy].Amount);
-                battleResult.Rools[enemy].Add(rollEnemy);
-                count = Dice_1k6.GetRoolsCount(rollEnemy);
-                battleResult.RoolsCount[enemy].Add(count);
+                for (int i = 0; i < _ArmiesStatus[enemy].Amount; i++)
+                {
+                    roll = Dice_1k6.Roll();
+                    count = Dice_1k6.GetRoolsCount(roll);
+
+                    battleResult.Rools[enemy].Add(roll);
+                    battleResult.RoolsCount[enemy].Add(count);
+
+                    rollEnemy += roll;
+                }
 
                 //Fight here
-                forceAlly = ally.Force + rollAlly + (int)(battleResult.LuckAlly * ally.Force);
-                forceEnemy = enemy.Force + rollEnemy + (int)(battleResult.LuckEnemy * enemy.Force);
+                forceAlly = ally.Force + rollAlly;
+                forceAlly += (int)(battleResult.LuckAlly * forceAlly);
 
-                int hitAmout = 0;
-                if (forceAlly > forceEnemy ) 
-                {
-                    hitAmout = (int)(Math.Ceiling((double)forceAlly / forceEnemy));
-                    _ArmiesStatus[enemy].Amount -= hitAmout;
-                    _ArmiesStatus[ally].Amount -= 1;
-                }
-                else 
-                {
-                    hitAmout = (int)(Math.Ceiling((double)forceEnemy / forceAlly));
-                    _ArmiesStatus[ally].Amount -= hitAmout;
-                    _ArmiesStatus[enemy].Amount -= 1;
-                }
+                forceEnemy = enemy.Force + rollEnemy;
+                forceEnemy += (int)(battleResult.LuckEnemy * forceEnemy);
+
+                _ArmiesStatus[ally].Hit(forceEnemy);
+                _ArmiesStatus[enemy].Hit(forceAlly);
             }
         }
 

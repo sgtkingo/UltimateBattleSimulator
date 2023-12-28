@@ -27,6 +27,8 @@ namespace UltimateBattleSimulator.interfaces
         public int Force { get; }
 
         public int Amount { get; }
+        public int Vitality { get; }
+
 
         public int MinimalAmoutToFight { get; }
 

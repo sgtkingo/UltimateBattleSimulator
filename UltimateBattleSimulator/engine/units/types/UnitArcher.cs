@@ -15,17 +15,21 @@ namespace UltimateBattleSimulator.engine.units.types
         {
             get
             {
-                return this.AttackNumber * this.DefenceNumber * (this.Iniciative + this.Move);
+                int force = base.Force;
+                force += (this.RangeAttack * 2 * (int)((double)this.Range / 50));
+
+                return force;
             }
         }
 
-        public int Range { get; set; } = 0;
-        public int RangeAttack { get; set; } = 0;
+        public int Range { get; set; } = 1;
+        public int RangeAttack { get; set; } = 1;
 
         public UnitArcher() : base()
         {
             UnitType = UnitType.Archers;
         }
+
         public UnitArcher(UnitPrototype prototype) : base(prototype)
         {
             UnitType = UnitType.Archers;
@@ -38,19 +42,6 @@ namespace UltimateBattleSimulator.engine.units.types
             clone.Range = Range;
 
             return clone;
-        }
-
-        public override void Save()
-        {
-            var jsonSerializerOptions = new JsonSerializerOptions()
-            {
-                AllowTrailingCommas = true,
-                WriteIndented = true
-            };
-
-            string jsonString = JsonSerializer.Serialize(this, jsonSerializerOptions);
-            string filePath = $"{DirectoryManager.Units}/{GUID}.json";
-            File.WriteAllText(filePath, jsonString);
         }
     }
 }

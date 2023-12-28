@@ -29,7 +29,7 @@ namespace UltimateBattleSimulator.engine.army
 
         public IDefence? Defence { get; set; } = null;
 
-        private int _amount = 0;
+        private int _amount = 1;
         public int Amount 
         {
             get 
@@ -50,6 +50,14 @@ namespace UltimateBattleSimulator.engine.army
             get
             {
                 return (Unit?.Force ?? 0) * Amount;
+            }
+        }
+
+        public int Vitality 
+        {
+            get 
+            {
+                return (Unit?.Vitality ?? 0) * Amount;
             }
         }
 

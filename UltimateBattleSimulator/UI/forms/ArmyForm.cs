@@ -144,12 +144,8 @@ namespace UltimateBattleSimulator.UI.forms
             {
                 if ( !Army.SetDefence(form.Defence) )
                 {
-                    error = "Can assigne unit to defence position, out of free space!";
+                    error = "Cant assigne unit to defence position, out of free space!";
                 }
-            }
-            else 
-            {
-                error = "None position selected..."; 
             }
 
             return error;

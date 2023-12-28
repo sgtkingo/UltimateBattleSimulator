@@ -21,16 +21,35 @@ namespace UltimateBattleSimulator.engine.units.types
         {
             get
             {
-                return AttackNumber * DefenceNumber;
+                int force =  this.AttackNumber * this.DefenceNumber * (this.Iniciative + this.Move);
+                force += (int)(force * LevelBonus);
+
+                return force;
             }
         }
 
-        public int AttackNumber { get; set; } = 0;
-        public int DefenceNumber { get; set; } = 0;
+        public virtual int Vitality
+        {
+            get 
+            {
+                return Life;
+            }
+        }
+
+        public double LevelBonus
+        {
+            get
+            {
+                return (double)this.Level / (IUnit.MaxLevel/2);
+            }
+        }
+
+        public int AttackNumber { get; set; } = 1;
+        public int DefenceNumber { get; set; } = 1;
         public int Iniciative { get; set; } = 0;
-        public int Life { get; set; } = 0;
-        public int Level { get; set; } = 0;
-        public int Move { get; set; } = 0;
+        public int Life { get; set; } = 1;
+        public int Level { get; set; } = 1;
+        public int Move { get; set; } = 1;
 
         public bool IsSelected { get; set; } = true;
         public bool IsLoadedFromFile { get; set; } = false;
@@ -99,7 +118,7 @@ namespace UltimateBattleSimulator.engine.units.types
 
         public override string ToString()
         {
-            return $"[{UnitType}] | {Name} ({Force})";
+            return $"{Name} ({Force}) | [{UnitType}]";
         }
     }
 }

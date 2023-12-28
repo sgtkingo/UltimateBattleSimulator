@@ -31,7 +31,7 @@
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UTBS));
             menuStripMain = new MenuStrip();
-            unitsToolStripMenuItem = new ToolStripMenuItem();
+            managersToolStripMenuItem = new ToolStripMenuItem();
             simulationToolStripMenuItem = new ToolStripMenuItem();
             globalToolStripMenuItem = new ToolStripMenuItem();
             tabControlMain = new TabControl();
@@ -130,6 +130,8 @@
             openFileDialog = new OpenFileDialog();
             bindingSourceArmies = new BindingSource(components);
             bindingSourceDefence = new BindingSource(components);
+            exportToolStripMenuItem = new ToolStripMenuItem();
+            importToolStripMenuItem = new ToolStripMenuItem();
             menuStripMain.SuspendLayout();
             tabControlMain.SuspendLayout();
             tabPageUnits.SuspendLayout();
@@ -161,18 +163,18 @@
             // 
             // menuStripMain
             // 
-            menuStripMain.Items.AddRange(new ToolStripItem[] { unitsToolStripMenuItem, simulationToolStripMenuItem, globalToolStripMenuItem });
+            menuStripMain.Items.AddRange(new ToolStripItem[] { managersToolStripMenuItem, simulationToolStripMenuItem, globalToolStripMenuItem, exportToolStripMenuItem, importToolStripMenuItem });
             menuStripMain.Location = new Point(0, 0);
             menuStripMain.Name = "menuStripMain";
             menuStripMain.Size = new Size(784, 24);
             menuStripMain.TabIndex = 1;
             menuStripMain.Text = "menuStripMain";
             // 
-            // unitsToolStripMenuItem
+            // managersToolStripMenuItem
             // 
-            unitsToolStripMenuItem.Name = "unitsToolStripMenuItem";
-            unitsToolStripMenuItem.Size = new Size(46, 20);
-            unitsToolStripMenuItem.Text = "Units";
+            managersToolStripMenuItem.Name = "managersToolStripMenuItem";
+            managersToolStripMenuItem.Size = new Size(71, 20);
+            managersToolStripMenuItem.Text = "Managers";
             // 
             // simulationToolStripMenuItem
             // 
@@ -1039,6 +1041,18 @@
             openFileDialog.RestoreDirectory = true;
             openFileDialog.Title = "Select file to open";
             // 
+            // exportToolStripMenuItem
+            // 
+            exportToolStripMenuItem.Name = "exportToolStripMenuItem";
+            exportToolStripMenuItem.Size = new Size(53, 20);
+            exportToolStripMenuItem.Text = "Export";
+            // 
+            // importToolStripMenuItem
+            // 
+            importToolStripMenuItem.Name = "importToolStripMenuItem";
+            importToolStripMenuItem.Size = new Size(55, 20);
+            importToolStripMenuItem.Text = "Import";
+            // 
             // UTBS
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1097,7 +1111,7 @@
 
         #endregion
         private MenuStrip menuStripMain;
-        private ToolStripMenuItem unitsToolStripMenuItem;
+        private ToolStripMenuItem managersToolStripMenuItem;
         private ToolStripMenuItem simulationToolStripMenuItem;
         private ToolStripMenuItem globalToolStripMenuItem;
         private TabControl tabControlMain;
@@ -1196,5 +1210,7 @@
         private Button buttonHelpWeatherConfig;
         private Label labelWeatherPenalty;
         private Label labelLandPenalty;
+        private ToolStripMenuItem exportToolStripMenuItem;
+        private ToolStripMenuItem importToolStripMenuItem;
     }
 }

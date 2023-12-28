@@ -35,7 +35,14 @@ namespace UltimateBattleSimulator.engine.units
 
             string jsonString = JsonSerializer.Serialize(unit, jsonSerializerOptions);
             string filePath = $"{DirectoryManager.Units}/{unit.GUID}.json";
-            File.WriteAllText(filePath, jsonString);
+            try
+            {
+                File.WriteAllText(filePath, jsonString);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
         public static IUnit? LoadFromJsonFile(string jsonFile)
@@ -67,7 +74,14 @@ namespace UltimateBattleSimulator.engine.units
         public static void DeleteAsJsonFile(IUnit unit) 
         {
             string filePath = $"{DirectoryManager.Units}/{unit.GUID}.json";
-            File.Delete(filePath);
+            try
+            {
+                File.Delete(filePath);
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

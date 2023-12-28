@@ -76,8 +76,15 @@ namespace UltimateBattleSimulator.UI.forms
 
         private void buttonSave_Click(object sender, EventArgs e)
         {
-            this.DialogResult = DialogResult.OK;
-            this.Close();
+            if( Group.Unit != null ) 
+            {
+                this.DialogResult = DialogResult.OK;
+                this.Close();
+            }
+            else 
+            {
+                MessageBox.Show("Select unit first!", "Select unit", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
     }
 }

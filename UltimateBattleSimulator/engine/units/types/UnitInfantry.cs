@@ -15,7 +15,7 @@ namespace UltimateBattleSimulator.engine.units.types
         {
             get
             {
-                return this.AttackNumber * this.DefenceNumber * (this.Iniciative + this.Move);
+                return base.Force;
             }
         }
 
@@ -35,19 +35,6 @@ namespace UltimateBattleSimulator.engine.units.types
             var clone = new UnitInfantry(prototype);
 
             return clone;
-        }
-
-        public override void Save()
-        {
-            var jsonSerializerOptions = new JsonSerializerOptions()
-            {
-                AllowTrailingCommas = true,
-                WriteIndented = true
-            };
-
-            string jsonString = JsonSerializer.Serialize(this, jsonSerializerOptions);
-            string filePath = $"{DirectoryManager.Units}/{GUID}.json";
-            File.WriteAllText(filePath, jsonString);
         }
     }
 }

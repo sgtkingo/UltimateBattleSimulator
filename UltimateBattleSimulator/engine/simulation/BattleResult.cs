@@ -17,6 +17,11 @@ namespace UltimateBattleSimulator.engine.simulation
         public int TotalLossesEnemy { get; set; } = 0;
         public int TotalLossesNone { get; set; } = 0;
 
+        public Dictionary<IArmy, int> Survivals { get; private set; } = new Dictionary<IArmy, int>();
+        public int TotalSurvivalsAlly { get; set; } = 0;
+        public int TotalSurvivalsEnemy { get; set; } = 0;
+        public int TotalSurvivalsNone { get; set; } = 0;
+
         public Dictionary<IArmy, List<int>> Rools { get; private set; } = new Dictionary<IArmy, List<int>>();
         public int BestRoolsAlly { get; set; } = 0;
         public int TotalRoolsAlly { get; set; } = 0;
@@ -43,27 +48,22 @@ namespace UltimateBattleSimulator.engine.simulation
         public void Postproccesing()
         {
             //Get rools stats
-            if (Rools.Count != 0)
-            {
-                this.BestRoolsAlly = Rools.Where(kv => kv.Key.ArmySide == ArmySide.Ally).SelectMany(kv => kv.Value).Max();
-                this.BestRoolsEnemy = Rools.Where(kv => kv.Key.ArmySide == ArmySide.Enemy).SelectMany(kv => kv.Value).Max();
+            this.BestRoolsAlly = Rools.Where(kv => kv.Key.ArmySide == ArmySide.Ally).SelectMany(kv => kv.Value).DefaultIfEmpty(0).Max();
+            this.BestRoolsEnemy = Rools.Where(kv => kv.Key.ArmySide == ArmySide.Enemy).SelectMany(kv => kv.Value).DefaultIfEmpty(0).Max();
 
-                this.TotalRoolsAlly = Rools.Where(kv => kv.Key.ArmySide == ArmySide.Ally).SelectMany(kv => kv.Value).Sum();
-                this.TotalRoolsEnemy = Rools.Where(kv => kv.Key.ArmySide == ArmySide.Enemy).SelectMany(kv => kv.Value).Sum();
-            }
+            this.TotalRoolsAlly = Rools.Where(kv => kv.Key.ArmySide == ArmySide.Ally).SelectMany(kv => kv.Value).DefaultIfEmpty(0).Sum();
+            this.TotalRoolsEnemy = Rools.Where(kv => kv.Key.ArmySide == ArmySide.Enemy).SelectMany(kv => kv.Value).DefaultIfEmpty(0).Sum();
 
-            if (RoolsCount.Count != 0)
-            {
-                this.TotalRoolsCountAlly = RoolsCount.Where(kv => kv.Key.ArmySide == ArmySide.Ally).SelectMany(kv => kv.Value).Sum();
-                this.TotalRoolsCountEnemy = RoolsCount.Where(kv => kv.Key.ArmySide == ArmySide.Enemy).SelectMany(kv => kv.Value).Sum();
-            }
+            this.TotalRoolsCountAlly = RoolsCount.Where(kv => kv.Key.ArmySide == ArmySide.Ally).SelectMany(kv => kv.Value).DefaultIfEmpty(0).Sum();
+            this.TotalRoolsCountEnemy = RoolsCount.Where(kv => kv.Key.ArmySide == ArmySide.Enemy).SelectMany(kv => kv.Value).DefaultIfEmpty(0).Sum();
 
             //Get looses
-            if (Losses.Count != 0)
-            {
-                this.TotalLossesAlly = Losses.Where(kv => kv.Key.ArmySide == ArmySide.Ally).Select(kv => kv.Value).Sum();
-                this.TotalLossesEnemy = Losses.Where(kv => kv.Key.ArmySide == ArmySide.Enemy).Select(kv => kv.Value).Sum();
-            }
+            this.TotalLossesAlly = Losses.Where(kv => kv.Key.ArmySide == ArmySide.Ally).Select(kv => kv.Value).DefaultIfEmpty(0).Sum();
+            this.TotalLossesEnemy = Losses.Where(kv => kv.Key.ArmySide == ArmySide.Enemy).Select(kv => kv.Value).DefaultIfEmpty(0).Sum();
+
+            //Get survivals
+            this.TotalSurvivalsAlly = Survivals.Where(kv => kv.Key.ArmySide == ArmySide.Ally).Select(kv => kv.Value).DefaultIfEmpty(0).Sum();
+            this.TotalSurvivalsEnemy = Survivals.Where(kv => kv.Key.ArmySide == ArmySide.Enemy).Select(kv => kv.Value).DefaultIfEmpty(0).Sum();
         }
 
         public override string ToString()

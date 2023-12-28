@@ -36,12 +36,12 @@
             // 
             propertyGrid.Location = new Point(12, 12);
             propertyGrid.Name = "propertyGrid";
-            propertyGrid.Size = new Size(443, 507);
+            propertyGrid.Size = new Size(443, 577);
             propertyGrid.TabIndex = 0;
             // 
             // buttonSave
             // 
-            buttonSave.Location = new Point(273, 538);
+            buttonSave.Location = new Point(273, 595);
             buttonSave.Name = "buttonSave";
             buttonSave.Size = new Size(182, 36);
             buttonSave.TabIndex = 1;
@@ -54,7 +54,7 @@
             AcceptButton = buttonSave;
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(467, 586);
+            ClientSize = new Size(467, 643);
             Controls.Add(buttonSave);
             Controls.Add(propertyGrid);
             FormBorderStyle = FormBorderStyle.FixedToolWindow;

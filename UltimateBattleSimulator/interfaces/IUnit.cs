@@ -30,6 +30,8 @@ namespace UltimateBattleSimulator.interfaces
         public int Move { get; set; }
 
         public int Force { get; }
+        public int Vitality { get; }
+        public double LevelBonus { get; }
 
         public string ToString();
     }

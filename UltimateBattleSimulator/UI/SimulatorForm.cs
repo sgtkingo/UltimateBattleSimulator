@@ -92,7 +92,7 @@ namespace UltimateBattleSimulator.UI
 
         private void ShowResults()
         {
-            labelWinner.Text = $"{Simulator.SimulationResult.Winner} ({Simulator.SimulationResult.ConfidenceLevel:F2} %)";
+            labelWinner.Text = $"{Simulator.SimulationResult.Winner} ({Simulator.SimulationResult.ConfidenceLevel*100:F2} %)";
             labelWins.Text = $"[{Simulator.SimulationResult.AllyWins} : {Simulator.SimulationResult.EnemyWins}]";
 
             //Set tracker bar

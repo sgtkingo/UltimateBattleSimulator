@@ -58,13 +58,15 @@ namespace UltimateBattleSimulator.engine.army.types
         {
             get
             {
-                int _count = 0;
-                foreach (var group in Groups)
-                {
-                    _count += group.Amount;
-                }
+                return Groups.Select(g => g.Amount).DefaultIfEmpty(0).Sum();
+            }
+        }
 
-                return _count;
+        public int Vitality
+        {
+            get
+            {
+                return Groups.Select( g=> g.Vitality ).DefaultIfEmpty(0).Sum();
             }
         }
 
