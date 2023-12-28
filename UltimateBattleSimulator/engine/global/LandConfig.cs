@@ -15,8 +15,8 @@ namespace UltimateBattleSimulator.engine.global
         public int Swamps { get; set; } = 0;
 
         public double GetPenalty()
-        { 
-            return (((double)Terain/MaxValue) + ((double)RiversAndLakes/MaxValue) + ((double)Swamps/MaxValue))/3.0;
+        {
+            return (((double)Terain / MaxValue) + ((double)RiversAndLakes / MaxValue) + ((double)Swamps / MaxValue)) / 3.0;
         }
     }
 }

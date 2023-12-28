@@ -16,7 +16,7 @@ namespace UltimateBattleSimulator.UI
     {
         CancellationTokenSource _cts = new CancellationTokenSource();
 
-        private int maxBattles = 1;
+        private int maxBattles = 100;
         private int progress = 0;
 
         public SimulatorForm()
@@ -92,7 +92,7 @@ namespace UltimateBattleSimulator.UI
 
         private void ShowResults()
         {
-            labelWinner.Text = $"{Simulator.SimulationResult.Winner} ({Simulator.SimulationResult.ConfidenceLevel*100:F2} %)";
+            labelWinner.Text = $"{Simulator.SimulationResult.Winner} ({Simulator.SimulationResult.ConfidenceLevel * 100:F2} %)";
             labelWins.Text = $"[{Simulator.SimulationResult.AllyWins} : {Simulator.SimulationResult.EnemyWins}]";
 
             //Set tracker bar
@@ -136,6 +136,11 @@ namespace UltimateBattleSimulator.UI
             form.SetObject(Simulator.SimulationResult);
 
             form.ShowDialog(this);
+        }
+
+        private void SimulatorForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Simulator.Dispose();
         }
     }
 }

@@ -36,12 +36,19 @@ namespace UltimateBattleSimulator.engine.units.types
 
         public UnitCavarly() : base() 
         {
-            UnitType = UnitType.Cavalerly;
         }
 
         public UnitCavarly(UnitPrototype prototype) : base(prototype)
         {
+        }
+
+        protected override void SetDefault()
+        {
             UnitType = UnitType.Cavalerly;
+
+            SanctionDefence = -0.5;
+            SanctionWeather = -0.1;
+            SanctionLand = -0.5;
         }
 
         public override object Clone()

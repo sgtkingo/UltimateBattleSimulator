@@ -18,9 +18,6 @@ namespace UltimateBattleSimulator.engine.simulation
 
         private Dictionary<IArmy, ArmyStatus> _ArmiesStatus = new Dictionary<IArmy, ArmyStatus>();
 
-        private LandConfig _LandConfig;
-        private WeatherConfig _WeatherConfig;
-
         private Dice Dice_1k6 = new Dice(6);
         private Dice Dice_1k10 = new Dice(10);
         private Dice Dice_1k100 = new Dice(100);
@@ -32,13 +29,10 @@ namespace UltimateBattleSimulator.engine.simulation
             BattleCompleted?.Invoke(this, result);
         }
 
-        public Battle(List<IArmy> armies, LandConfig landConfig, WeatherConfig weatherConfig) 
+        public Battle(List<IArmy> armies) 
         {
             //Create shallow copy
             _ArmiesStatus = armies.ToDictionary(a => a, a => new ArmyStatus(a));
-
-            _LandConfig = landConfig;
-            _WeatherConfig = weatherConfig;
         }
 
         public async Task<BattleResult> StartAsync(CancellationToken cancellationToken) 

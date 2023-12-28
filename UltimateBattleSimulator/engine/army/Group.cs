@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UltimateBattleSimulator.engine.units.types;
 using UltimateBattleSimulator.interfaces;
+using UltimateBattleSimulator.engine.global;
 
 namespace UltimateBattleSimulator.engine.army
 {
@@ -45,11 +46,25 @@ namespace UltimateBattleSimulator.engine.army
             }
         }
 
+        public EnvironmentConfig EnvironmentConfig { get; set; } = EnvironmentManager.GetUsedEnvironment;
+
         public int Force
         {
             get
             {
-                return (Unit?.Force ?? 0) * Amount;
+                int force =  (Unit?.Force ?? 0) * Amount;
+
+                //Apply sancitions
+                force += (int)((Unit?.SanctionDefence ?? 0) * (force * Defence?.RealBonus ?? 0));
+                force += (int)((Unit?.SanctionWeather ?? 0) * EnvironmentConfig.Weather.GetPenalty() * force);
+                force += (int)((Unit?.SanctionLand ?? 0) * EnvironmentConfig.Land.GetPenalty() * force);
+
+                if( force < ((Unit?.Force ?? 0) * 0.10)) 
+                {
+                    force = (int)((Unit?.Force ?? 0) * 0.10);
+                }
+
+                return force;
             }
         }
 

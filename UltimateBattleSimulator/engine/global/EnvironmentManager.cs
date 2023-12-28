@@ -8,18 +8,15 @@ namespace UltimateBattleSimulator.engine.global
 {
     internal static class EnvironmentManager
     {
-        public static WeatherConfig Weather { get; private set; } = new WeatherConfig();
-        public static LandConfig Land { get; private set; } = new LandConfig();
+        public static bool UseEnvironmentConfig { get; set; } = true;
+        public static EnvironmentConfig EnvironmentConfig { get; set; } = new EnvironmentConfig();
 
-        public static double GetPenalty() 
+        public static EnvironmentConfig GetUsedEnvironment 
         {
-            double penalty = Weather.GetPenalty() + Land.GetPenalty();
-            if( penalty > 1.0 ) 
+            get 
             {
-                penalty = 1.0;
+                return UseEnvironmentConfig ? EnvironmentConfig : EnvironmentConfig.Empty;
             }
-
-            return penalty;
         }
     }
 }

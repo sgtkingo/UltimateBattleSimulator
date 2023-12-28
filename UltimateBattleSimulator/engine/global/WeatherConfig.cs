@@ -17,7 +17,7 @@ namespace UltimateBattleSimulator.engine.global
 
         public double GetPenalty()
         {
-            return (((double)Rain / MaxValue) + ((double)Fog / MaxValue) + ((double)Wind / MaxValue) + ((double)Snow / MaxValue))/4.0;
+            return (((double)Rain / MaxValue) + ((double)Fog / MaxValue) + ((double)Wind / MaxValue) + ((double)Snow / MaxValue)) / 4.0;
         }
     }
 }

@@ -21,12 +21,19 @@ namespace UltimateBattleSimulator.engine.units.types
 
         public UnitInfantry()
         {
-            UnitType = UnitType.Infantry;
         }
 
         public UnitInfantry(UnitPrototype prototype) : base(prototype)
         {
+        }
+
+        protected override void SetDefault()
+        {
             UnitType = UnitType.Infantry;
+
+            SanctionDefence = 0.5;
+            SanctionWeather = -0.25;
+            SanctionLand = -0.25;
         }
 
         public override object Clone()

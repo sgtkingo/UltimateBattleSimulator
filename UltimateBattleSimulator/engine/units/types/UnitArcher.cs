@@ -27,12 +27,19 @@ namespace UltimateBattleSimulator.engine.units.types
 
         public UnitArcher() : base()
         {
-            UnitType = UnitType.Archers;
         }
 
         public UnitArcher(UnitPrototype prototype) : base(prototype)
         {
+        }
+
+        protected override void SetDefault()
+        {
             UnitType = UnitType.Archers;
+
+            SanctionDefence = 2.0;
+            SanctionWeather = -2.0;
+            SanctionLand = 0.25;
         }
 
         public override object Clone()

@@ -41,7 +41,7 @@ namespace UltimateBattleSimulator.engine.simulation
 
             for (int i = 0; i < nBattles; i++) 
             {
-                var battle = new Battle(armies, EnvironmentManager.Land, EnvironmentManager.Weather);
+                var battle = new Battle(armies);
                 battle.BattleCompleted += eventHandler;
 
                 battles.Add(battle);

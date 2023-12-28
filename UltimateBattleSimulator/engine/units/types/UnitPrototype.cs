@@ -44,6 +44,10 @@ namespace UltimateBattleSimulator.engine.units.types
             }
         }
 
+        public double SanctionWeather { get; set; } = -0.5;
+        public double SanctionLand { get; set; } = -0.5;
+        public double SanctionDefence { get; set; } = +0.5;
+
         public int AttackNumber { get; set; } = 1;
         public int DefenceNumber { get; set; } = 1;
         public int Iniciative { get; set; } = 0;
@@ -57,7 +61,7 @@ namespace UltimateBattleSimulator.engine.units.types
 
         public UnitPrototype() 
         {
-            UnitType = UnitType.None;
+            SetDefault();
         }
 
         public UnitPrototype(UnitPrototype prototype)
@@ -71,6 +75,22 @@ namespace UltimateBattleSimulator.engine.units.types
             Life = prototype.Life;
             Level = prototype.Level;
             Move = prototype.Move;
+
+
+            SanctionDefence = prototype.SanctionDefence;
+            SanctionLand = prototype.SanctionLand;
+            SanctionWeather = prototype.SanctionWeather;
+
+            SetDefault();
+        }
+
+        protected virtual void SetDefault() 
+        {
+            UnitType = UnitType.None;
+
+            SanctionDefence = 0.5;
+            SanctionWeather = -0.5;
+            SanctionLand = -0.5;
         }
 
         public virtual object Clone()
@@ -88,6 +108,10 @@ namespace UltimateBattleSimulator.engine.units.types
             clone.Life = Life;
             clone.Iniciative = Iniciative;
             clone.Move = Move;
+
+            clone.SanctionDefence = this.SanctionDefence;
+            clone.SanctionLand = this.SanctionLand;
+            clone.SanctionWeather = this.SanctionWeather;
 
             return clone;
         }

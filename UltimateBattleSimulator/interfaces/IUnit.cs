@@ -33,6 +33,10 @@ namespace UltimateBattleSimulator.interfaces
         public int Vitality { get; }
         public double LevelBonus { get; }
 
+        public double SanctionWeather { get; set; }
+        public double SanctionLand { get; set; }
+        public double SanctionDefence { get; set; }
+
         public string ToString();
     }
 }

@@ -228,6 +228,7 @@
             Name = "SimulatorForm";
             StartPosition = FormStartPosition.CenterParent;
             Text = "Simulator";
+            FormClosing += SimulatorForm_FormClosing;
             Load += SimulatorForm_Load;
             groupBoxAllyStats.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dataGridViewAllyStats).EndInit();
