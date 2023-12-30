@@ -4,19 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UltimateBattleSimulator.engine.units.types;
+using UltimateBattleSimulator.engine.units.exceptions;
 using UltimateBattleSimulator.interfaces;
 
 namespace UltimateBattleSimulator.engine.units
 {
     internal static class UnitCreator
     {
-        public static Dictionary<string, IUnit> Units { get; private set; } = new Dictionary<string, IUnit>
-        {
-            { "Infantry", new UnitInfantry() },
-            { "Archers", new UnitArcher() },
-            { "Cavarly", new UnitCavarly() },
-            { "Universal", new UnitPrototype() }
-        };
+        public static string[] UnitsTypeNames { get; private set; } = Enum.GetNames(typeof(UnitType));
 
         public static Dictionary<UnitType, string> TypesDescription { get; private set; } = new Dictionary<UnitType, string>
         {
@@ -28,13 +23,14 @@ namespace UltimateBattleSimulator.engine.units
 
         public static IUnit GetUnitByName(string name)
         {
-            if (Units.ContainsKey(name))
+            try
             {
-                return Units[name];
+                var unitType = (UnitType)Enum.Parse(typeof(UnitType), name);
+                return UnitFactory.Create(unitType) ?? throw new UnknownUnitTypeExceptions();
             }
-            else
+            catch (Exception)
             {
-                throw new KeyNotFoundException();
+                throw;
             }
         }
 

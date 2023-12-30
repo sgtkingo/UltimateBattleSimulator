@@ -28,7 +28,7 @@ namespace UltimateBattleSimulator.UI.forms
 
         private void Init()
         {
-            bindingSourceUnits.DataSource = UnitsManager.Instance.Get(true, true);
+            bindingSourceUnits.DataSource = UnitsManager.Instance.Get(true);
 
             dataGridViewUnits.DataSource = bindingSourceUnits;
             dataGridViewUnits.CurrentCell = null;

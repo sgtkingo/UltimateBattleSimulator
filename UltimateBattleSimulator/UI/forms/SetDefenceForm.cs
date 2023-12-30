@@ -28,19 +28,23 @@ namespace UltimateBattleSimulator.UI.forms
 
         private void Init()
         {
-            dataGridViewDefence.DataSource = DefenceManager.Instance.Get(true, true);
+            bindingSourceDefence.DataSource = DefenceManager.Instance.Get(false);
+            dataGridViewDefence.DataSource = bindingSourceDefence;
+
             dataGridViewDefence.CurrentCell = null;
         }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void bindingSourceDefence_CurrentChanged(object sender, EventArgs e)
         {
-            var row = dataGridViewDefence.Rows[e.RowIndex];
-            Defence = row?.DataBoundItem as IDefence;
+            var defence = bindingSourceDefence.Current;
+            if (defence != null)
+            {
+                Defence = (IDefence)defence;
+            }
         }
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            if( Defence != null ) 
+            if (Defence != null)
             {
                 this.DialogResult = DialogResult.OK;
                 this.Close();

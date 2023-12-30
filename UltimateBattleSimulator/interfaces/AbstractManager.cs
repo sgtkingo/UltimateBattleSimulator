@@ -13,17 +13,12 @@ namespace UltimateBattleSimulator.interfaces
 
         public List<T> Loaded{ get; private set; } = new List<T>();
 
-        public virtual List<T> Get(bool onlySelected = false, bool includeFromFile = false)
+        public virtual List<T> Get(bool includeFromFile = false)
         {
             Temp.RemoveAll(item => item.IsLoadedFromFile);
             if (includeFromFile)
             {
                 Temp.AddRange(Loaded.FindAll(u => u.IsSelected == true));
-            }
-
-            if (onlySelected)
-            {
-                return Temp.FindAll(u => u.IsSelected == true);
             }
             return Temp;
         }

@@ -39,13 +39,13 @@ namespace UltimateBattleSimulator.engine.simulation
         public int AllyAverageLooses { get; private set; } = 0;
         public int AllyWorstLooses { get; private set; } = 0;
         public int AllyAverageSurvivals { get; private set; } = 0;
-        public int AllyWorstSurvivals { get; private set; } = 0;
+        public int AllyBestSurvivals { get; private set; } = 0;
 
         public int EnemyTotalAmount { get; private set; } = 0;
         public int EnemyAverageLooses { get; private set; } = 0;
         public int EnemyWorstLooses { get; private set; } = 0;
         public int EnemyAverageSurvivals { get; private set; } = 0;
-        public int EnemyWorstSurvivals { get; private set; } = 0;
+        public int EnemyBestSurvivals { get; private set; } = 0;
 
         public Dictionary<string, string> AllyStats { get; private set; } = new Dictionary<string, string>();
         public Dictionary<string, string> EnemyStats { get; private set; } = new Dictionary<string, string>();
@@ -84,12 +84,12 @@ namespace UltimateBattleSimulator.engine.simulation
             AllyAverageLooses = 0;
             AllyWorstLooses = 0;
             AllyAverageSurvivals = 0;
-            AllyWorstSurvivals = 0;
+            AllyBestSurvivals = 0;
 
             EnemyAverageLooses = 0;
             EnemyWorstLooses = 0;
             EnemyAverageLooses = 0;
-            EnemyWorstSurvivals = 0;
+            EnemyBestSurvivals = 0;
 
             AllyTotalAmount = 0;
             EnemyTotalAmount = 0;
@@ -148,13 +148,13 @@ namespace UltimateBattleSimulator.engine.simulation
                 this.AllyAverageLooses = (int)results.Select(r => r.TotalLossesAlly).Average();
                 this.AllyWorstLooses = results.Select(r => r.TotalLossesAlly).Max();
                 this.AllyAverageSurvivals = (int)results.Select(r => r.TotalSurvivalsAlly).Average();
-                this.AllyWorstSurvivals = results.Select(r => r.TotalSurvivalsAlly).Max();
+                this.AllyBestSurvivals = results.Select(r => r.TotalSurvivalsAlly).Max();
 
                 this.EnemyTotalAmount = (int)results.Select(r => r.TotalAmountEnemy).Average();
                 this.EnemyAverageLooses = (int)results.Select(r => r.TotalLossesEnemy).Average();
                 this.EnemyWorstLooses = results.Select(r => r.TotalLossesEnemy).Max();
                 this.EnemyAverageSurvivals = (int)results.Select(r => r.TotalSurvivalsEnemy).Average();
-                this.EnemyWorstSurvivals = results.Select(r => r.TotalSurvivalsEnemy).Max();
+                this.EnemyBestSurvivals = results.Select(r => r.TotalSurvivalsEnemy).Max();
             }
             catch (Exception)
             {
@@ -175,6 +175,8 @@ namespace UltimateBattleSimulator.engine.simulation
             AllyStats.Add("Best roll", $"{this.AllyBestRoll}");
             AllyStats.Add("Rolls count", $"{this.AllyRoolsCount}");
             AllyStats.Add("Average survivals", $"{this.AllyAverageSurvivals} / {this.AllyTotalAmount}");
+            AllyStats.Add("Best survivals", $"{this.AllyBestSurvivals} / {this.AllyTotalAmount}");
+            AllyStats.Add("Average looses", $"{this.AllyAverageLooses} / {this.AllyTotalAmount}");
             AllyStats.Add("Worst looses", $"{this.AllyWorstLooses} / {this.AllyTotalAmount}");
             AllyStats.Add("Survived/losses ratio", $"{(double)this.AllyAverageSurvivals / this.AllyTotalAmount}");
 
@@ -188,6 +190,8 @@ namespace UltimateBattleSimulator.engine.simulation
             EnemyStats.Add("Best roll", $"{this.EnemyBestRoll}");
             EnemyStats.Add("Rolls count", $"{this.EnemyRoolsCount}");
             EnemyStats.Add("Average survivals", $"{this.EnemyAverageSurvivals} / {this.EnemyTotalAmount}");
+            EnemyStats.Add("Best survivals", $"{this.EnemyBestSurvivals} / {this.EnemyTotalAmount}");
+            EnemyStats.Add("Average looses", $"{this.EnemyAverageLooses} / {this.EnemyTotalAmount}");
             EnemyStats.Add("Worst looses", $"{this.EnemyWorstLooses} / {this.EnemyTotalAmount}");
             EnemyStats.Add("Survived/losses ratio", $"{(double)this.EnemyAverageSurvivals / this.EnemyTotalAmount}");
         }

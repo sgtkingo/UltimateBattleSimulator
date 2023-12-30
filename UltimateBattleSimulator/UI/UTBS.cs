@@ -138,9 +138,9 @@ namespace UltimateBattleSimulator.UI
             BindUnits();
         }
 
-        private void BindUnits(bool onlySelected = false, bool includeFromFile = false)
+        private void BindUnits(bool includeFromFile = false)
         {
-            bindingSourceUnits.DataSource = UnitsManager.Instance.Get(onlySelected, includeFromFile);
+            bindingSourceUnits.DataSource = UnitsManager.Instance.Get(includeFromFile);
             dataGridViewUnits.DataSource = bindingSourceUnits;
 
             Refresh(dataGridViewUnits, bindingSourceUnits);
@@ -263,7 +263,7 @@ namespace UltimateBattleSimulator.UI
             var form = new SelectUnitFromListForm();
             if (form.ShowDialog(this) == DialogResult.OK)
             {
-                BindUnits(false, true);
+                BindUnits(true);
             }
         }
 
@@ -301,9 +301,9 @@ namespace UltimateBattleSimulator.UI
             BindArmies();
         }
 
-        private void BindArmies(bool onlySelected = false, bool includeFromFile = false)
+        private void BindArmies(bool includeFromFile = false)
         {
-            bindingSourceArmies.DataSource = ArmiesManager.Instance.Get(onlySelected, includeFromFile);
+            bindingSourceArmies.DataSource = ArmiesManager.Instance.Get(includeFromFile);
             dataGridViewArmies.DataSource = bindingSourceArmies;
 
             Refresh(dataGridViewArmies, bindingSourceArmies);
@@ -430,9 +430,9 @@ namespace UltimateBattleSimulator.UI
             BindDefence();
         }
 
-        private void BindDefence(bool onlySelected = false, bool includeFromFile = false)
+        private void BindDefence(bool includeFromFile = false)
         {
-            bindingSourceDefence.DataSource = DefenceManager.Instance.Get(onlySelected, includeFromFile);
+            bindingSourceDefence.DataSource = DefenceManager.Instance.Get(includeFromFile);
             dataGridViewDefence.DataSource = bindingSourceDefence;
 
             Refresh(dataGridViewDefence, bindingSourceDefence);

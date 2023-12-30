@@ -26,11 +26,24 @@ namespace UltimateBattleSimulator.engine.army
             }
         }
 
+        private int _vitality  = 0;
+        private double _vitalityDiv = 0;
         public int Vitality
         {
             get
             {
-                return (int)((double)Army.Vitality * ((double)this.Amount / Army.Amount));
+                return _vitality;
+            }
+            set 
+            {
+                if( value < 0 ) 
+                {
+                    value = 0;
+                }
+                this._vitality = value;
+
+                this._vitalityDiv = ((double)this._vitality) / Army.Vitality;
+                this.Amount -= (int)Math.Ceiling((1.0- this._vitalityDiv) * this.Amount);
             }
         }
 
@@ -64,14 +77,12 @@ namespace UltimateBattleSimulator.engine.army
         {
             Army = army;
             Amount = army.Amount;
+            Vitality = army.Vitality;
         }
-
-        public void Hit(int force) 
+        
+        public void Hit(int hit)
         {
-            double forceDiv = (double)force / this.Force;
-            int hit = (int)Math.Ceiling(forceDiv);
-
-            this.Amount -= hit;
+            Vitality -= hit;
         }
     }
 }

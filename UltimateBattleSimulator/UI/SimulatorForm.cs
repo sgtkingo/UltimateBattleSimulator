@@ -96,7 +96,12 @@ namespace UltimateBattleSimulator.UI
             labelWins.Text = $"[{Simulator.SimulationResult.AllyWins} : {Simulator.SimulationResult.EnemyWins}]";
 
             //Set tracker bar
-            int confidenceLevel = (int)(Simulator.SimulationResult.ConfidenceLevel);
+            int confidenceLevel = (int)(Simulator.SimulationResult.ConfidenceLevel*100);
+            if( Simulator.SimulationResult.Winner == interfaces.ArmySide.None)
+            {
+                confidenceLevel = 0;
+            }
+
             confidenceLevel *= Simulator.SimulationResult.Winner == interfaces.ArmySide.Ally ? -1 : 1;
             trackBarWinnerConfidence.Value = confidenceLevel;
 

@@ -178,14 +178,46 @@ namespace UltimateBattleSimulator.engine.simulation
 
                 //Fight here
                 forceAlly = ally.Force + rollAlly;
-                forceAlly += (int)(battleResult.LuckAlly * forceAlly);
+                forceAlly += (int)(((double)battleResult.LuckAlly/100) * forceAlly);
 
                 forceEnemy = enemy.Force + rollEnemy;
-                forceEnemy += (int)(battleResult.LuckEnemy * forceEnemy);
+                forceEnemy += (int)(((double)battleResult.LuckEnemy / 100) * forceEnemy);
 
-                _ArmiesStatus[ally].Hit(forceEnemy);
-                _ArmiesStatus[enemy].Hit(forceAlly);
+                //Hit calc
+                double amountDiv = 0.0;
+
+                amountDiv = (double)_ArmiesStatus[ally].Amount / _ArmiesStatus[enemy].Amount;
+                int allyHit = Hit(forceAlly, forceEnemy, amountDiv);
+
+                amountDiv = (double)_ArmiesStatus[enemy].Amount / _ArmiesStatus[ally].Amount;
+                int enemyHit = Hit(forceEnemy, forceAlly, amountDiv);
+
+                _ArmiesStatus[ally].Hit(enemyHit);
+                _ArmiesStatus[enemy].Hit(allyHit);
             }
+        }
+
+        private int Hit(int f1, int f2, double amountDiv)
+        {
+            double forceDiv = 0.0;
+
+            if( amountDiv < 0.1)
+            {
+                amountDiv = 0.1; 
+            }
+
+            if( amountDiv < 1.0) 
+            {
+                forceDiv = (double)f1 / (f2*amountDiv);
+            }
+            else 
+            {
+                forceDiv = (double)f1 / f2;
+            }
+
+            int hit = (int)(100 * forceDiv);
+
+            return hit;
         }
 
     }

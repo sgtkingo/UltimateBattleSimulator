@@ -28,7 +28,7 @@ namespace UltimateBattleSimulator.UI.forms
 
         private void Init() 
         {
-            comboBoxUnitTypes.Items.AddRange(UnitCreator.Units.Keys.ToArray());
+            comboBoxUnitTypes.Items.AddRange(UnitCreator.UnitsTypeNames);
             comboBoxUnitTypes.SelectedIndex = 0;
         }
 
