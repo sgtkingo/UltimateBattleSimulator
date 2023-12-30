@@ -32,8 +32,11 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UTBS));
             menuStripMain = new MenuStrip();
             managersToolStripMenuItem = new ToolStripMenuItem();
+            unitsToolStripMenuItem = new ToolStripMenuItem();
             simulationToolStripMenuItem = new ToolStripMenuItem();
             globalToolStripMenuItem = new ToolStripMenuItem();
+            exportToolStripMenuItem = new ToolStripMenuItem();
+            importToolStripMenuItem = new ToolStripMenuItem();
             tabControlMain = new TabControl();
             tabPageUnits = new TabPage();
             groupBoxUnits = new GroupBox();
@@ -106,6 +109,10 @@
             dataGridViewDefence = new DataGridView();
             tabPageEnvironment = new TabPage();
             groupBoxWeather = new GroupBox();
+            labelSnowStatus = new Label();
+            labelFogStatus = new Label();
+            labelWindStatus = new Label();
+            labelRainStatus = new Label();
             labelWeatherPenalty = new Label();
             buttonHelpWeatherConfig = new Button();
             labelSnow = new Label();
@@ -117,6 +124,9 @@
             trackBarWind = new TrackBar();
             trackBarRain = new TrackBar();
             groupBoxLand = new GroupBox();
+            labelSwampsStatus = new Label();
+            labelRiverAndlakesStatus = new Label();
+            labelTerainStatus = new Label();
             labelLandPenalty = new Label();
             buttonHelpLandConfig = new Button();
             labelSwamps = new Label();
@@ -130,8 +140,6 @@
             openFileDialog = new OpenFileDialog();
             bindingSourceArmies = new BindingSource(components);
             bindingSourceDefence = new BindingSource(components);
-            exportToolStripMenuItem = new ToolStripMenuItem();
-            importToolStripMenuItem = new ToolStripMenuItem();
             menuStripMain.SuspendLayout();
             tabControlMain.SuspendLayout();
             tabPageUnits.SuspendLayout();
@@ -172,9 +180,17 @@
             // 
             // managersToolStripMenuItem
             // 
+            managersToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { unitsToolStripMenuItem });
             managersToolStripMenuItem.Name = "managersToolStripMenuItem";
             managersToolStripMenuItem.Size = new Size(71, 20);
             managersToolStripMenuItem.Text = "Managers";
+            // 
+            // unitsToolStripMenuItem
+            // 
+            unitsToolStripMenuItem.Name = "unitsToolStripMenuItem";
+            unitsToolStripMenuItem.Size = new Size(180, 22);
+            unitsToolStripMenuItem.Text = "Units";
+            unitsToolStripMenuItem.Click += unitsToolStripMenuItem_Click;
             // 
             // simulationToolStripMenuItem
             // 
@@ -188,6 +204,18 @@
             globalToolStripMenuItem.Size = new Size(53, 20);
             globalToolStripMenuItem.Text = "Global";
             // 
+            // exportToolStripMenuItem
+            // 
+            exportToolStripMenuItem.Name = "exportToolStripMenuItem";
+            exportToolStripMenuItem.Size = new Size(53, 20);
+            exportToolStripMenuItem.Text = "Export";
+            // 
+            // importToolStripMenuItem
+            // 
+            importToolStripMenuItem.Name = "importToolStripMenuItem";
+            importToolStripMenuItem.Size = new Size(55, 20);
+            importToolStripMenuItem.Text = "Import";
+            // 
             // tabControlMain
             // 
             tabControlMain.Controls.Add(tabPageUnits);
@@ -199,7 +227,6 @@
             tabControlMain.SelectedIndex = 0;
             tabControlMain.Size = new Size(784, 561);
             tabControlMain.TabIndex = 2;
-            tabControlMain.SelectedIndexChanged += tabControlMain_SelectedIndexChanged;
             // 
             // tabPageUnits
             // 
@@ -245,7 +272,7 @@
             // toolStripButtonEditUnits
             // 
             toolStripButtonEditUnits.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButtonEditUnits.Image = (Image)resources.GetObject("toolStripButtonEditUnits.Image");
+            toolStripButtonEditUnits.Image = Properties.Resources.edit;
             toolStripButtonEditUnits.ImageTransparentColor = Color.Magenta;
             toolStripButtonEditUnits.Name = "toolStripButtonEditUnits";
             toolStripButtonEditUnits.Size = new Size(23, 22);
@@ -256,7 +283,7 @@
             // toolStripButtonUnitsFromLoadedList
             // 
             toolStripButtonUnitsFromLoadedList.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButtonUnitsFromLoadedList.Image = (Image)resources.GetObject("toolStripButtonUnitsFromLoadedList.Image");
+            toolStripButtonUnitsFromLoadedList.Image = Properties.Resources.from_list;
             toolStripButtonUnitsFromLoadedList.ImageTransparentColor = Color.Magenta;
             toolStripButtonUnitsFromLoadedList.Name = "toolStripButtonUnitsFromLoadedList";
             toolStripButtonUnitsFromLoadedList.Size = new Size(23, 22);
@@ -271,7 +298,7 @@
             // toolStripButtonDeleteUnits
             // 
             toolStripButtonDeleteUnits.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButtonDeleteUnits.Image = (Image)resources.GetObject("toolStripButtonDeleteUnits.Image");
+            toolStripButtonDeleteUnits.Image = Properties.Resources.delete_icon;
             toolStripButtonDeleteUnits.ImageTransparentColor = Color.Magenta;
             toolStripButtonDeleteUnits.Name = "toolStripButtonDeleteUnits";
             toolStripButtonDeleteUnits.Size = new Size(23, 22);
@@ -282,7 +309,7 @@
             // toolStripButtonDeleteAllUnits
             // 
             toolStripButtonDeleteAllUnits.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButtonDeleteAllUnits.Image = (Image)resources.GetObject("toolStripButtonDeleteAllUnits.Image");
+            toolStripButtonDeleteAllUnits.Image = Properties.Resources.delete_all_icon;
             toolStripButtonDeleteAllUnits.ImageTransparentColor = Color.Magenta;
             toolStripButtonDeleteAllUnits.Name = "toolStripButtonDeleteAllUnits";
             toolStripButtonDeleteAllUnits.Size = new Size(23, 22);
@@ -307,7 +334,7 @@
             // toolStripButtonSaveAllUnits
             // 
             toolStripButtonSaveAllUnits.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButtonSaveAllUnits.Image = (Image)resources.GetObject("toolStripButtonSaveAllUnits.Image");
+            toolStripButtonSaveAllUnits.Image = Properties.Resources.document_save_icon;
             toolStripButtonSaveAllUnits.ImageTransparentColor = Color.Magenta;
             toolStripButtonSaveAllUnits.Name = "toolStripButtonSaveAllUnits";
             toolStripButtonSaveAllUnits.Size = new Size(23, 22);
@@ -331,7 +358,7 @@
             // toolStripButtonRefreshUnits
             // 
             toolStripButtonRefreshUnits.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButtonRefreshUnits.Image = (Image)resources.GetObject("toolStripButtonRefreshUnits.Image");
+            toolStripButtonRefreshUnits.Image = Properties.Resources.refresh_icon;
             toolStripButtonRefreshUnits.ImageTransparentColor = Color.Magenta;
             toolStripButtonRefreshUnits.Name = "toolStripButtonRefreshUnits";
             toolStripButtonRefreshUnits.Size = new Size(23, 22);
@@ -386,7 +413,7 @@
             // toolStripButtonUnitsHide
             // 
             toolStripButtonUnitsHide.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButtonUnitsHide.Image = (Image)resources.GetObject("toolStripButtonUnitsHide.Image");
+            toolStripButtonUnitsHide.Image = Properties.Resources.hide_icon;
             toolStripButtonUnitsHide.ImageTransparentColor = Color.Magenta;
             toolStripButtonUnitsHide.Name = "toolStripButtonUnitsHide";
             toolStripButtonUnitsHide.Size = new Size(23, 22);
@@ -451,7 +478,7 @@
             // toolStripButtonArmiesEdit
             // 
             toolStripButtonArmiesEdit.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButtonArmiesEdit.Image = (Image)resources.GetObject("toolStripButtonArmiesEdit.Image");
+            toolStripButtonArmiesEdit.Image = Properties.Resources.edit;
             toolStripButtonArmiesEdit.ImageTransparentColor = Color.Magenta;
             toolStripButtonArmiesEdit.Name = "toolStripButtonArmiesEdit";
             toolStripButtonArmiesEdit.Size = new Size(23, 22);
@@ -462,7 +489,7 @@
             // toolStripButtonArmiesFromList
             // 
             toolStripButtonArmiesFromList.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButtonArmiesFromList.Image = (Image)resources.GetObject("toolStripButtonArmiesFromList.Image");
+            toolStripButtonArmiesFromList.Image = Properties.Resources.from_list;
             toolStripButtonArmiesFromList.ImageTransparentColor = Color.Magenta;
             toolStripButtonArmiesFromList.Name = "toolStripButtonArmiesFromList";
             toolStripButtonArmiesFromList.Size = new Size(23, 22);
@@ -477,7 +504,7 @@
             // toolStripButtonArmiesDelete
             // 
             toolStripButtonArmiesDelete.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButtonArmiesDelete.Image = (Image)resources.GetObject("toolStripButtonArmiesDelete.Image");
+            toolStripButtonArmiesDelete.Image = Properties.Resources.delete_icon;
             toolStripButtonArmiesDelete.ImageTransparentColor = Color.Magenta;
             toolStripButtonArmiesDelete.Name = "toolStripButtonArmiesDelete";
             toolStripButtonArmiesDelete.Size = new Size(23, 22);
@@ -488,7 +515,7 @@
             // toolStripButtonArmiesDeleteAll
             // 
             toolStripButtonArmiesDeleteAll.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButtonArmiesDeleteAll.Image = (Image)resources.GetObject("toolStripButtonArmiesDeleteAll.Image");
+            toolStripButtonArmiesDeleteAll.Image = Properties.Resources.delete_all_icon;
             toolStripButtonArmiesDeleteAll.ImageTransparentColor = Color.Magenta;
             toolStripButtonArmiesDeleteAll.Name = "toolStripButtonArmiesDeleteAll";
             toolStripButtonArmiesDeleteAll.Size = new Size(23, 22);
@@ -513,7 +540,7 @@
             // toolStripButtonArmiesSaveAll
             // 
             toolStripButtonArmiesSaveAll.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButtonArmiesSaveAll.Image = (Image)resources.GetObject("toolStripButtonArmiesSaveAll.Image");
+            toolStripButtonArmiesSaveAll.Image = Properties.Resources.document_save_icon;
             toolStripButtonArmiesSaveAll.ImageTransparentColor = Color.Magenta;
             toolStripButtonArmiesSaveAll.Name = "toolStripButtonArmiesSaveAll";
             toolStripButtonArmiesSaveAll.Size = new Size(23, 22);
@@ -537,7 +564,7 @@
             // toolStripButtonArmiesRefresh
             // 
             toolStripButtonArmiesRefresh.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButtonArmiesRefresh.Image = (Image)resources.GetObject("toolStripButtonArmiesRefresh.Image");
+            toolStripButtonArmiesRefresh.Image = Properties.Resources.refresh_icon;
             toolStripButtonArmiesRefresh.ImageTransparentColor = Color.Magenta;
             toolStripButtonArmiesRefresh.Name = "toolStripButtonArmiesRefresh";
             toolStripButtonArmiesRefresh.Size = new Size(23, 22);
@@ -592,7 +619,7 @@
             // toolStripButtonArmiesHide
             // 
             toolStripButtonArmiesHide.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButtonArmiesHide.Image = (Image)resources.GetObject("toolStripButtonArmiesHide.Image");
+            toolStripButtonArmiesHide.Image = Properties.Resources.hide_icon;
             toolStripButtonArmiesHide.ImageTransparentColor = Color.Magenta;
             toolStripButtonArmiesHide.Name = "toolStripButtonArmiesHide";
             toolStripButtonArmiesHide.Size = new Size(23, 22);
@@ -657,7 +684,7 @@
             // toolStripButtonDefenceEdit
             // 
             toolStripButtonDefenceEdit.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButtonDefenceEdit.Image = (Image)resources.GetObject("toolStripButtonDefenceEdit.Image");
+            toolStripButtonDefenceEdit.Image = Properties.Resources.edit;
             toolStripButtonDefenceEdit.ImageTransparentColor = Color.Magenta;
             toolStripButtonDefenceEdit.Name = "toolStripButtonDefenceEdit";
             toolStripButtonDefenceEdit.Size = new Size(23, 22);
@@ -668,7 +695,7 @@
             // toolStripButtonDefenceFromList
             // 
             toolStripButtonDefenceFromList.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButtonDefenceFromList.Image = (Image)resources.GetObject("toolStripButtonDefenceFromList.Image");
+            toolStripButtonDefenceFromList.Image = Properties.Resources.from_list;
             toolStripButtonDefenceFromList.ImageTransparentColor = Color.Magenta;
             toolStripButtonDefenceFromList.Name = "toolStripButtonDefenceFromList";
             toolStripButtonDefenceFromList.Size = new Size(23, 22);
@@ -683,7 +710,7 @@
             // toolStripButtonDefenceDelete
             // 
             toolStripButtonDefenceDelete.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButtonDefenceDelete.Image = (Image)resources.GetObject("toolStripButtonDefenceDelete.Image");
+            toolStripButtonDefenceDelete.Image = Properties.Resources.delete_icon;
             toolStripButtonDefenceDelete.ImageTransparentColor = Color.Magenta;
             toolStripButtonDefenceDelete.Name = "toolStripButtonDefenceDelete";
             toolStripButtonDefenceDelete.Size = new Size(23, 22);
@@ -694,7 +721,7 @@
             // toolStripButtonDefenceDeleteAll
             // 
             toolStripButtonDefenceDeleteAll.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButtonDefenceDeleteAll.Image = (Image)resources.GetObject("toolStripButtonDefenceDeleteAll.Image");
+            toolStripButtonDefenceDeleteAll.Image = Properties.Resources.delete_all_icon;
             toolStripButtonDefenceDeleteAll.ImageTransparentColor = Color.Magenta;
             toolStripButtonDefenceDeleteAll.Name = "toolStripButtonDefenceDeleteAll";
             toolStripButtonDefenceDeleteAll.Size = new Size(23, 22);
@@ -719,7 +746,7 @@
             // toolStripButtonDefenceSaveAll
             // 
             toolStripButtonDefenceSaveAll.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButtonDefenceSaveAll.Image = (Image)resources.GetObject("toolStripButtonDefenceSaveAll.Image");
+            toolStripButtonDefenceSaveAll.Image = Properties.Resources.document_save_icon;
             toolStripButtonDefenceSaveAll.ImageTransparentColor = Color.Magenta;
             toolStripButtonDefenceSaveAll.Name = "toolStripButtonDefenceSaveAll";
             toolStripButtonDefenceSaveAll.Size = new Size(23, 22);
@@ -743,7 +770,7 @@
             // toolStripButtonDefenceRefresh
             // 
             toolStripButtonDefenceRefresh.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButtonDefenceRefresh.Image = (Image)resources.GetObject("toolStripButtonDefenceRefresh.Image");
+            toolStripButtonDefenceRefresh.Image = Properties.Resources.refresh_icon;
             toolStripButtonDefenceRefresh.ImageTransparentColor = Color.Magenta;
             toolStripButtonDefenceRefresh.Name = "toolStripButtonDefenceRefresh";
             toolStripButtonDefenceRefresh.Size = new Size(23, 22);
@@ -798,7 +825,7 @@
             // toolStripButtonDefenceHide
             // 
             toolStripButtonDefenceHide.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButtonDefenceHide.Image = (Image)resources.GetObject("toolStripButtonDefenceHide.Image");
+            toolStripButtonDefenceHide.Image = Properties.Resources.hide_icon;
             toolStripButtonDefenceHide.ImageTransparentColor = Color.Magenta;
             toolStripButtonDefenceHide.Name = "toolStripButtonDefenceHide";
             toolStripButtonDefenceHide.Size = new Size(23, 22);
@@ -832,6 +859,10 @@
             // 
             // groupBoxWeather
             // 
+            groupBoxWeather.Controls.Add(labelSnowStatus);
+            groupBoxWeather.Controls.Add(labelFogStatus);
+            groupBoxWeather.Controls.Add(labelWindStatus);
+            groupBoxWeather.Controls.Add(labelRainStatus);
             groupBoxWeather.Controls.Add(labelWeatherPenalty);
             groupBoxWeather.Controls.Add(buttonHelpWeatherConfig);
             groupBoxWeather.Controls.Add(labelSnow);
@@ -849,11 +880,51 @@
             groupBoxWeather.TabStop = false;
             groupBoxWeather.Text = "Weather Config";
             // 
+            // labelSnowStatus
+            // 
+            labelSnowStatus.AutoSize = true;
+            labelSnowStatus.Location = new Point(434, 250);
+            labelSnowStatus.Name = "labelSnowStatus";
+            labelSnowStatus.Size = new Size(12, 15);
+            labelSnowStatus.TabIndex = 12;
+            labelSnowStatus.Text = "-";
+            labelSnowStatus.TextChanged += labelEnvironmentStatus_TextChanged;
+            // 
+            // labelFogStatus
+            // 
+            labelFogStatus.AutoSize = true;
+            labelFogStatus.Location = new Point(434, 189);
+            labelFogStatus.Name = "labelFogStatus";
+            labelFogStatus.Size = new Size(12, 15);
+            labelFogStatus.TabIndex = 11;
+            labelFogStatus.Text = "-";
+            labelFogStatus.TextChanged += labelEnvironmentStatus_TextChanged;
+            // 
+            // labelWindStatus
+            // 
+            labelWindStatus.AutoSize = true;
+            labelWindStatus.Location = new Point(434, 120);
+            labelWindStatus.Name = "labelWindStatus";
+            labelWindStatus.Size = new Size(12, 15);
+            labelWindStatus.TabIndex = 10;
+            labelWindStatus.Text = "-";
+            labelWindStatus.TextChanged += labelEnvironmentStatus_TextChanged;
+            // 
+            // labelRainStatus
+            // 
+            labelRainStatus.AutoSize = true;
+            labelRainStatus.Location = new Point(434, 52);
+            labelRainStatus.Name = "labelRainStatus";
+            labelRainStatus.Size = new Size(12, 15);
+            labelRainStatus.TabIndex = 9;
+            labelRainStatus.Text = "-";
+            labelRainStatus.TextChanged += labelEnvironmentStatus_TextChanged;
+            // 
             // labelWeatherPenalty
             // 
             labelWeatherPenalty.AutoSize = true;
             labelWeatherPenalty.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 238);
-            labelWeatherPenalty.Location = new Point(710, 260);
+            labelWeatherPenalty.Location = new Point(672, 19);
             labelWeatherPenalty.Name = "labelWeatherPenalty";
             labelWeatherPenalty.Size = new Size(44, 21);
             labelWeatherPenalty.TabIndex = 8;
@@ -861,6 +932,8 @@
             // 
             // buttonHelpWeatherConfig
             // 
+            buttonHelpWeatherConfig.BackgroundImage = Properties.Resources.help_icon;
+            buttonHelpWeatherConfig.BackgroundImageLayout = ImageLayout.Zoom;
             buttonHelpWeatherConfig.Location = new Point(722, 19);
             buttonHelpWeatherConfig.Name = "buttonHelpWeatherConfig";
             buttonHelpWeatherConfig.Size = new Size(32, 32);
@@ -938,6 +1011,9 @@
             // 
             // groupBoxLand
             // 
+            groupBoxLand.Controls.Add(labelSwampsStatus);
+            groupBoxLand.Controls.Add(labelRiverAndlakesStatus);
+            groupBoxLand.Controls.Add(labelTerainStatus);
             groupBoxLand.Controls.Add(labelLandPenalty);
             groupBoxLand.Controls.Add(buttonHelpLandConfig);
             groupBoxLand.Controls.Add(labelSwamps);
@@ -953,11 +1029,41 @@
             groupBoxLand.TabStop = false;
             groupBoxLand.Text = "Land Config";
             // 
+            // labelSwampsStatus
+            // 
+            labelSwampsStatus.AutoSize = true;
+            labelSwampsStatus.Location = new Point(434, 194);
+            labelSwampsStatus.Name = "labelSwampsStatus";
+            labelSwampsStatus.Size = new Size(12, 15);
+            labelSwampsStatus.TabIndex = 10;
+            labelSwampsStatus.Text = "-";
+            labelSwampsStatus.TextChanged += labelEnvironmentStatus_TextChanged;
+            // 
+            // labelRiverAndlakesStatus
+            // 
+            labelRiverAndlakesStatus.AutoSize = true;
+            labelRiverAndlakesStatus.Location = new Point(434, 119);
+            labelRiverAndlakesStatus.Name = "labelRiverAndlakesStatus";
+            labelRiverAndlakesStatus.Size = new Size(12, 15);
+            labelRiverAndlakesStatus.TabIndex = 9;
+            labelRiverAndlakesStatus.Text = "-";
+            labelRiverAndlakesStatus.TextChanged += labelEnvironmentStatus_TextChanged;
+            // 
+            // labelTerainStatus
+            // 
+            labelTerainStatus.AutoSize = true;
+            labelTerainStatus.Location = new Point(434, 56);
+            labelTerainStatus.Name = "labelTerainStatus";
+            labelTerainStatus.Size = new Size(12, 15);
+            labelTerainStatus.TabIndex = 8;
+            labelTerainStatus.Text = "-";
+            labelTerainStatus.TextChanged += labelEnvironmentStatus_TextChanged;
+            // 
             // labelLandPenalty
             // 
             labelLandPenalty.AutoSize = true;
             labelLandPenalty.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 238);
-            labelLandPenalty.Location = new Point(710, 194);
+            labelLandPenalty.Location = new Point(672, 19);
             labelLandPenalty.Name = "labelLandPenalty";
             labelLandPenalty.Size = new Size(44, 21);
             labelLandPenalty.TabIndex = 7;
@@ -965,6 +1071,8 @@
             // 
             // buttonHelpLandConfig
             // 
+            buttonHelpLandConfig.BackgroundImage = Properties.Resources.help_icon;
+            buttonHelpLandConfig.BackgroundImageLayout = ImageLayout.Zoom;
             buttonHelpLandConfig.Location = new Point(722, 19);
             buttonHelpLandConfig.Name = "buttonHelpLandConfig";
             buttonHelpLandConfig.Size = new Size(32, 32);
@@ -1041,18 +1149,6 @@
             openFileDialog.RestoreDirectory = true;
             openFileDialog.Title = "Select file to open";
             // 
-            // exportToolStripMenuItem
-            // 
-            exportToolStripMenuItem.Name = "exportToolStripMenuItem";
-            exportToolStripMenuItem.Size = new Size(53, 20);
-            exportToolStripMenuItem.Text = "Export";
-            // 
-            // importToolStripMenuItem
-            // 
-            importToolStripMenuItem.Name = "importToolStripMenuItem";
-            importToolStripMenuItem.Size = new Size(55, 20);
-            importToolStripMenuItem.Text = "Import";
-            // 
             // UTBS
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -1062,6 +1158,7 @@
             Controls.Add(tabControlMain);
             Controls.Add(menuStripMain);
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MainMenuStrip = menuStripMain;
             MaximizeBox = false;
             Name = "UTBS";
@@ -1212,5 +1309,13 @@
         private Label labelLandPenalty;
         private ToolStripMenuItem exportToolStripMenuItem;
         private ToolStripMenuItem importToolStripMenuItem;
+        private Label labelSnowStatus;
+        private Label labelFogStatus;
+        private Label labelWindStatus;
+        private Label labelRainStatus;
+        private Label labelSwampsStatus;
+        private Label labelRiverAndlakesStatus;
+        private Label labelTerainStatus;
+        private ToolStripMenuItem unitsToolStripMenuItem;
     }
 }

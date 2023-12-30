@@ -28,19 +28,24 @@ namespace UltimateBattleSimulator.UI.forms
 
         private void Init()
         {
-            dataGridViewUnits.DataSource = UnitsManager.Instance.Get(true, true);
+            bindingSourceUnits.DataSource = UnitsManager.Instance.Get(true, true);
+
+            dataGridViewUnits.DataSource = bindingSourceUnits;
             dataGridViewUnits.CurrentCell = null;
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void bindingSourceUnits_CurrentChanged(object sender, EventArgs e)
         {
-            var row = dataGridViewUnits.Rows[e.RowIndex];
-            Unit = row?.DataBoundItem as IUnit;
+            var unit = bindingSourceUnits.Current;
+            if (unit != null)
+            {
+                Unit = (IUnit)unit;
+            }
         }
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            if( Unit != null ) 
+            if (Unit != null)
             {
                 this.DialogResult = DialogResult.OK;
                 this.Close();

@@ -15,7 +15,11 @@ namespace UltimateBattleSimulator.engine.units
         public override void Reload()
         {
             base.Reload();
+            LoadFromFiles();
+        }
 
+        public void LoadFromFiles()
+        {
             string directoryPath = DirectoryManager.Units;
 
             // Check if the directory exists

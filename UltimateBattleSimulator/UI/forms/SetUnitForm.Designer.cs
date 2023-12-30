@@ -28,9 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             buttonOK = new Button();
             dataGridViewUnits = new DataGridView();
+            bindingSourceUnits = new BindingSource(components);
             ((System.ComponentModel.ISupportInitialize)dataGridViewUnits).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)bindingSourceUnits).BeginInit();
             SuspendLayout();
             // 
             // buttonOK
@@ -55,7 +58,10 @@
             dataGridViewUnits.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridViewUnits.Size = new Size(320, 271);
             dataGridViewUnits.TabIndex = 1;
-            dataGridViewUnits.CellContentClick += dataGridView1_CellContentClick;
+            // 
+            // bindingSourceUnits
+            // 
+            bindingSourceUnits.CurrentChanged += bindingSourceUnits_CurrentChanged;
             // 
             // SetUnitForm
             // 
@@ -71,6 +77,7 @@
             Text = "Set unit form";
             Load += SetUnitForm_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridViewUnits).EndInit();
+            ((System.ComponentModel.ISupportInitialize)bindingSourceUnits).EndInit();
             ResumeLayout(false);
         }
 
@@ -78,5 +85,6 @@
 
         private Button buttonOK;
         private DataGridView dataGridViewUnits;
+        private BindingSource bindingSourceUnits;
     }
 }

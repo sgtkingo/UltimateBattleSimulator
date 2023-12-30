@@ -31,14 +31,15 @@
             checkedListBoxUnits = new CheckedListBox();
             richTextBoxUnitInfo = new RichTextBox();
             buttonSelect = new Button();
+            buttonReload = new Button();
             SuspendLayout();
             // 
             // checkedListBoxUnits
             // 
             checkedListBoxUnits.FormattingEnabled = true;
-            checkedListBoxUnits.Location = new Point(12, 12);
+            checkedListBoxUnits.Location = new Point(12, 48);
             checkedListBoxUnits.Name = "checkedListBoxUnits";
-            checkedListBoxUnits.Size = new Size(235, 472);
+            checkedListBoxUnits.Size = new Size(235, 436);
             checkedListBoxUnits.TabIndex = 0;
             checkedListBoxUnits.ItemCheck += checkedListBoxUnits_ItemCheck;
             checkedListBoxUnits.SelectedIndexChanged += checkedListBoxUnits_SelectedIndexChanged;
@@ -64,12 +65,25 @@
             buttonSelect.UseVisualStyleBackColor = false;
             buttonSelect.Click += buttonSelect_Click;
             // 
+            // buttonReload
+            // 
+            buttonReload.BackColor = Color.DarkOrange;
+            buttonReload.BackgroundImage = Properties.Resources.refresh_icon;
+            buttonReload.BackgroundImageLayout = ImageLayout.Zoom;
+            buttonReload.Location = new Point(210, 12);
+            buttonReload.Name = "buttonReload";
+            buttonReload.Size = new Size(37, 30);
+            buttonReload.TabIndex = 3;
+            buttonReload.UseVisualStyleBackColor = false;
+            buttonReload.Click += buttonReload_Click;
+            // 
             // SelectUnitFromListForm
             // 
             AcceptButton = buttonSelect;
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(563, 493);
+            Controls.Add(buttonReload);
             Controls.Add(buttonSelect);
             Controls.Add(richTextBoxUnitInfo);
             Controls.Add(checkedListBoxUnits);
@@ -87,5 +101,6 @@
         private CheckedListBox checkedListBoxUnits;
         private RichTextBox richTextBoxUnitInfo;
         private Button buttonSelect;
+        private Button buttonReload;
     }
 }

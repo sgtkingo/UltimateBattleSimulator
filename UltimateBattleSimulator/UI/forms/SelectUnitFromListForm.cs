@@ -60,5 +60,16 @@ namespace UltimateBattleSimulator.UI.forms
                 item.IsSelected = e.NewValue == CheckState.Checked;
             }
         }
+
+        private void buttonReload_Click(object sender, EventArgs e)
+        {
+            if( MessageBox.Show("Do u wanna reload all units from files? All loaded units will be deleted and recreated!", "Reload units", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Warning) == DialogResult.Yes)
+            {
+                UnitsManager.Instance.Reload();
+                BindData();
+
+                MessageBox.Show("Done!");
+            }
+        }
     }
 }

@@ -66,6 +66,8 @@
             // 
             // buttonSetUnit
             // 
+            buttonSetUnit.BackgroundImageLayout = ImageLayout.Center;
+            buttonSetUnit.ImageAlign = ContentAlignment.MiddleLeft;
             buttonSetUnit.Location = new Point(213, 117);
             buttonSetUnit.Name = "buttonSetUnit";
             buttonSetUnit.Size = new Size(160, 23);

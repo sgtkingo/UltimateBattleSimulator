@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ArmyForm));
             buttonSave = new Button();
             propertyGrid = new PropertyGrid();
             groupBoxGroups = new GroupBox();
@@ -91,7 +90,7 @@
             // toolStripButtonGroupsNew
             // 
             toolStripButtonGroupsNew.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButtonGroupsNew.Image = (Image)resources.GetObject("toolStripButtonGroupsNew.Image");
+            toolStripButtonGroupsNew.Image = Properties.Resources.add_icon;
             toolStripButtonGroupsNew.ImageTransparentColor = Color.Magenta;
             toolStripButtonGroupsNew.Name = "toolStripButtonGroupsNew";
             toolStripButtonGroupsNew.Size = new Size(23, 22);
@@ -101,7 +100,7 @@
             // toolStripButtonGroupsEdit
             // 
             toolStripButtonGroupsEdit.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButtonGroupsEdit.Image = (Image)resources.GetObject("toolStripButtonGroupsEdit.Image");
+            toolStripButtonGroupsEdit.Image = Properties.Resources.edit;
             toolStripButtonGroupsEdit.ImageTransparentColor = Color.Magenta;
             toolStripButtonGroupsEdit.Name = "toolStripButtonGroupsEdit";
             toolStripButtonGroupsEdit.Size = new Size(23, 22);
@@ -116,7 +115,7 @@
             // toolStripButtonGroupsDelete
             // 
             toolStripButtonGroupsDelete.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButtonGroupsDelete.Image = (Image)resources.GetObject("toolStripButtonGroupsDelete.Image");
+            toolStripButtonGroupsDelete.Image = Properties.Resources.delete_icon;
             toolStripButtonGroupsDelete.ImageTransparentColor = Color.Magenta;
             toolStripButtonGroupsDelete.Name = "toolStripButtonGroupsDelete";
             toolStripButtonGroupsDelete.Size = new Size(23, 22);
@@ -151,17 +150,18 @@
             // buttonDessigne
             // 
             buttonDessigne.BackColor = Color.Red;
+            buttonDessigne.BackgroundImage = Properties.Resources.cancel_icon;
+            buttonDessigne.BackgroundImageLayout = ImageLayout.Zoom;
             buttonDessigne.Location = new Point(191, 22);
             buttonDessigne.Name = "buttonDessigne";
             buttonDessigne.Size = new Size(117, 45);
             buttonDessigne.TabIndex = 2;
-            buttonDessigne.Text = "Unssigne";
             buttonDessigne.UseVisualStyleBackColor = false;
             buttonDessigne.Click += buttonDessigne_Click;
             // 
             // buttonSetDefence
             // 
-            buttonSetDefence.BackColor = SystemColors.Highlight;
+            buttonSetDefence.BackColor = SystemColors.ActiveCaption;
             buttonSetDefence.Location = new Point(6, 22);
             buttonSetDefence.Name = "buttonSetDefence";
             buttonSetDefence.Size = new Size(164, 45);

@@ -17,6 +17,7 @@ using UltimateBattleSimulator.engine.system;
 using UltimateBattleSimulator.engine.units;
 using UltimateBattleSimulator.interfaces;
 using UltimateBattleSimulator.UI.forms;
+using UltimateBattleSimulator.UI.managers;
 
 namespace UltimateBattleSimulator.UI
 {
@@ -42,17 +43,8 @@ namespace UltimateBattleSimulator.UI
             ReloadUnits();
             ReloadArmies();
             ReloadDefence();
-        }
 
-        private void tabControlMain_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            switch (tabControlMain.SelectedTab?.Name)
-            {
-                case "tabPageUnits":
-                    break;
-                default:
-                    break;
-            }
+            InitEnvironment();
         }
 
         private void ShowHelp(string helpMessage)
@@ -157,7 +149,7 @@ namespace UltimateBattleSimulator.UI
         private IUnit? CreateUnit()
         {
             var form = new CreateUnitForm();
-            if( form.ShowDialog(this) == DialogResult.OK ) 
+            if (form.ShowDialog(this) == DialogResult.OK)
             {
                 return form.Unit;
             }
@@ -560,22 +552,40 @@ namespace UltimateBattleSimulator.UI
         #endregion
 
         #region Environment
+        private void InitEnvironment()
+        {
+            labelTerainStatus.Text = EnvironmentManager.TerainStatus[trackBarTerain.Value];
+            labelRiverAndlakesStatus.Text = EnvironmentManager.RiversAndLakesStatus[trackBarRiversAndLakes.Value];
+            labelSwampsStatus.Text = EnvironmentManager.SwampsStatus[trackBarSwamps.Value];
+
+            labelRainStatus.Text = EnvironmentManager.RainStatus[trackBarRain.Value];
+            labelWindStatus.Text = EnvironmentManager.WindStatus[trackBarWind.Value];
+            labelFogStatus.Text = EnvironmentManager.FogStatus[trackBarFog.Value];
+            labelSnowStatus.Text = EnvironmentManager.SnowStatus[trackBarSnow.Value];
+
+            labelLandPenalty.Text = $"{EnvironmentManager.EnvironmentConfig.Land.GetPenalty():F2}";
+            labelWeatherPenalty.Text = $"{EnvironmentManager.EnvironmentConfig.Weather.GetPenalty():F2}";
+        }
+
         private void trackBarTerain_Scroll(object sender, EventArgs e)
         {
             EnvironmentManager.EnvironmentConfig.Land.Terain = trackBarTerain.Value;
             labelLandPenalty.Text = $"{EnvironmentManager.EnvironmentConfig.Land.GetPenalty():F2}";
+            labelTerainStatus.Text = EnvironmentManager.TerainStatus[trackBarTerain.Value];
         }
 
         private void trackBarRiversAndLakes_Scroll(object sender, EventArgs e)
         {
             EnvironmentManager.EnvironmentConfig.Land.RiversAndLakes = trackBarRiversAndLakes.Value;
             labelLandPenalty.Text = $"{EnvironmentManager.EnvironmentConfig.Land.GetPenalty():F2}";
+            labelRiverAndlakesStatus.Text = EnvironmentManager.RiversAndLakesStatus[trackBarRiversAndLakes.Value];
         }
 
         private void trackBarSwamps_Scroll(object sender, EventArgs e)
         {
             EnvironmentManager.EnvironmentConfig.Land.Swamps = trackBarSwamps.Value;
             labelLandPenalty.Text = $"{EnvironmentManager.EnvironmentConfig.Land.GetPenalty():F2}";
+            labelSwampsStatus.Text = EnvironmentManager.SwampsStatus[trackBarSwamps.Value];
         }
         //------------------------------------------------------------------------
 
@@ -583,25 +593,30 @@ namespace UltimateBattleSimulator.UI
         {
             EnvironmentManager.EnvironmentConfig.Weather.Rain = trackBarRain.Value;
             labelWeatherPenalty.Text = $"{EnvironmentManager.EnvironmentConfig.Weather.GetPenalty():F2}";
+            labelRainStatus.Text = EnvironmentManager.RainStatus[trackBarRain.Value];
         }
 
         private void trackBarWind_Scroll(object sender, EventArgs e)
         {
             EnvironmentManager.EnvironmentConfig.Weather.Wind = trackBarWind.Value;
             labelWeatherPenalty.Text = $"{EnvironmentManager.EnvironmentConfig.Weather.GetPenalty():F2}";
+            labelWindStatus.Text = EnvironmentManager.WindStatus[trackBarWind.Value];
         }
 
         private void trackBarFog_Scroll(object sender, EventArgs e)
         {
             EnvironmentManager.EnvironmentConfig.Weather.Fog = trackBarFog.Value;
             labelWeatherPenalty.Text = $"{EnvironmentManager.EnvironmentConfig.Weather.GetPenalty():F2}";
+            labelFogStatus.Text = EnvironmentManager.FogStatus[trackBarFog.Value];
         }
 
         private void trackBarSnow_Scroll(object sender, EventArgs e)
         {
             EnvironmentManager.EnvironmentConfig.Weather.Snow = trackBarSnow.Value;
             labelWeatherPenalty.Text = $"{EnvironmentManager.EnvironmentConfig.Weather.GetPenalty():F2}";
+            labelSnowStatus.Text = EnvironmentManager.SnowStatus[trackBarSnow.Value];
         }
+
         private void buttonHelpLandConfig_Click(object sender, EventArgs e)
         {
             ShowHelp(HelpManager.LandConfigHelp);
@@ -610,6 +625,15 @@ namespace UltimateBattleSimulator.UI
         private void buttonHelpWeatherConfig_Click(object sender, EventArgs e)
         {
             ShowHelp(HelpManager.WeatherConfigHelp);
+        }
+
+        private void labelEnvironmentStatus_TextChanged(object sender, EventArgs e)
+        {
+            string origin = ((Label)sender).Text;
+            if (!string.IsNullOrEmpty(origin) && origin.Length > 55)
+            {
+                ((Label)sender).Text = origin.Substring(0, 55) + "...";
+            }
         }
         #endregion
 
@@ -624,5 +648,13 @@ namespace UltimateBattleSimulator.UI
             //TODO: Dispose all objects
             Simulator.Dispose();
         }
+
+        #region Managers
+        private void unitsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var form = new UnitsManagerForm();
+            form.Show();
+        }
+        #endregion
     }
 }
